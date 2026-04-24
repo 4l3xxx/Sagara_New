@@ -1,59 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sagara Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#137fec',
+                        secondary: '#10b981',
+                        sidebar: '#0f172a',
+                        surface: '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f5f7fb; }
-        .sidebar-item { transition: all 0.2s; cursor: pointer; }
-        .sidebar-item:hover { background: rgba(19, 127, 236, 0.1); transform: translateX(4px); }
-        .sidebar-item.active { background: rgba(19, 127, 236, 0.15); color: #137fec; border-left: 3px solid #137fec; }
-        .card-hover { transition: transform 0.2s, box-shadow 0.2s; }
-        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .loading { display: inline-block; width: 20px; height: 20px; border: 2px solid #f3f3f3; border-top: 2px solid #137fec; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .toast { position: fixed; bottom: 20px; right: 20px; background: #333; color: white; padding: 12px 20px; border-radius: 8px; z-index: 1000; animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #f8fafc; /* slate-50 */
+        }
+        
+        /* Professional Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .sidebar-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #94a3b8; /* slate-400 */
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #f8fafc;
+            transform: translateX(4px);
+        }
+
+        .sidebar-item.active {
+            background: rgba(19, 127, 236, 0.15);
+            color: #38bdf8; /* sky-400 */
+            border-left: 3px solid #38bdf8;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
+            border-color: rgba(19, 127, 236, 0.3);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #137fec;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Delete button hover effect for chat */
+        .delete-btn {
+            transition: all 0.2s ease;
+        }
+        .delete-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Scrollbar styling */
+        .chat-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .chat-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     </style>
 </head>
+
 <body>
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-xl fixed h-full overflow-y-auto">
-            <div class="p-6 border-b">
+        <aside class="w-64 bg-sidebar text-slate-300 shadow-2xl fixed h-full overflow-y-auto z-50 flex flex-col">
+            <div class="p-6 border-b border-slate-800">
                 <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="w-9 h-9 rounded-xl shadow-lg border border-slate-700 object-cover hidden md:block" onerror="this.style.display='none'">
+                    <div class="w-9 h-9 bg-gradient-to-br from-primary to-blue-600 rounded-xl flex items-center justify-center shadow-lg border border-slate-700 md:hidden">
                         <span class="text-white font-bold text-lg">S</span>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold text-gray-800">Sagara</h1>
-                        <p class="text-xs text-gray-500">Admin Panel</p>
+                        <h1 class="text-xl font-bold text-white tracking-wide">Sagara</h1>
+                        <p class="text-[11px] text-slate-400 uppercase tracking-widest font-semibold">Admin Portal</p>
                     </div>
                 </div>
             </div>
-            <nav class="p-4 space-y-1">
-                <div class="sidebar-item active p-3 rounded-lg" data-section="dashboard">
-                    📊 Dashboard
+            
+            <nav class="p-4 flex-1">
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Main Menu</div>
+                
+                <div class="sidebar-item active p-3" data-section="dashboard">
+                    <span class="material-symbols-outlined text-[20px]">dashboard</span>
+                    <span class="font-medium text-sm">Dashboard</span>
                 </div>
-                <div class="sidebar-item p-3 rounded-lg" data-section="chats">
-                    💬 Chat History
+                <div class="sidebar-item p-3" data-section="chats">
+                    <span class="material-symbols-outlined text-[20px]">forum</span>
+                    <span class="font-medium text-sm">Chat History</span>
                 </div>
-                <div class="sidebar-item p-3 rounded-lg" data-section="content">
-                    ✏️ Edit Content
+                <div class="sidebar-item p-3" data-section="content">
+                    <span class="material-symbols-outlined text-[20px]">edit_document</span>
+                    <span class="font-medium text-sm">Edit Content</span>
                 </div>
-                <div class="sidebar-item p-3 rounded-lg" data-section="settings">
-                    ⚙️ Settings
+                <div class="sidebar-item p-3" data-section="consultations">
+                    <span class="material-symbols-outlined text-[20px]">mail</span>
+                    <span class="font-medium text-sm">Consultations</span>
                 </div>
-                <div class="sidebar-item p-3 rounded-lg text-red-600" data-section="logout" id="logoutBtn">
-                    🚪 Logout
+                <div class="sidebar-item p-3" data-section="analytics">
+                    <span class="material-symbols-outlined text-[20px]">monitoring</span>
+                    <span class="font-medium text-sm">Analytics</span>
+                </div>
+                
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-6 mb-3 px-3">System</div>
+                <div class="sidebar-item p-3" data-section="settings">
+                    <span class="material-symbols-outlined text-[20px]">settings</span>
+                    <span class="font-medium text-sm">Settings</span>
                 </div>
             </nav>
-            <div class="absolute bottom-0 left-0 right-0 p-4 border-t text-xs text-gray-400 text-center">
-                Sagara v1.0 | Muffin AI
+            
+            <div class="p-4 border-t border-slate-800">
+                <div class="sidebar-item p-3 text-red-400 hover:text-red-300 hover:bg-red-500/10" data-section="logout" id="logoutBtn">
+                    <span class="material-symbols-outlined text-[20px]">logout</span>
+                    <span class="font-medium text-sm">Sign Out</span>
+                </div>
+                <div class="mt-4 text-center">
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest">Sagara v1.0 &copy; 2024</p>
+                </div>
             </div>
         </aside>
 
@@ -62,49 +204,102 @@
             <div class="p-8">
                 <!-- Dashboard Section -->
                 <div id="dashboardSection">
-                    <div class="mb-8">
-                        <h2 class="text-2xl font-bold text-gray-800">Dashboard Overview</h2>
-                        <p class="text-gray-500 mt-1">Selamat datang di panel admin Sagara</p>
+                    <div class="mb-8 flex justify-between items-end">
+                        <div>
+                            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Dashboard Overview</h2>
+                            <p class="text-slate-500 mt-1 font-medium">Welcome back, here's what's happening today.</p>
+                        </div>
+                        <div class="hidden sm:block">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold uppercase tracking-wide">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Live System
+                            </span>
+                        </div>
                     </div>
-                    
-                    <!-- Stats Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                        <div class="bg-white rounded-xl p-6 shadow-sm border card-hover">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-gray-500 text-sm">Total Chats</span>
-                                <span class="text-2xl">💬</span>
+
+                    <!-- Premium Stats Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                        <!-- Card 1 -->
+                        <div class="bg-white rounded-2xl p-6 card-hover relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 p-4 opacity-10 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500">
+                                <span class="material-symbols-outlined text-[80px] text-primary">forum</span>
                             </div>
-                            <div class="text-3xl font-bold text-primary" id="totalChats">-</div>
-                            <div class="text-xs text-gray-400 mt-2">sepanjang masa</div>
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-primary border border-blue-100">
+                                    <span class="material-symbols-outlined text-[24px]">chat_bubble</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Total Chats</h3>
+                                </div>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <div class="text-4xl font-black text-slate-800" id="totalChats">-</div>
+                                <div class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">All Time</div>
+                            </div>
                         </div>
-                        <div class="bg-white rounded-xl p-6 shadow-sm border card-hover">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-gray-500 text-sm">Today's Chats</span>
-                                <span class="text-2xl">📅</span>
+
+                        <!-- Card 2 -->
+                        <div class="bg-white rounded-2xl p-6 card-hover relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 p-4 opacity-10 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500">
+                                <span class="material-symbols-outlined text-[80px] text-emerald-500">calendar_today</span>
                             </div>
-                            <div class="text-3xl font-bold text-green-600" id="todayChats">-</div>
-                            <div class="text-xs text-gray-400 mt-2">hari ini</div>
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 border border-emerald-100">
+                                    <span class="material-symbols-outlined text-[24px]">today</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Today's Chats</h3>
+                                </div>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <div class="text-4xl font-black text-slate-800" id="todayChats">-</div>
+                                <div class="flex items-center text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
+                                    <span class="material-symbols-outlined text-[14px]">trending_up</span> +12%
+                                </div>
+                            </div>
                         </div>
-                        <div class="bg-white rounded-xl p-6 shadow-sm border card-hover">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-gray-500 text-sm">System Uptime</span>
-                                <span class="text-2xl">⏱️</span>
+
+                        <!-- Card 3 -->
+                        <div class="bg-white rounded-2xl p-6 card-hover relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 p-4 opacity-10 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500">
+                                <span class="material-symbols-outlined text-[80px] text-purple-500">timer</span>
                             </div>
-                            <div class="text-3xl font-bold text-blue-600" id="uptime">-</div>
-                            <div class="text-xs text-gray-400 mt-2">server aktif</div>
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 border border-purple-100">
+                                    <span class="material-symbols-outlined text-[24px]">schedule</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Uptime</h3>
+                                </div>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <div class="text-4xl font-black text-slate-800" id="uptime">-</div>
+                                <div class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">Active</div>
+                            </div>
                         </div>
-                        <div class="bg-white rounded-xl p-6 shadow-sm border card-hover">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-gray-500 text-sm">API Status</span>
-                                <span class="text-2xl">🤖</span>
+
+                        <!-- Card 4 -->
+                        <div class="bg-white rounded-2xl p-6 card-hover relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 p-4 opacity-10 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500">
+                                <span class="material-symbols-outlined text-[80px] text-amber-500">memory</span>
                             </div>
-                            <div class="text-3xl font-bold text-emerald-600" id="apiStatus">-</div>
-                            <div class="text-xs text-gray-400 mt-2">Groq API</div>
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 border border-amber-100">
+                                    <span class="material-symbols-outlined text-[24px]">api</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">API Status</h3>
+                                </div>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <div class="text-2xl font-black text-slate-800" id="apiStatus">-</div>
+                                <div class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">Groq API</div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Recent Activity -->
-                    <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden">
                         <div class="p-6 border-b">
                             <h3 class="font-semibold text-gray-800">Recent Activity</h3>
                         </div>
@@ -112,7 +307,7 @@
                     </div>
                 </div>
 
-                <!-- Chats Section -->
+                <!-- Chats Section (with delete per chat) -->
                 <div id="chatsSection" class="hidden">
                     <div class="flex justify-between items-center mb-6">
                         <div>
@@ -120,10 +315,13 @@
                             <p class="text-gray-500 mt-1">Semua percakapan dengan Muffin AI</p>
                         </div>
                         <button onclick="clearAllChats()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition flex items-center gap-2">
-                            <span>🗑️</span> Clear All
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Clear All
                         </button>
                     </div>
-                    <div id="chatList" class="space-y-4"></div>
+                    <div id="chatList" class="space-y-4 chat-container"></div>
                 </div>
 
                 <!-- Content Section -->
@@ -145,6 +343,84 @@
                             💾 Save Changes
                         </button>
                         <div id="saveMessage" class="mt-4 text-sm hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Consultation Requests Section -->
+                <div id="consultationsSection" class="hidden">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+                        <div class="max-w-2xl">
+                            <h2 class="text-4xl font-extrabold text-slate-900 mb-2">Consultation Requests</h2>
+                            <p class="text-slate-500 text-base">Manage and evaluate incoming AI consultation inquiries. Prioritize urgent corporate leads.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="exportToCSV()" class="px-6 py-3 rounded-xl text-teal-600 font-semibold text-sm border-2 border-teal-600/20 hover:border-teal-600 transition-all flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">download</span> Export CSV
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Toolbar placed right above the table box -->
+                    <div class="flex items-center mb-3 min-h-[40px]">
+                        <button id="bulkDeleteBtn" onclick="deleteSelectedLeads()" class="hidden text-red-600 hover:text-white bg-red-50 hover:bg-red-600 px-4 py-2 rounded-lg text-sm font-bold border border-red-200 transition-colors flex items-center gap-2 shadow-sm whitespace-nowrap">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                            Hapus Data Terpilih (<span id="selectedCount">0</span>)
+                        </button>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm border overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[1000px]">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-500 font-semibold text-xs uppercase tracking-wider">
+                                    <th class="py-5 px-6 w-10">
+                                        <input type="checkbox" id="selectAllLeads" onchange="toggleAllLeads(this)" class="rounded text-teal-600 focus:ring-teal-500">
+                                    </th>
+                                    <th class="py-5 px-6">Prospect Details</th>
+                                    <th class="py-5 px-6">Service Type</th>
+                                    <th class="py-5 px-6">AI Category</th>
+                                    <th class="py-5 px-6">Lead Score</th>
+                                    <th class="py-5 px-6">Date</th>
+                                    <th class="py-5 px-6 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="consultationTableBody" class="text-sm divide-y divide-slate-100">
+                                <tr><td colspan="7" class="py-10 text-center text-slate-400">📭 Loading data...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Analytics Section -->
+                <div id="analyticsSection" class="hidden">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold text-slate-900">Analytics Overview</h2>
+                        <p class="text-slate-500">Business insights and AI performance metrics</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white rounded-xl p-6 shadow-sm border relative overflow-hidden">
+                            <p class="text-xs uppercase tracking-widest text-slate-400 mb-2">Total Consultations</p>
+                            <h3 class="text-3xl font-bold text-slate-900" id="analytic-total">0</h3>
+                        </div>
+                        <div class="bg-white rounded-xl p-6 shadow-sm border relative overflow-hidden">
+                            <p class="text-xs uppercase tracking-widest text-slate-400 mb-2">Corporate Leads</p>
+                            <h3 class="text-3xl font-bold text-teal-600" id="analytic-corporate">0</h3>
+                        </div>
+                        <div class="bg-white rounded-xl p-6 shadow-sm border relative overflow-hidden bg-slate-900 text-white">
+                            <p class="text-xs uppercase tracking-widest text-slate-300 mb-2">Urgent Priority</p>
+                            <h3 class="text-3xl font-bold text-red-400" id="analytic-urgent">0</h3>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white rounded-xl p-8 shadow-sm border">
+                            <h3 class="font-bold text-slate-800 mb-4">Leads Growth</h3>
+                            <div id="leads-chart" class="h-64"></div>
+                        </div>
+                        <div class="bg-white rounded-xl p-8 shadow-sm border">
+                            <h3 class="font-bold text-slate-800 mb-4">Client Segmentation</h3>
+                            <div id="segmentation-chart" class="h-64"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -218,7 +494,7 @@
         }
 
         // ============================================
-        // FETCH WITH AUTH (mengirim cookie)
+        // FETCH WITH AUTH
         // ============================================
         async function fetchWithAuth(url, options = {}) {
             try {
@@ -230,13 +506,11 @@
                         'Content-Type': 'application/json'
                     }
                 });
-                
+
                 if (response.status === 401) {
-                    // Redirect ke halaman login
                     window.location.href = '/admin/login';
                     throw new Error('Unauthorized');
                 }
-                
                 return response;
             } catch (err) {
                 if (err.message !== 'Unauthorized') {
@@ -280,8 +554,25 @@
         }
 
         // ============================================
-        // CHAT FUNCTIONS
+        // CHAT FUNCTIONS (with delete per chat)
         // ============================================
+        async function deleteSingleChat(chatId) {
+            if (confirm('⚠️ Yakin ingin menghapus chat ini? Tindakan tidak bisa dibatalkan!')) {
+                try {
+                    const response = await fetchWithAuth(`/api/admin/chats/${chatId}`, { method: 'DELETE' });
+                    if (response.ok) {
+                        showToast('✅ Chat berhasil dihapus!');
+                        loadChats();
+                        loadDashboard();
+                    } else {
+                        showToast('❌ Gagal menghapus chat', 'error');
+                    }
+                } catch (err) {
+                    showToast('❌ Gagal menghapus chat', 'error');
+                }
+            }
+        }
+
         async function loadChats() {
             try {
                 const res = await fetchWithAuth('/api/admin/chats?limit=50');
@@ -294,10 +585,19 @@
                 }
                 
                 container.innerHTML = chats.map(chat => `
-                    <div class="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition">
-                        <div class="flex justify-between text-xs text-gray-400 mb-2">
-                            <span>🕐 ${formatDate(chat.timestamp)}</span>
-                            <span>#${chat.id}</span>
+                    <div class="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition relative group">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="text-xs text-gray-400">
+                                <span>🕐 ${formatDate(chat.timestamp)}</span>
+                                <span class="ml-3">#${chat.id}</span>
+                            </div>
+                            <button onclick="deleteSingleChat(${chat.id})" 
+                                class="delete-btn opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white p-2 rounded-lg"
+                                title="Delete chat">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
                         </div>
                         <div class="mb-3">
                             <div class="text-sm font-semibold text-gray-700 mb-1">👤 User:</div>
@@ -362,10 +662,7 @@
                     document.getElementById('saveMessage').className = 'mt-4 text-sm text-green-600';
                 } else {
                     showToast('❌ Gagal menyimpan content', 'error');
-                    document.getElementById('saveMessage').textContent = '❌ Gagal menyimpan';
-                    document.getElementById('saveMessage').className = 'mt-4 text-sm text-red-600';
                 }
-                
                 document.getElementById('saveMessage').classList.remove('hidden');
                 setTimeout(() => document.getElementById('saveMessage').classList.add('hidden'), 3000);
             } catch (err) {
@@ -374,14 +671,222 @@
         }
 
         // ============================================
+        // CONSULTATION FUNCTIONS
+        // ============================================
+        async function loadConsultations() {
+            try {
+                const res = await fetchWithAuth('/api/admin/consultations');
+                const data = await res.json();
+                const container = document.getElementById('consultationTableBody');
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<tr><td colspan="7" class="py-10 text-center text-slate-400">📭 Belum ada data konsultasi di database</td></tr>';
+                    return;
+                }
+
+                container.innerHTML = data.map(item => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-5 px-6">
+                            <input type="checkbox" value="${item.id}" onchange="updateSelectedCount()" class="lead-checkbox rounded text-teal-600 focus:ring-teal-500">
+                        </td>
+                        <td class="py-5 px-6">
+                            <div class="font-semibold text-slate-900">${escapeHtml(item.full_name)}</div>
+                            <div class="text-slate-500 text-xs">${escapeHtml(item.business_email)}</div>
+                        </td>
+                        <td class="py-5 px-6 text-slate-700">${escapeHtml(item.service_type)}</td>
+                        <td class="py-5 px-6">
+                            <span class="px-2 py-1 rounded text-[10px] font-bold uppercase ${item.nlp_category === 'Corporate' ? 'bg-slate-900 text-white' : 'bg-emerald-100 text-emerald-700'}">${item.nlp_category || 'General'}</span>
+                        </td>
+                        <td class="py-5 px-6">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-slate-900">${Math.round((item.lead_score || 0.5) * 100)}</span>
+                                <div class="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-teal-500" style="width: ${(item.lead_score || 0.5) * 100}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-5 px-6 text-slate-500 text-xs">${formatDate(item.created_at)}</td>
+                        <td class="py-5 px-6 text-right">
+                            <div class="flex items-center justify-end gap-3">
+                                ${item.status === 'New' ? `<span class="whitespace-nowrap px-2 py-1 rounded-md text-[10px] font-bold bg-blue-50 text-blue-600 border border-blue-200 tracking-wide">NEW LEAD</span>` : ''}
+                                ${item.status === 'Contacted' ? `<span class="whitespace-nowrap px-2 py-1 rounded-md text-[10px] font-bold bg-amber-50 text-amber-600 border border-amber-200 tracking-wide">CONTACTED</span>` : ''}
+                                ${item.status === 'Closed' ? `<span class="whitespace-nowrap px-2 py-1 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200 tracking-wide">DEAL WON</span>` : ''}
+                                ${item.status === 'Failed' ? `<span class="whitespace-nowrap px-2 py-1 rounded-md text-[10px] font-bold bg-slate-100 text-slate-500 border border-slate-200 tracking-wide">DEAL LOST</span>` : ''}
+                                
+                                ${item.status === 'New' ? `<button onclick="handleLeadAction('${item.id}', '${item.business_email}', 'New')" class="whitespace-nowrap text-xs font-bold text-white bg-primary hover:bg-blue-600 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">mail</span> Reply</button>` : ''}
+                                ${item.status === 'Contacted' ? `<button onclick="handleLeadAction('${item.id}', '${item.business_email}', 'Contacted')" class="whitespace-nowrap text-xs font-bold text-white bg-slate-800 hover:bg-slate-900 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check_circle</span> Update</button>` : ''}
+                                
+                                <button onclick="deleteLead('${item.id}')" class="p-1.5 text-slate-400 hover:text-red-600 transition-colors" title="Delete">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error('Failed to load consultations:', err);
+            }
+        }
+
+        function handleLeadAction(id, email, currentStatus) {
+            if (currentStatus === 'New') {
+                // Enterprise Automation: Open Mail Client AND auto-update status to Contacted
+                window.location.href = `mailto:${email}?subject=Re: Sagara AI Consultation`;
+                setTimeout(() => {
+                    updateLeadStatus(id, 'Contacted', true);
+                }, 1000); 
+            } else if (currentStatus === 'Contacted') {
+                const action = prompt("Selesaikan negosiasi prospek ini:\n\nKetik 'WON' jika Deal Berhasil (Closed)\nKetik 'LOST' jika Deal Gagal (Failed)", "WON");
+                if (action === 'WON') {
+                    updateLeadStatus(id, 'Closed', false);
+                } else if (action === 'LOST') {
+                    updateLeadStatus(id, 'Failed', false);
+                }
+            }
+        }
+
+        async function updateLeadStatus(id, newStatus, skipPrompt = false) {
+            let reason = "";
+            if (!skipPrompt && (newStatus === 'Closed' || newStatus === 'Failed')) {
+                reason = prompt("Harap masukkan alasan/catatan (Opsional):");
+                if (reason === null) {
+                    loadConsultations();
+                    return;
+                }
+            } else if (newStatus === 'Contacted') {
+                reason = "Automated: Admin sent an email response.";
+            }
+
+            try {
+                const res = await fetchWithAuth('/api/admin/consultations/status', {
+                    method: 'POST',
+                    body: JSON.stringify({ id, status: newStatus, notes: reason })
+                });
+                if (res.ok) {
+                    showToast(`Status berhasil diubah ke ${newStatus}`);
+                    loadConsultations();
+                    loadAnalytics();
+                }
+            } catch (err) {
+                showToast("Gagal update status", "error");
+            }
+        }
+
+        // ============================================
+        // DELETION FUNCTIONS FOR CONSULTATIONS
+        // ============================================
+        function toggleAllLeads(masterCheckbox) {
+            const checkboxes = document.querySelectorAll('.lead-checkbox');
+            checkboxes.forEach(cb => cb.checked = masterCheckbox.checked);
+            updateSelectedCount();
+        }
+
+        function updateSelectedCount() {
+            const checkedCount = document.querySelectorAll('.lead-checkbox:checked').length;
+            const btn = document.getElementById('bulkDeleteBtn');
+            const countLabel = document.getElementById('selectedCount');
+            
+            if (checkedCount > 0) {
+                btn.classList.remove('hidden');
+                countLabel.textContent = checkedCount;
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
+
+        async function deleteLead(id) {
+            if (!confirm('Apakah Anda yakin ingin menghapus data ini secara PERMANEN?')) return;
+            await performDelete([id]);
+        }
+
+        async function deleteSelectedLeads() {
+            const checkboxes = document.querySelectorAll('.lead-checkbox:checked');
+            const ids = Array.from(checkboxes).map(cb => cb.value);
+            if (!confirm(`Apakah Anda yakin ingin menghapus ${ids.length} data terpilih secara PERMANEN?`)) return;
+            await performDelete(ids);
+        }
+
+        async function performDelete(ids) {
+            try {
+                const res = await fetchWithAuth('/api/admin/consultations/delete', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ ids })
+                });
+
+                if (res.ok) {
+                    showToast(`${ids.length} data berhasil dihapus permanen`);
+                    document.getElementById('selectAllLeads').checked = false;
+                    loadConsultations();
+                    loadAnalytics();
+                } else {
+                    showToast("Gagal menghapus data", "error");
+                }
+            } catch (err) {
+                showToast("Gagal terhubung ke server", "error");
+            }
+        }
+
+        function exportToCSV() {
+            showToast("📥 Export CSV - feature coming soon", "success");
+        }
+
+        // ============================================
+        // ANALYTICS FUNCTIONS
+        // ============================================
+        async function loadAnalytics() {
+            try {
+                const res = await fetchWithAuth('/api/admin/consultations/stats');
+                const stats = await res.json();
+
+                document.getElementById('analytic-total').textContent = stats.total || 0;
+                document.getElementById('analytic-corporate').textContent = stats.corporate || 0;
+                document.getElementById('analytic-urgent').textContent = stats.urgent || 0;
+
+                renderCharts(stats);
+            } catch (err) {
+                console.error('Failed to load analytics:', err);
+                document.getElementById('analytic-total').textContent = '0';
+                document.getElementById('analytic-corporate').textContent = '0';
+                document.getElementById('analytic-urgent').textContent = '0';
+            }
+        }
+
+        function renderCharts(stats) {
+            const options = {
+                series: [{ name: 'Leads', data: [stats.corporate || 0, stats.sme || 0, (stats.total - (stats.corporate || 0) - (stats.sme || 0))] }],
+                chart: { type: 'bar', height: 250, toolbar: { show: false } },
+                colors: ['#0F172A', '#10B981', '#CBD5E1'],
+                xaxis: { categories: ['Corporate', 'SME', 'Gov'] }
+            };
+
+            const chartDiv = document.querySelector("#segmentation-chart");
+            if (chartDiv) {
+                chartDiv.innerHTML = '';
+                new ApexCharts(chartDiv, options).render();
+            }
+
+            const growthOptions = {
+                series: [{ name: 'Leads', data: [10, 15, 8, 20, 25, stats.total || 0] }],
+                chart: { type: 'area', height: 250, toolbar: { show: false } },
+                colors: ['#14b8a6'],
+                stroke: { curve: 'smooth' }
+            };
+            const growthDiv = document.querySelector("#leads-chart");
+            if (growthDiv) {
+                growthDiv.innerHTML = '';
+                new ApexCharts(growthDiv, growthOptions).render();
+            }
+        }
+
+        // ============================================
         // SETTINGS FUNCTIONS
         // ============================================
         async function loadSettings() {
             try {
-                // Get system info
-                const nodeVersion = navigator.userAgent.match(/Node\.js\/([^;]+)/)?.[1] || '-';
-                document.getElementById('nodeVersion').textContent = nodeVersion;
-                document.getElementById('platform').textContent = navigator.platform || '-';
+                document.getElementById('nodeVersion').textContent = 'v18+';
+                document.getElementById('platform').textContent = navigator.platform || 'Server';
             } catch (err) {
                 console.error('Failed to load settings:', err);
             }
@@ -392,75 +897,54 @@
         // ============================================
         let currentSection = 'dashboard';
 
-        function showSection(section, event = null) {
-            // Hide all sections
-            document.getElementById('dashboardSection').classList.add('hidden');
-            document.getElementById('chatsSection').classList.add('hidden');
-            document.getElementById('contentSection').classList.add('hidden');
-            document.getElementById('settingsSection').classList.add('hidden');
-            
-            // Show selected section
-            if (section === 'dashboard') {
-                document.getElementById('dashboardSection').classList.remove('hidden');
-                loadDashboard();
-            } else if (section === 'chats') {
-                document.getElementById('chatsSection').classList.remove('hidden');
-                loadChats();
-            } else if (section === 'content') {
-                document.getElementById('contentSection').classList.remove('hidden');
-                loadContent();
-            } else if (section === 'settings') {
-                document.getElementById('settingsSection').classList.remove('hidden');
-                loadSettings();
-           } else if (section === 'logout') {
-             window.location.href = '/admin/logout';  // ← HARUSNYA INI
-             } 
-            
-            currentSection = section;
-            
-            // Update active sidebar style
+        function showSection(section) {
+            const sections = [
+                'dashboardSection',
+                'chatsSection',
+                'contentSection',
+                'settingsSection',
+                'consultationsSection',
+                'analyticsSection'
+            ];
+
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden');
+            });
+
+            const activeId = section + 'Section';
+            const activeEl = document.getElementById(activeId);
+            if (activeEl) activeEl.classList.remove('hidden');
+
+            if (section === 'dashboard') loadDashboard();
+            if (section === 'chats') loadChats();
+            if (section === 'content') loadContent();
+            if (section === 'consultations') loadConsultations();
+            if (section === 'analytics') loadAnalytics();
+            if (section === 'settings') loadSettings();
+            if (section === 'logout') window.location.href = '/admin/logout';
+
             document.querySelectorAll('.sidebar-item').forEach(item => {
                 item.classList.remove('active');
+                if (item.getAttribute('data-section') === section) {
+                    item.classList.add('active');
+                }
             });
-            if (event && event.target) {
-                event.target.classList.add('active');
-            } else {
-                // Fallback: cari berdasarkan data-section
-                document.querySelectorAll('.sidebar-item').forEach(item => {
-                    if (item.getAttribute('data-section') === section) {
-                        item.classList.add('active');
-                    }
-                });
-            }
         }
 
         // ============================================
         // INITIALIZATION
         // ============================================
         document.addEventListener('DOMContentLoaded', () => {
-            // Attach event listeners to sidebar items
             document.querySelectorAll('.sidebar-item').forEach(item => {
                 item.addEventListener('click', function(e) {
                     const section = this.getAttribute('data-section');
-                    if (section) {
-                        showSection(section, e);
-                    }
+                    if (section) showSection(section);
                 });
             });
-            
-            // Load initial dashboard
             loadDashboard();
-            
-            // Check session validity periodically (every 5 minutes)
-            setInterval(async () => {
-                try {
-                    const res = await fetchWithAuth('/api/admin/stats');
-                    if (!res.ok) throw new Error('Session expired');
-                } catch (err) {
-                    window.location.href = '/admin/login';
-                }
-            }, 5 * 60 * 1000);
         });
     </script>
 </body>
+
 </html>

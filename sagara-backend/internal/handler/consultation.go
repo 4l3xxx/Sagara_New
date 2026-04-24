@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 
-
 	"github.com/google/uuid"
 )
 
@@ -34,7 +33,6 @@ func CreateConsultationHandler(db *sql.DB) http.HandlerFunc {
 			http.Error(w, "Failed to save request: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
-
 
 		w.WriteHeader(http.StatusCreated)
 		json.NewEncoder(w).Encode(map[string]string{"message": "Konsultasi berhasil dikirim", "id": id})

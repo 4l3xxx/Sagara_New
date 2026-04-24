@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html class="light" lang="en">
 
 <head>
@@ -13,9 +12,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script>
         tailwind.config = {
@@ -24,7 +20,7 @@
                 extend: {
                     colors: {
                         "primary": "#137fec",
-                        "cta-orange": "#f97316", // Orange for CTA as requested
+                        "cta-orange": "#f97316",
                         "cta-orange-hover": "#ea580c",
                         "background-light": "#f6f7f8",
                         "background-dark": "#101922",
@@ -33,17 +29,13 @@
                         "display": ["Inter", "sans-serif"],
                         "body": ["Inter", "sans-serif"],
                     },
-                    backgroundImage: {
-                        'hero-pattern': "url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')",
-                    }
                 },
             },
         }
     </script>
     <style>
-        /* Navbar active link indicator */
         .nav-link-active {
-            color: #137fec !important; /* text-primary */
+            color: #137fec !important;
             position: relative;
         }
 
@@ -56,13 +48,23 @@
             height: 2px;
             background-color: #137fec;
             border-radius: 9999px;
-            transform-origin: center;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-spin {
+            animation: spin 0.8s linear infinite;
         }
     </style>
 </head>
 
 <body
     class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased min-h-screen flex flex-col">
+
     <script>
         function switchLanguage(lang) {
             localStorage.setItem('language', lang);
@@ -74,7 +76,6 @@
                 }
             });
 
-            // Update Desktop Buttons
             const btnEn = document.getElementById('btn-en');
             const btnId = document.getElementById('btn-id');
             if (btnEn && btnId) {
@@ -91,7 +92,6 @@
                 }
             }
 
-            // Update Mobile Buttons if they exist
             const btnEnMobile = document.getElementById('btn-en-mobile');
             const btnIdMobile = document.getElementById('btn-id-mobile');
             if (btnEnMobile && btnIdMobile) {
@@ -114,59 +114,48 @@
             switchLanguage(lang);
         });
     </script>
+
     <!-- Navbar -->
     <nav
         class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
+                <!-- LOGO (UPDATED - tanpa SVG kerucut biru) -->
                 <a class="flex items-center gap-3" href="index.html">
-                    <div class="size-8 text-primary">
-                        <svg class="h-full w-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z"
-                                fill="currentColor"></path>
-                            <path clip-rule="evenodd"
-                                d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z"
-                                fill="currentColor" fill-rule="evenodd"></path>
-                        </svg>
-                    </div>
+                    <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-10 w-auto rounded-lg"
+                        onerror="this.style.display='none'">
                     <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara
                     </h2>
                 </a>
-                <!-- Desktop Menu -->
+
                 <div class="hidden md:flex flex-1 justify-end items-center gap-8">
                     <div class="flex items-center gap-8">
                         <a data-lang="en"
-                            class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
                             href="index.html">Home</a>
                         <a data-lang="id"
-                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
                             href="index.html">Beranda</a>
-
                         <a data-lang="en"
-                            class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
-                            href="case-studies.html">Services</a>
+                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="services.html">Services</a>
                         <a data-lang="id"
-                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
-                            href="case-studies.html">Layanan</a>
-
+                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="services.html">Layanan</a>
                         <a data-lang="en"
-                            class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
                             href="portfolio.html">Portfolio</a>
                         <a data-lang="id"
-                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
                             href="portfolio.html">Portofolio</a>
-
                         <a data-lang="en"
-                            class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
                             href="about.html">About Us</a>
                         <a data-lang="id"
-                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
                             href="about.html">Tentang Kami</a>
                     </div>
 
-                    <!-- Language Toggle -->
                     <div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
                         <button onclick="switchLanguage('id')"
                             class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer"
@@ -178,18 +167,13 @@
 
                     <a data-lang="en"
                         class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105"
-                        href="contact.html">
-                        Consult Now
-                    </a>
+                        href="contact.html">Consult Now</a>
                     <a data-lang="id"
                         class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105"
-                        href="contact.html">
-                        Konsultasi
-                    </a>
+                        href="contact.html">Konsultasi</a>
                 </div>
-                <!-- Mobile Menu Button -->
+
                 <div class="md:hidden flex items-center gap-4">
-                    <!-- Mobile Lang Toggle -->
                     <div class="flex items-center gap-2">
                         <button onclick="switchLanguage('id')"
                             class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile">ID</button>
@@ -204,9 +188,10 @@
             </div>
         </div>
     </nav>
+
     <!-- Main Content -->
     <main class="flex-grow flex items-center justify-center relative overflow-hidden">
-        <!-- Abstract Background Decoration -->
+        <!-- Background Decoration -->
         <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             <div
                 class="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] rounded-full bg-primary/10 blur-3xl dark:bg-primary/5">
@@ -215,9 +200,11 @@
                 class="absolute top-[40%] -left-[10%] w-[400px] h-[400px] rounded-full bg-cta-orange/10 blur-3xl dark:bg-cta-orange/5">
             </div>
         </div>
+
         <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 relative z-10">
             <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                <!-- Left Column: Value Proposition -->
+
+                <!-- Left Column -->
                 <div class="flex flex-col gap-8 text-center lg:text-left">
                     <div class="space-y-4">
                         <div
@@ -239,37 +226,32 @@
                                 your enterprise needs. Get a custom roadmap for cloud, security, or software
                                 development.</span>
                             <span data-lang="id" class="hidden">Terhubung dengan konsultan senior kami untuk solusi IT
-                                ahli yang disesuaikan dengan kebutuhan perusahaan Anda. Dapatkan peta jalan khusus untuk
-                                cloud, keamanan, atau pengembangan perangkat lunak.</span>
+                                ahli yang disesuaikan dengan kebutuhan perusahaan Anda.</span>
                         </p>
                     </div>
-                    <!-- Trust Indicators -->
+
                     <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-4">
                         <div class="flex -space-x-3">
-                            <img alt="Consultant avatar 1"
+                            <img alt="Consultant"
                                 class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 object-cover"
-                                data-alt="Professional woman portrait"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8RWHYe5LMm_RSomoFJI4CVi3HBqwc7DfRuM8Bm0c7neIPBVs9oAn2TZtNm_9DfMY-yU6oZwRq5DTCcnHes7bUrPop98207WZY6wjATJnB1xMcfJDai5GYWjW-CYrZ_95YiGeOJqBzmCoLL5UQVdwauw3_zr0TLtQcPQlc_Msuz0K-lYLNhxPSyYrbdLiDj2X8forInL8ToOBwKvV0hyABYy6zLJ4rryOn7v5rRDSxTRP712tfr4SNybfpsh7w8GDXrZeyc40FIVU" />
-                            <img alt="Consultant avatar 2"
+                                src="https://randomuser.me/api/portraits/women/68.jpg" />
+                            <img alt="Consultant"
                                 class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 object-cover"
-                                data-alt="Professional man portrait"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8FusYEzGn-ZyKvdUnmVOPI7R6wQpUJ6YQE6qNPWjp0Hv0cJ7jZWN7e4j8TyNtw8HRzX9X5HjKtbI80vr5C9djbinEAKf368Ud5LaK7dIJr5bwDGA4FWDPw52gaL9zgeyV6DqBd40tu406gl8oDyClVbIuj50TYcNw08Km66j0jUnyhy7LgA5QkWR3_UxlYZ2qjRWkdvkU6YNOjXONaQd1O3TtqCqAaZG1AfzqW2LsmD6vSG-fyS1blVZ2Y2KJujWpPbmKMwvZkkI" />
-                            <img alt="Consultant avatar 3"
+                                src="https://randomuser.me/api/portraits/men/32.jpg" />
+                            <img alt="Consultant"
                                 class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 object-cover"
-                                data-alt="Smiling professional portrait"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQlyfg8oGpEs8Hs0degsFjC2WGvH-fF3jxEpMBxbRaIAQZsMUQEVVUw4POMh7rof8eJZ-0V8aMUopc5saD5iqp_wO6jyNwQHi9wLCeXxE4kn2laMNVRd1JrKusGGvsAe9vrpm4xo1ZmpggGQkBRlLxHKVNslX3o54KQ3MuVlcW_zm3r3Z4oqk5VHuqlpEG9onKBGoDBMAHgpA7v_UkERKnhXRTmNGKFaD214-l9QGmih3mEhyRYi1GVch27Db4QX_N0QBu9Cm-e24" />
+                                src="https://randomuser.me/api/portraits/women/45.jpg" />
                             <div
                                 class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300">
-                                +50
-                            </div>
+                                +50</div>
                         </div>
                         <div class="text-sm">
                             <div class="flex items-center gap-1 text-yellow-500">
-                                <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                <span class="material-symbols-outlined text-[18px]">star</span>
+                                <span class="material-symbols-outlined text-[18px]">star</span>
+                                <span class="material-symbols-outlined text-[18px]">star</span>
+                                <span class="material-symbols-outlined text-[18px]">star</span>
+                                <span class="material-symbols-outlined text-[18px]">star</span>
                             </div>
                             <p class="text-slate-500 dark:text-slate-400 mt-1">
                                 <span data-lang="en">Trusted by 500+ Enterprises</span>
@@ -277,19 +259,14 @@
                             </p>
                         </div>
                     </div>
-                    <div class="hidden lg:grid grid-cols-3 gap-8 opacity-60 grayscale mt-8">
-                        <!-- Logos placeholders -->
-                        <div class="h-8 bg-slate-200 dark:bg-slate-700 rounded w-24"></div>
-                        <div class="h-8 bg-slate-200 dark:bg-slate-700 rounded w-24"></div>
-                        <div class="h-8 bg-slate-200 dark:bg-slate-700 rounded w-24"></div>
-                    </div>
                 </div>
+
                 <!-- Right Column: Consultation Form -->
                 <div class="w-full max-w-md mx-auto">
                     <div
-                        class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 p-8 relative overflow-hidden group">
-                        <!-- Top Accent Line -->
+                        class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 p-8 relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary to-blue-400"></div>
+
                         <div class="mb-6">
                             <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">
                                 <span data-lang="en">Request Consultation</span>
@@ -301,7 +278,9 @@
                                     disesuaikan.</span>
                             </p>
                         </div>
-                        <form class="space-y-5">
+
+                        <form id="consultationForm" class="space-y-5" onsubmit="return false;">
+                            <!-- Full Name -->
                             <div class="space-y-1.5">
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-200"
                                     for="fullname">
@@ -315,13 +294,16 @@
                                     </div>
                                     <input
                                         class="block w-full pl-10 pr-3 py-3 border-slate-200 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm"
-                                        id="fullname" name="fullname" placeholder="Enter your full name" type="text" />
+                                        id="fullname" name="fullname" placeholder="Enter your full name" type="text"
+                                        required />
                                 </div>
                             </div>
+
+                            <!-- Email (wajib @gmail.com) -->
                             <div class="space-y-1.5">
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-200" for="email">
-                                    <span data-lang="en">Business Email</span>
-                                    <span data-lang="id" class="hidden">Email Bisnis</span>
+                                    <span data-lang="en">Email Address</span>
+                                    <span data-lang="id" class="hidden">Alamat Email</span>
                                 </label>
                                 <div class="relative">
                                     <div
@@ -330,9 +312,17 @@
                                     </div>
                                     <input
                                         class="block w-full pl-10 pr-3 py-3 border-slate-200 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm"
-                                        id="email" name="email" placeholder="name@company.com" type="email" />
+                                        id="email" name="email" placeholder="yourname@gmail.com" type="email"
+                                        required />
                                 </div>
+                                <div id="email-error" class="text-xs mt-1 hidden"></div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">
+                                    ⚠️ <span data-lang="en">Only @gmail.com addresses are accepted</span>
+                                    <span data-lang="id" class="hidden">⚠️ Hanya alamat @gmail.com yang diterima</span>
+                                </p>
                             </div>
+
+                            <!-- Service Type -->
                             <div class="space-y-1.5">
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-200"
                                     for="service">
@@ -346,13 +336,13 @@
                                     </div>
                                     <select
                                         class="block w-full pl-10 pr-10 py-3 border-slate-200 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm appearance-none"
-                                        id="service" name="service">
-                                        <option disabled="" selected="" value="">Select a service...</option>
-                                        <option value="software">Custom Software Development</option>
-                                        <option value="cloud">Cloud Infrastructure &amp; Migration</option>
-                                        <option value="security">Cybersecurity Audit</option>
-                                        <option value="consulting">IT Strategy Consulting</option>
-                                        <option value="government">Government Solutions</option>
+                                        id="service" name="service" required>
+                                        <option disabled selected value="">Select a service...</option>
+                                        <option value="Web development">Web development</option>
+                                        <option value="Mobile app development">Mobile app development</option>
+                                        <option value="IT outsourcing">IT outsourcing</option>
+                                        <option value="UI/UX design">UI/UX design</option>
+                                        <option value="Digital transformation / custom software">Digital transformation / custom software</option>
                                     </select>
                                     <div
                                         class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
@@ -361,7 +351,7 @@
                                 </div>
                             </div>
 
-                            <!-- Message Field -->
+                            <!-- Message -->
                             <div class="space-y-1.5">
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-200"
                                     for="message">
@@ -376,7 +366,8 @@
                                     <textarea
                                         class="block w-full pl-10 pr-3 py-3 border-slate-200 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm min-h-[120px]"
                                         id="message" name="message"
-                                        placeholder="Hi Sagara, I would like to discuss a potential project regarding... (Please describe your needs, goals, and rough timeline)"></textarea>
+                                        placeholder="Hi Sagara, I would like to discuss a potential project regarding... (Please describe your needs, goals, and rough timeline)"
+                                        required></textarea>
                                 </div>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
                                     <span data-lang="en">Please provide a brief overview of your needs so we can prepare
@@ -386,88 +377,19 @@
                                 </p>
                             </div>
 
+                            <!-- Submit Button -->
                             <button id="submitBtn"
                                 class="w-full flex items-center justify-center gap-2 py-4 px-6 border border-transparent rounded-lg shadow-sm text-base font-bold text-white bg-cta-orange hover:bg-cta-orange-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cta-orange transition-all transform hover:-translate-y-0.5 shadow-lg shadow-orange-500/30 disabled:opacity-70 disabled:cursor-not-allowed"
                                 type="button">
                                 <span class="btn-text">
-                                    <span data-lang="en">Get Free Consultation</span>
-                                    <span data-lang="id" class="hidden">Dapatkan Konsultasi Gratis</span>
+                                    <span data-lang="en">Send Consultation →</span>
+                                    <span data-lang="id" class="hidden">Kirim Konsultasi →</span>
                                 </span>
                                 <span
                                     class="loading-spinner hidden animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
-                                <span class="material-symbols-outlined text-[20px] btn-icon">arrow_forward</span>
                             </button>
                         </form>
 
-                        <!-- Form Submission Script -->
-                        <script>
-                            document.getElementById('submitBtn').addEventListener('click', async function () {
-                                const btn = this;
-                                const originalText = btn.querySelector('.btn-text');
-                                const spinner = btn.querySelector('.loading-spinner');
-                                const icon = btn.querySelector('.btn-icon');
-
-                                // Get values
-                                const fullName = document.getElementById('fullname').value;
-                                const email = document.getElementById('email').value;
-                                const service = document.getElementById('service').value;
-                                const message = document.getElementById('message').value;
-
-                                // Simple Validation
-                                if (!fullName || !email || !service || !message) {
-                                    alert('Please fill in all fields / Mohon isi semua kolom.');
-                                    return;
-                                }
-
-                                // Prepare payload for Go Backend
-                                const payload = {
-                                    full_name: fullName,
-                                    business_email: email,
-                                    service_type: service,
-                                    message: message
-                                };
-
-                                // Loading state
-                                btn.disabled = true;
-                                originalText.classList.add('opacity-0');
-                                icon.classList.add('opacity-0');
-                                spinner.classList.remove('hidden');
-
-                                try {
-                                    // Send to backend
-                                    const response = await fetch('http://localhost:8080/api/consultation', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify(payload)
-                                    });
-
-                                    const result = await response.json();
-
-                                    if (response.ok) {
-                                        alert(result.message || 'Consultation request sent successfully!');
-                                        // Reset form
-                                        document.getElementById('fullname').value = '';
-                                        document.getElementById('email').value = '';
-                                        document.getElementById('service').value = '';
-                                        document.getElementById('message').value = '';
-                                    } else {
-                                        throw new Error(result.error || 'Failed to send request');
-                                    }
-                                } catch (error) {
-                                    console.error('Error:', error);
-                                    alert('Sorry, there was an error sending your request. Please try again later.');
-                                } finally {
-                                    // Restore button state
-                                    btn.disabled = false;
-                                    originalText.classList.remove('opacity-0');
-                                    icon.classList.remove('opacity-0');
-                                    spinner.classList.add('hidden');
-                                }
-                            });
-                        </script>
-                        <!-- Assurance Message -->
                         <div
                             class="mt-6 pt-5 border-t border-slate-100 dark:border-slate-700 flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400">
                             <span class="material-symbols-outlined text-green-500 text-[20px]">check_circle</span>
@@ -477,16 +399,11 @@
                             </span>
                         </div>
                     </div>
-                    <!-- Mobile only trust badges (below card) -->
-                    <div class="lg:hidden flex justify-center gap-4 mt-8 opacity-60 grayscale">
-                        <div class="h-6 bg-slate-300 dark:bg-slate-700 rounded w-20"></div>
-                        <div class="h-6 bg-slate-300 dark:bg-slate-700 rounded w-20"></div>
-                        <div class="h-6 bg-slate-300 dark:bg-slate-700 rounded w-20"></div>
-                    </div>
                 </div>
             </div>
         </div>
     </main>
+
     <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8">
         <div
             class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -496,17 +413,140 @@
                     undang-undang.</span>
             </p>
             <div class="flex gap-6 text-sm text-slate-500 dark:text-slate-400">
-                <a class="hover:text-primary transition-colors" href="#">
-                    <span data-lang="en">Privacy Policy</span>
-                    <span data-lang="id" class="hidden">Kebijakan Privasi</span>
-                </a>
-                <a class="hover:text-primary transition-colors" href="#">
-                    <span data-lang="en">Terms of Service</span>
-                    <span data-lang="id" class="hidden">Ketentuan Layanan</span>
-                </a>
+                <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+                <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
             </div>
         </div>
     </footer>
+
+    <!-- Form Handler Script with redirectToGmail -->
+    <script>
+        // Function to validate email (only @gmail.com)
+        function validateEmail(email) {
+            const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+            return gmailRegex.test(email);
+        }
+
+        // Function to redirect to Gmail (YANG LO MINTA)
+        function redirectToGmail() {
+            const email = document.getElementById('email').value;
+            const fullName = document.getElementById('fullname').value;
+            const service = document.getElementById('service').value;
+            const message = document.getElementById('message').value;
+
+            const subject = encodeURIComponent(`Consultation Request from ${fullName} - ${service}`);
+            const body = encodeURIComponent(`
+Nama: ${fullName}
+Email: ${email}
+Tipe Layanan: ${service}
+
+Pesan:
+${message}
+
+---
+Dikirim dari form konsultasi Sagara
+            `.trim());
+
+            // Buka Gmail compose di tab baru
+            window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`, '_blank');
+        }
+
+        // Real-time validation
+        const emailInput = document.getElementById('email');
+        const errorDiv = document.getElementById('email-error');
+
+        if (emailInput) {
+            emailInput.addEventListener('input', function () {
+                const email = this.value.trim();
+
+                if (email === '') {
+                    errorDiv.classList.add('hidden');
+                    errorDiv.innerHTML = '';
+                } else if (!validateEmail(email)) {
+                    errorDiv.classList.remove('hidden');
+                    errorDiv.innerHTML = '❌ <span data-lang="en">Email must use @gmail.com domain</span><span data-lang="id" class="hidden">❌ Email harus menggunakan domain @gmail.com</span>';
+                    errorDiv.style.color = '#ff5c7a';
+                } else {
+                    errorDiv.classList.remove('hidden');
+                    errorDiv.innerHTML = '✅ <span data-lang="en">Email valid!</span><span data-lang="id" class="hidden">✅ Email valid!</span>';
+                    errorDiv.style.color = '#4fffb0';
+                }
+            });
+        }
+
+        // Handle form submission with redirectToGmail
+        document.getElementById('submitBtn').addEventListener('click', async function () {
+            const btn = this;
+            const spinner = btn.querySelector('.loading-spinner');
+            const btnText = btn.querySelector('.btn-text');
+
+            // Get form values
+            const fullName = document.getElementById('fullname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const service = document.getElementById('service').value;
+            const message = document.getElementById('message').value.trim();
+
+            // Validation
+            if (!fullName || !email || !service || !message) {
+                alert('Please fill in all fields / Mohon isi semua kolom.');
+                return;
+            }
+
+            // Email format validation
+            if (!validateEmail(email)) {
+                alert('Email must be @gmail.com / Email harus @gmail.com');
+                return;
+            }
+
+            // Show loading state
+            btn.disabled = true;
+            btnText.classList.add('opacity-0');
+            spinner.classList.remove('hidden');
+
+            // SAVE TO BACKEND FIRST (NEW)
+            try {
+                const response = await fetch('/api/consultation', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        full_name: fullName,
+                        business_email: email,
+                        service_type: service,
+                        message: message
+                    })
+                });
+
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to save to database');
+                }
+
+                console.log('✅ Consultation saved to database');
+            } catch (err) {
+                console.error('❌ Error saving to database:', err);
+                alert('⚠️ Data failed to save to database, but we will still redirect you to Gmail.\n\n⚠️ Gagal menyimpan ke database, tapi Anda akan tetap diarahkan ke Gmail.');
+            }
+
+            // Call redirectToGmail function
+            redirectToGmail();
+
+            // Reset form after short delay
+            setTimeout(() => {
+                document.getElementById('fullname').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('service').value = '';
+                document.getElementById('message').value = '';
+                errorDiv.classList.add('hidden');
+
+                // Reset button state
+                btn.disabled = false;
+                btnText.classList.remove('opacity-0');
+                spinner.classList.add('hidden');
+
+                alert('✅ Consultation request sent! Please check your Gmail.\n\n✅ Permintaan konsultasi terkirim! Silakan cek Gmail Anda.');
+            }, 500);
+        });
+    </script>
 </body>
 
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Sagara - IT Solutions &amp; Consulting with Muffin AI</title>
+    <title>Sagara - IT Solutions &amp; Consulting with Sagara AI</title>
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
@@ -13,6 +13,7 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
         tailwind.config = {
@@ -86,7 +87,7 @@
             border-radius: 9999px;
         }
 
-        /* ========== MUFFIN CHAT STYLES ========== */
+        /* ========== SAGARA AI CHAT STYLES ========== */
         :root {
             --bg: #09090f;
             --bg2: #0f0f1a;
@@ -108,7 +109,7 @@
             --r-lg: 18px;
         }
 
-        #muffin-fab {
+        #sagara-ai-fab {
             position: fixed;
             bottom: 32px;
             right: 32px;
@@ -130,8 +131,8 @@
             from { opacity: 0; transform: scale(0); }
             to { opacity: 1; transform: scale(1); }
         }
-        #muffin-fab:hover { transform: scale(1.1); }
-        #muffin-fab svg { width: 24px; height: 24px; }
+        #sagara-ai-fab:hover { transform: scale(1.1); }
+        #sagara-ai-fab svg { width: 24px; height: 24px; }
         .fab-tooltip {
             position: absolute;
             right: 70px;
@@ -161,9 +162,9 @@
             border-right: 1px solid var(--border2);
             border-top: 1px solid var(--border2);
         }
-        #muffin-fab:hover .fab-tooltip { opacity: 1; transform: translateX(0); }
+        #sagara-ai-fab:hover .fab-tooltip { opacity: 1; transform: translateX(0); }
 
-        #muffin-panel {
+        #sagara-ai-panel {
             position: fixed;
             bottom: 108px;
             right: 32px;
@@ -183,7 +184,7 @@
             transform-origin: bottom right;
             transition: transform 0.3s cubic-bezier(0.34,1.4,0.64,1), opacity 0.22s ease;
         }
-        #muffin-panel.open {
+        #sagara-ai-panel.open {
             transform: scale(1) translateY(0);
             opacity: 1;
             pointer-events: all;
@@ -410,12 +411,98 @@
             color: #050f0a;
         }
         @media (max-width: 480px) {
-            #muffin-panel { right: 12px; left: 12px; width: auto; bottom: 100px; }
-            #muffin-fab { right: 20px; bottom: 20px; }
+            #sagara-ai-panel { right: 12px; left: 12px; width: auto; bottom: 100px; }
+            #sagara-ai-fab { right: 20px; bottom: 20px; }
+        }
+
+
+
+        /* Modern UI Improvements */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Gradient button */
+        .btn-gradient {
+            background: linear-gradient(135deg, #137fec 0%, #4f8fff 100%);
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gradient:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(19, 127, 236, 0.3);
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading animation */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #1a1a28 25%, #22223a 50%, #1a1a28 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        /* Loading spinner */
+        .loading-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-x-hidden w-full">
+    <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-x-hidden w-full">
+    
+    <!-- ========== LOADING SCREEN (NEW) ========== -->
+    <div id="loadingScreen" class="fixed inset-0 bg-background-light dark:bg-background-dark z-[9999] flex items-center justify-center transition-opacity duration-500">
+        <div class="text-center">
+            <div class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-slate-600 dark:text-slate-300 font-medium">Loading Sagara...</p>
+        </div>
+    </div>
+    <!-- ========== END LOADING SCREEN ========== -->
+
+    <script>
+        // Hide loading screen setelah page load
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loader = document.getElementById('loadingScreen');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(function() {
+                        loader.style.display = 'none';
+                    }, 500);
+                }
+            }, 500);
+        });
+    </script>
+
     <script>
         function switchLanguage(lang) {
             localStorage.setItem('language', lang);
@@ -464,41 +551,135 @@
             const lang = localStorage.getItem('language') || 'en';
             switchLanguage(lang);
         });
+
+        // Function untuk redirect ke about.html (Learn About Our Impact)
+        function goToAbout() {
+            window.location.href = '/about.html';
+        }
+
+        // Function untuk download brochure
+        function downloadBrochure() {
+            alert('📄 Company brochure will be downloaded soon.\n\n📄 Brosur perusahaan akan segera diunduh.');
+        }
+
+        // ============================================
+        // NEWSLETTER FUNCTION (FIXED)
+        // ============================================
+        async function subscribeNewsletter() {
+            const emailInput = document.getElementById('newsletter-email');
+            const email = emailInput.value.trim();
+            const messageDiv = document.getElementById('newsletter-message');
+            const btn = event?.target.closest('button');
+            const originalHtml = btn?.innerHTML;
+            
+            // Validasi email kosong
+            if (!email) {
+                messageDiv.innerHTML = '❌ Please enter your email address';
+                messageDiv.style.color = '#ff5c7a';
+                messageDiv.classList.remove('hidden');
+                setTimeout(() => messageDiv.classList.add('hidden'), 3000);
+                return;
+            }
+            
+            // Validasi format email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                messageDiv.innerHTML = '❌ Please enter a valid email address';
+                messageDiv.style.color = '#ff5c7a';
+                messageDiv.classList.remove('hidden');
+                setTimeout(() => messageDiv.classList.add('hidden'), 3000);
+                return;
+            }
+            
+            // Loading state
+            if (btn) {
+                btn.innerHTML = '<div class="loading-spinner mx-auto"></div>';
+                btn.disabled = true;
+            }
+            
+            try {
+                // Coba kirim ke backend (opsional)
+                const response = await fetch('/api/newsletter/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email })
+                }).catch(() => null);
+                
+                // Simpan ke localStorage sebagai backup
+                let subscribers = JSON.parse(localStorage.getItem('sagara_newsletter') || '[]');
+                if (subscribers.includes(email)) {
+                    messageDiv.innerHTML = '❌ Email already subscribed!';
+                    messageDiv.style.color = '#ff5c7a';
+                } else {
+                    subscribers.push(email);
+                    localStorage.setItem('sagara_newsletter', JSON.stringify(subscribers));
+                    messageDiv.innerHTML = '✅ Successfully subscribed to newsletter!';
+                    messageDiv.style.color = '#10b981';
+                    emailInput.value = '';
+                }
+            } catch (error) {
+                // Fallback: simpan ke localStorage
+                let subscribers = JSON.parse(localStorage.getItem('sagara_newsletter') || '[]');
+                if (subscribers.includes(email)) {
+                    messageDiv.innerHTML = '❌ Email already subscribed!';
+                    messageDiv.style.color = '#ff5c7a';
+                } else {
+                    subscribers.push(email);
+                    localStorage.setItem('sagara_newsletter', JSON.stringify(subscribers));
+                    messageDiv.innerHTML = '✅ Successfully subscribed to newsletter!';
+                    messageDiv.style.color = '#10b981';
+                    emailInput.value = '';
+                }
+            } finally {
+                messageDiv.classList.remove('hidden');
+                setTimeout(() => messageDiv.classList.add('hidden'), 3000);
+                
+                if (btn) {
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                }
+            }
+        }
     </script>
-    <div class="relative flex min-h-screen w-full flex-col group/design-root">
-        <!-- Navigation -->
-        <nav class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-20">
-                    <a class="flex items-center gap-3" href="index.html">
-                        <div class="size-8 text-primary">
-                            <svg class="h-full w-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
-                                <path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara</h2>
-                    </a>
-                    <div class="hidden md:flex flex-1 justify-end items-center gap-8">
-                        <div class="flex items-center gap-8">
-                            <a data-lang="en" class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="index.html">Home</a>
-                            <a data-lang="id" class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="index.html">Beranda</a>
-                            <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="case-studies.html">Services</a>
-                            <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="case-studies.html">Layanan</a>
-                            <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portfolio</a>
-                            <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portofolio</a>
-                            <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="about.html">About Us</a>
-                            <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="about.html">Tentang Kami</a>
-                        </div>
-                        <div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
-                            <button onclick="switchLanguage('id')" class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer" id="btn-id">ID</button>
-                            <span class="text-slate-300">|</span>
-                            <button onclick="switchLanguage('en')" class="font-bold text-sm text-primary cursor-pointer" id="btn-en">EN</button>
-                        </div>
-                        <a data-lang="en" class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Consult Now</a>
-                        <a data-lang="id" class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Konsultasi</a>
-                    </div>
-                    <div class="md:hidden flex items-center gap-4">
+    <nav class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <!-- LOGO (UPDATED - tanpa SVG kerucut biru) -->
+            <a class="flex items-center gap-3" href="index.html">
+                <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-10 w-auto rounded-lg" onerror="this.style.display='none'">
+                <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara</h2>
+            </a>
+            <div class="hidden md:flex flex-1 justify-end items-center gap-8">
+                <div class="flex items-center gap-8">
+                    <!-- Home -->
+                    <a data-lang="en" class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="index.html">Home</a>
+                    <a data-lang="id" class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="index.html">Beranda</a>
+                    
+                    <!-- Services -->
+                    <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="services.html">Services</a>
+                    <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="services.html">Layanan</a>
+                    
+                    <!-- Portfolio -->
+                    <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portfolio</a>
+                    <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portofolio</a>
+                    
+                    <!-- Blog (NEW) -->
+                    <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="blog.html">Blog</a>
+                    <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="blog.html">Blog</a>
+                    
+                    <!-- About Us -->
+                    <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="about.html">About Us</a>
+                    <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="about.html">Tentang Kami</a>
+                </div>
+                <div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
+                    <button onclick="switchLanguage('id')" class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer" id="btn-id">ID</button>
+                    <span class="text-slate-300">|</span>
+                    <button onclick="switchLanguage('en')" class="font-bold text-sm text-primary cursor-pointer" id="btn-en">EN</button>
+                </div>
+                <a data-lang="en" class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Consult Now</a>
+                <a data-lang="id" class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Konsultasi</a>
+            </div>
+            <div class="md:hidden flex items-center gap-4">
                         <div class="flex items-center gap-2">
                             <button onclick="switchLanguage('id')" class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile">ID</button>
                             <span class="text-slate-300 text-xs">|</span>
@@ -652,6 +833,82 @@
             </div>
         </section>
         
+        <!-- ========== AI CLASSIFICATION METRICS SECTION ========== -->
+        <section class="py-16 bg-slate-50 dark:bg-slate-900/30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-12">
+                    <span data-lang="en">AI Classification Metrics</span>
+                    <span data-lang="id" class="hidden">Metrik Klasifikasi AI</span>
+                </h2>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="glass-card p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🏛️</span>
+                            <h3 class="text-xl font-bold"><span data-lang="en">Government</span><span data-lang="id" class="hidden">Pemerintah</span></h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Match Score</span><span data-lang="id" class="hidden">Skor Kecocokan</span></p>
+                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden"><div class="h-full bg-orange-500 rounded-full" style="width: 85%"></div></div>
+                                <p class="text-xs mt-1 text-slate-500 dark:text-slate-400"><span data-lang="en">85% - Based on regulatory compliance & scale</span><span data-lang="id" class="hidden">85% - Berdasarkan kepatuhan regulasi & skala</span></p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Criteria:</span><span data-lang="id" class="hidden">Kriteria:</span></p>
+                                <ul class="text-xs list-disc list-inside text-slate-500 dark:text-slate-400">
+                                    <li><span data-lang="en">Regulatory compliance: +30%</span><span data-lang="id" class="hidden">Kepatuhan regulasi: +30%</span></li>
+                                    <li><span data-lang="en">Project scale > 1M: +25%</span><span data-lang="id" class="hidden">Skala proyek > 1M: +25%</span></li>
+                                    <li><span data-lang="en">Security requirements: +30%</span><span data-lang="id" class="hidden">Kebutuhan keamanan: +30%</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🏪</span>
+                            <h3 class="text-xl font-bold">UMKM</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Match Score</span><span data-lang="id" class="hidden">Skor Kecocokan</span></p>
+                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden"><div class="h-full bg-green-500 rounded-full" style="width: 70%"></div></div>
+                                <p class="text-xs mt-1 text-slate-500 dark:text-slate-400"><span data-lang="en">70% - Based on business agility & growth potential</span><span data-lang="id" class="hidden">70% - Berdasarkan agility bisnis & potensi pertumbuhan</span></p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Criteria:</span><span data-lang="id" class="hidden">Kriteria:</span></p>
+                                <ul class="text-xs list-disc list-inside text-slate-500 dark:text-slate-400">
+                                    <li><span data-lang="en">Digital readiness: +25%</span><span data-lang="id" class="hidden">Kesiapan digital: +25%</span></li>
+                                    <li><span data-lang="en">Growth potential: +25%</span><span data-lang="id" class="hidden">Potensi pertumbuhan: +25%</span></li>
+                                    <li><span data-lang="en">Budget flexibility: +20%</span><span data-lang="id" class="hidden">Fleksibilitas anggaran: +20%</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🏢</span>
+                            <h3 class="text-xl font-bold"><span data-lang="en">Corporate</span><span data-lang="id" class="hidden">Perusahaan</span></h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Match Score</span><span data-lang="id" class="hidden">Skor Kecocokan</span></p>
+                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden"><div class="h-full bg-blue-500 rounded-full" style="width: 95%"></div></div>
+                                <p class="text-xs mt-1 text-slate-500 dark:text-slate-400"><span data-lang="en">95% - Based on enterprise readiness & integration</span><span data-lang="id" class="hidden">95% - Berdasarkan kesiapan enterprise & integrasi</span></p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Criteria:</span><span data-lang="id" class="hidden">Kriteria:</span></p>
+                                <ul class="text-xs list-disc list-inside text-slate-500 dark:text-slate-400">
+                                    <li><span data-lang="en">Enterprise integration: +35%</span><span data-lang="id" class="hidden">Integrasi enterprise: +35%</span></li>
+                                    <li><span data-lang="en">Scalability needs: +30%</span><span data-lang="id" class="hidden">Kebutuhan skalabilitas: +30%</span></li>
+                                    <li><span data-lang="en">Support requirements: +30%</span><span data-lang="id" class="hidden">Kebutuhan dukungan: +30%</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
         <!-- Smart Village Initiative Spotlight -->
         <section class="py-24 relative overflow-hidden">
             <div class="absolute inset-0 bg-slate-900 z-0">
@@ -666,7 +923,10 @@
                         </div>
                         <h2 class="text-3xl lg:text-5xl font-display font-bold text-white mb-6"><span data-lang="en">Technology with Heart: <br />The Smart Village Initiative</span><span data-lang="id" class="hidden">Teknologi dengan Hati: <br />Inisiatif Desa Cerdas</span></h2>
                         <p class="text-lg text-slate-300 mb-8 max-w-xl font-body"><span data-lang="en">We believe in technology as a force for good. Sagara actively invests in digitizing rural communities, providing education, and building sustainable infrastructure.</span><span data-lang="id" class="hidden">Kami percaya pada teknologi sebagai kekuatan untuk kebaikan. Sagara secara aktif berinvestasi dalam digitalisasi masyarakat pedesaan.</span></p>
-                        <button class="bg-secondary hover:bg-secondary/90 text-white px-8 py-3.5 rounded-lg font-bold transition-all shadow-lg shadow-secondary/25"><span data-lang="en">Learn About Our Impact</span><span data-lang="id" class="hidden">Pelajari Dampak Kami</span></button>
+                        <button onclick="goToAbout()" class="bg-secondary hover:bg-secondary/90 text-white px-8 py-3.5 rounded-lg font-bold transition-all shadow-lg shadow-secondary/25 cursor-pointer">
+                            <span data-lang="en">Learn About Our Impact</span>
+                            <span data-lang="id" class="hidden">Pelajari Dampak Kami</span>
+                        </button>
                     </div>
                     <div class="flex-1 w-full">
                         <div class="grid grid-cols-2 gap-4">
@@ -700,65 +960,144 @@
                 <p class="text-xl text-slate-600 dark:text-slate-300 mb-10 font-body"><span data-lang="en">Let's build something extraordinary together. Our experts are ready to discuss your vision.</span><span data-lang="id" class="hidden">Mari membangun sesuatu yang luar biasa bersama. Ahli kami siap mendiskusikan visi Anda.</span></p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a class="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-lg font-bold text-lg shadow-xl shadow-primary/30 transition-transform hover:-translate-y-1 inline-block text-center" href="contact.html"><span data-lang="en">Consult Now</span><span data-lang="id" class="hidden">Konsultasi Sekarang</span></a>
-                    <button class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white px-10 py-4 rounded-lg font-bold text-lg border border-slate-200 dark:border-slate-700 transition-colors"><span data-lang="en">Download Brochure</span><span data-lang="id" class="hidden">Unduh Brosur</span></button>
+                    <button onclick="downloadBrochure()" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white px-10 py-4 rounded-lg font-bold text-lg border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer">
+                        <span data-lang="en">Download Brochure</span>
+                        <span data-lang="id" class="hidden">Unduh Brosur</span>
+                    </button>
                 </div>
             </div>
         </section>
-        
-        <!-- Footer -->
-        <a href="/admin/login" class="text-sm text-gray-500 hover:text-primary">
-           🔐 Admin Login
-        </a>
 
+        <!-- Footer dengan Newsletter FIXED -->
         <footer class="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                     <div class="space-y-4">
-                        <div class="flex items-center gap-2"><div class="size-6 text-primary"><svg class="h-full w-full" fill="none" viewbox="0 0 48 48"><path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path><path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764Z" fill="currentColor" fill-rule="evenodd"></path></svg></div><span class="text-xl font-display font-bold text-slate-900 dark:text-white">Sagara</span></div>
+                        <div class="flex items-center gap-2">
+                            <div class="size-6 text-primary">
+                                <svg class="h-full w-full" fill="none" viewbox="0 0 48 48">
+                                    <path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+                                    <path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764Z" fill="currentColor" fill-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <span class="text-xl font-display font-bold text-slate-900 dark:text-white">Sagara</span>
+                        </div>
                         <p class="text-slate-500 text-sm leading-relaxed"><span data-lang="en">Premier IT consultancy delivering high-impact solutions for corporate, SME, and government sectors.</span><span data-lang="id" class="hidden">Konsultan IT terkemuka yang memberikan solusi berdampak tinggi untuk sektor korporasi, UKM, dan pemerintah.</span></p>
                     </div>
                     <div><h4 class="font-bold text-slate-900 dark:text-white mb-4">Services</h4><ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400"><li><a class="hover:text-primary transition-colors" href="#">Digital Transformation</a></li><li><a class="hover:text-primary transition-colors" href="#">IT Consulting</a></li><li><a class="hover:text-primary transition-colors" href="#">Custom Software Dev</a></li><li><a class="hover:text-primary transition-colors" href="#">Talent Augmentation</a></li></ul></div>
-                    <div><h4 class="font-bold text-slate-900 dark:text-white mb-4">Company</h4><ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400"><li><a class="hover:text-primary transition-colors" href="#">About Us</a></li><li><a class="hover:text-primary transition-colors" href="#">Portfolio</a></li><li><a class="hover:text-primary transition-colors" href="#">Careers</a></li><li><a class="hover:text-primary transition-colors" href="#">Smart Village</a></li></ul></div>
-                    <div><h4 class="font-bold text-slate-900 dark:text-white mb-4">Newsletter</h4><p class="text-xs text-slate-500 dark:text-slate-400 mb-4"><span data-lang="en">Get the latest insights on tech and innovation.</span><span data-lang="id" class="hidden">Dapatkan wawasan terbaru tentang teknologi dan inovasi.</span></p><div class="flex"><input class="flex-1 bg-slate-100 dark:bg-slate-800 border-none rounded-l-lg text-sm px-4 py-2 focus:ring-2 focus:ring-primary outline-none" placeholder="Your email" type="email" /><button class="bg-primary text-white px-4 py-2 rounded-r-lg hover:bg-primary/90"><span class="material-symbols-outlined text-[20px]">send</span></button></div></div>
+                    <div><h4 class="font-bold text-slate-900 dark:text-white mb-4">Company</h4><ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400"><li><a class="hover:text-primary transition-colors" href="about.html">About Us</a></li><li><a class="hover:text-primary transition-colors" href="portfolio.html">Portfolio</a></li><li><a class="hover:text-primary transition-colors" href="#">Careers</a></li><li><a class="hover:text-primary transition-colors" href="about.html#smart-village">Smart Village</a></li></ul></div>
+                    
+                    <!-- NEWSLETTER SECTION (FIXED) -->
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-4">Newsletter</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            <span data-lang="en">Get the latest insights on tech and innovation.</span>
+                            <span data-lang="id" class="hidden">Dapatkan wawasan terbaru tentang teknologi dan inovasi.</span>
+                        </p>
+                        <div class="flex">
+                            <input id="newsletter-email" class="flex-1 bg-slate-100 dark:bg-slate-800 border-none rounded-l-lg text-sm px-4 py-2 focus:ring-2 focus:ring-primary outline-none" type="email" placeholder="Your email" />
+                            <button onclick="subscribeNewsletter()" class="bg-primary text-white px-4 py-2 rounded-r-lg hover:bg-primary/90 transition-colors">
+                                <span class="material-symbols-outlined text-[20px]">send</span>
+                            </button>
+                        </div>
+                        <div id="newsletter-message" class="text-xs mt-2 hidden"></div>
+                    </div>
                 </div>
-                <div class="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"><p class="text-xs text-slate-400">© 2024 Sagara Tech. All rights reserved. Muffin AI Assistant included.</p><div class="flex gap-6 text-xs text-slate-400"><a class="hover:text-primary" href="#">Privacy Policy</a><a class="hover:text-primary" href="#">Terms of Service</a></div></div>
+                <div class="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-xs text-slate-400">© 2024 Sagara Tech. All rights reserved. Sagara AI Assistant included.</p>
+                    <div class="flex gap-6 text-xs text-slate-400">
+                        <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+                        <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+                    </div>
+                    <!-- Latest Blog Posts Section -->
+<section class="py-20 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Latest Insights</h2>
+            <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Read our latest articles on technology, innovation, and digital transformation</p>
+        </div>
+        <div id="homepageBlogs" class="grid md:grid-cols-3 gap-8">
+            <div class="col-span-3 text-center py-10">Loading articles...</div>
+        </div>
+        <div class="text-center mt-10">
+            <a href="blog.html" class="inline-flex items-center gap-2 text-primary hover:underline font-medium">View All Articles →</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Load latest 3 blogs untuk homepage
+    async function loadHomepageBlogs() {
+        try {
+            const response = await fetch('/api/blogs');
+            const blogs = await response.json();
+            const latestBlogs = blogs.slice(0, 3);
+            const container = document.getElementById('homepageBlogs');
+            
+            if (latestBlogs.length === 0) {
+                container.innerHTML = '<div class="col-span-3 text-center text-slate-500">No articles yet. Check back soon!</div>';
+                return;
+            }
+            
+            container.innerHTML = latestBlogs.map(blog => `
+                <div class="bg-white dark:bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-all cursor-pointer" onclick="window.location.href='/blog-detail.html?id=${blog.id}'">
+                    <img src="${blog.image}" alt="${blog.title}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="text-xs text-primary mb-2">${new Date(blog.date).toLocaleDateString()}</div>
+                        <h3 class="text-xl font-bold mb-2 hover:text-primary transition-colors">${blog.title}</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">${blog.excerpt}</p>
+                        <div class="mt-4 text-primary text-sm font-medium">Read more →</div>
+                    </div>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error('Error loading blogs:', error);
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', loadHomepageBlogs);
+</script>
+                </div>
             </div>
         </footer>
     </div>
 
-    <!-- ========== MUFFIN AI CHATBOT (TAMBAHAN DARI CODE KEDUA) ========== -->
-    <button id="muffin-fab" onclick="togglePanel()">
+
+    <!-- ========== SAGARA AI CHATBOT ========== -->
+    <button id="sagara-ai-fab" onclick="togglePanel()">
         <svg id="fab-chat" viewBox="0 0 24 24" fill="none" stroke="#050f0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         <svg id="fab-close" viewBox="0 0 24 24" fill="none" stroke="#050f0a" stroke-width="2.5" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        <div class="fab-tooltip">Chat sama Muffin 🤖</div>
+        <div class="fab-tooltip">Chat with Sagara AI</div>
     </button>
 
-    <div id="muffin-panel">
+    <div id="sagara-ai-panel">
         <div class="mp-header">
-            <div class="mp-avatar">M</div>
-            <div class="mp-meta"><div class="mp-name">Muffin AI</div><div class="mp-status"><span class="mp-dot"></span> Siap menjawab apa aja</div></div>
+            <div class="mp-avatar">S</div>
+            <div class="mp-meta"><div class="mp-name">Sagara AI</div><div class="mp-status"><span class="mp-dot"></span> Ready to assist</div></div>
             <button class="mp-close" onclick="togglePanel()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
         </div>
         <div class="mp-msgs" id="msgs">
             <div class="msg bot">
-                <div class="m-av">M</div>
-                <div class="m-wrap"><div class="m-bubble">Halo! Gua <strong>Muffin</strong> 👋 Asisten AI-nya Samuel.<br><br>Mau tanya soal project, tech stack, atau apapun? Gua siap bantu!</div><div class="m-time" id="greet-time"></div></div>
+                <div class="m-av">S</div>
+                <div class="m-wrap"><div class="m-bubble">Hello! I'm <strong>Sagara AI</strong> 👋<br><br>Your intelligent assistant for all things related to Sagara's IT solutions, services, and expertise. How may I assist you today?</div><div class="m-time" id="greet-time"></div></div>
             </div>
         </div>
         <div class="mp-quick" id="quick-wrap">
-            <button class="q-btn" onclick="sendQ(this)">Tech stack apa aja?</button>
-            <button class="q-btn" onclick="sendQ(this)">Open for hire?</button>
-            <button class="q-btn" onclick="sendQ(this)">Tanya sesuatu</button>
+            <button class="q-btn" onclick="sendQ(this)">What services do you offer?</button>
+            <button class="q-btn" onclick="sendQ(this)">Tell me about your portfolio</button>
+            <button class="q-btn" onclick="sendQ(this)">Ask me anything</button>
         </div>
         <div class="mp-input-wrap">
-            <textarea class="mp-input" id="inp" rows="1" placeholder="Tanya Muffin apa aja..." onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+            <textarea class="mp-input" id="inp" rows="1" placeholder="Ask Sagara AI anything..." onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
             <button class="mp-send" id="send-btn" onclick="sendMsg()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
         </div>
-        <div class="mp-footer">Powered by Groq LLaMA · Konten sensitif tidak dilayani</div>
+        <div class="mp-footer">Powered by Groq LLaMA · Enterprise AI Assistant</div>
     </div>
 
     <script>
-        // Muffin AI Chat Functions
+        // ============================================
+        // SAGARA AI CHAT FUNCTIONS
+        // ============================================
         function getTime() { return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }); }
         document.getElementById('greet-time').textContent = getTime();
         
@@ -770,7 +1109,7 @@
 
         function togglePanel() {
             isOpen = !isOpen;
-            document.getElementById('muffin-panel').classList.toggle('open', isOpen);
+            document.getElementById('sagara-ai-panel').classList.toggle('open', isOpen);
             document.getElementById('fab-chat').style.display = isOpen ? 'none' : '';
             document.getElementById('fab-close').style.display = isOpen ? '' : 'none';
             if (isOpen) setTimeout(() => document.getElementById('inp').focus(), 300);
@@ -794,7 +1133,7 @@
             const msgs = document.getElementById('msgs');
             const row = document.createElement('div');
             row.className = `msg ${isErr ? 'err' : role}`;
-            row.innerHTML = `<div class="m-av">${role==='user'?'U':'M'}</div><div class="m-wrap"><div class="m-bubble">${renderMd(content)}</div><div class="m-time">${getTime()}</div></div>`;
+            row.innerHTML = `<div class="m-av">${role==='user'?'U':'S'}</div><div class="m-wrap"><div class="m-bubble">${renderMd(content)}</div><div class="m-time">${getTime()}</div></div>`;
             msgs.appendChild(row);
             scrollBottom();
         }
@@ -803,7 +1142,7 @@
             const msgs = document.getElementById('msgs');
             const row = document.createElement('div');
             row.className = 'msg bot'; row.id = 'typing-row';
-            row.innerHTML = `<div class="m-av">M</div><div class="m-wrap"><div class="m-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
+            row.innerHTML = `<div class="m-av">S</div><div class="m-wrap"><div class="m-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
             msgs.appendChild(row); scrollBottom();
         }
         
@@ -836,7 +1175,7 @@
                 const msgs = document.getElementById('msgs');
                 const row = document.createElement('div');
                 row.className = 'msg bot';
-                row.innerHTML = `<div class="m-av">M</div><div class="m-wrap"><div class="m-bubble cursor"></div><div class="m-time">${getTime()}</div></div>`;
+                row.innerHTML = `<div class="m-av">S</div><div class="m-wrap"><div class="m-bubble cursor"></div><div class="m-time">${getTime()}</div></div>`;
                 msgs.appendChild(row);
                 const bubble = row.querySelector('.m-bubble');
                 scrollBottom();
@@ -863,7 +1202,7 @@
                 removeTyping(); showTyping();
                 setTimeout(() => {
                     removeTyping();
-                    const fallbackReply = `Maaf, server sedang sibuk! Tapi tenang, Samuel bisa dihubungi langsung di email: samuel@email.com atau melalui form kontak. Ada yang bisa saya bantu? 😊`;
+                    const fallbackReply = `I apologize, but our server is currently experiencing high demand. Our team has been notified. Please feel free to reach out via our contact form, and we'll respond promptly. Thank you for your patience.`;
                     addMsg('bot', fallbackReply);
                     history.push({ role: 'assistant', content: fallbackReply });
                 }, 800);
@@ -872,6 +1211,32 @@
             document.getElementById('send-btn').disabled = false;
             inp.focus();
         }
+
+
     </script>
+        <!-- ========== BACK TO TOP BUTTON (NEW) ========== -->
+    <button onclick="scrollToTop()" id="backToTopBtn" class="fixed bottom-24 right-6 bg-primary text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 z-50 hover:bg-primary/90 hover:scale-110 cursor-pointer">
+        <span class="material-symbols-outlined text-[20px]">arrow_upward</span>
+    </button>
+
+    <script>
+        // Back to Top functionality
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible');
+                backToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'invisible');
+                backToTopBtn.classList.remove('opacity-100', 'visible');
+            }
+        });
+        
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+    <!-- ========== END BACK TO TOP BUTTON ========== -->
 </body>
 </html>

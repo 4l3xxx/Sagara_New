@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Sagara - Careers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#137fec", "background-light": "#f8fafc", "background-dark": "#0f172a" },
+                    fontFamily: { "display": ["Inter", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .nav-link-active {
+            color: #137fec !important;
+            position: relative;
+        }
+
+        .nav-link-active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #137fec;
+            border-radius: 9999px;
+        }
+
+        .job-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display">
+
+    <script>
+        function switchLanguage(lang) {
+            localStorage.setItem('language', lang);
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                if (el.getAttribute('data-lang') === lang) el.classList.remove('hidden');
+                else el.classList.add('hidden');
+            });
+            const btnEn = document.getElementById('btn-en'), btnId = document.getElementById('btn-id');
+            if (btnEn && btnId) {
+                if (lang === 'en') { btnEn.classList.add('text-primary'); btnEn.classList.remove('text-slate-500'); btnId.classList.remove('text-primary'); btnId.classList.add('text-slate-500'); }
+                else { btnId.classList.add('text-primary'); btnId.classList.remove('text-slate-500'); btnEn.classList.remove('text-primary'); btnEn.classList.add('text-slate-500'); }
+            }
+            const btnEnMobile = document.getElementById('btn-en-mobile'), btnIdMobile = document.getElementById('btn-id-mobile');
+            if (btnEnMobile && btnIdMobile) {
+                if (lang === 'en') { btnEnMobile.classList.add('text-primary'); btnEnMobile.classList.remove('text-slate-500'); btnIdMobile.classList.remove('text-primary'); btnIdMobile.classList.add('text-slate-500'); }
+                else { btnIdMobile.classList.add('text-primary'); btnIdMobile.classList.remove('text-slate-500'); btnEnMobile.classList.remove('text-primary'); btnEnMobile.classList.add('text-slate-500'); }
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => { const lang = localStorage.getItem('language') || 'en'; switchLanguage(lang); });
+    </script>
+
+    <!-- Navigation -->
+    <nav
+        class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a class="flex items-center gap-3" href="index.html">
+                    <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-10 w-auto rounded-lg"
+                        onerror="this.style.display='none'">
+                    <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara
+                    </h2>
+                </a>
+                <div class="hidden md:flex flex-1 justify-end items-center gap-8">
+                    <div class="flex items-center gap-8">
+                        <a data-lang="en"
+                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="index.html">Home</a>
+                        <a data-lang="id"
+                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="index.html">Beranda</a>
+                        <a data-lang="en"
+                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="services.html">Services</a>
+                        <a data-lang="id"
+                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="services.html">Layanan</a>
+                        <a data-lang="en"
+                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="portfolio.html">Portfolio</a>
+                        <a data-lang="id"
+                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="portfolio.html">Portofolio</a>
+                        <a data-lang="en"
+                            class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="careers.html">Careers</a>
+                        <a data-lang="id"
+                            class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="careers.html">Karir</a>
+                        <a data-lang="en"
+                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="about.html">About Us</a>
+                        <a data-lang="id"
+                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                            href="about.html">Tentang Kami</a>
+                    </div>
+                    <div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
+                        <button onclick="switchLanguage('id')"
+                            class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer"
+                            id="btn-id">ID</button>
+                        <span class="text-slate-300">|</span>
+                        <button onclick="switchLanguage('en')" class="font-bold text-sm text-primary cursor-pointer"
+                            id="btn-en">EN</button>
+                    </div>
+                    <a data-lang="en"
+                        class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105"
+                        href="contact.html">Consult Now</a>
+                    <a data-lang="id"
+                        class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105"
+                        href="contact.html">Konsultasi</a>
+                </div>
+                <div class="md:hidden flex items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <button onclick="switchLanguage('id')"
+                            class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile">ID</button>
+                        <span class="text-slate-300 text-xs">|</span>
+                        <button onclick="switchLanguage('en')" class="font-bold text-xs text-primary"
+                            id="btn-en-mobile">EN</button>
+                    </div>
+                    <button class="text-slate-700 dark:text-white"><span
+                            class="material-symbols-outlined">menu</span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary/10 to-transparent py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white mb-6">Join Our Team</h1>
+            <p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">Build the future with us. We're
+                looking for passionate individuals to join our growing team.</p>
+        </div>
+    </section>
+
+    <!-- Jobs Grid -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="jobsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="text-center py-20 col-span-3">Loading jobs...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-8 w-auto rounded-lg"
+                        onerror="this.style.display='none'">
+                    <span class="text-lg font-bold text-slate-900 dark:text-white">Sagara</span>
+                </div>
+                <p class="text-sm text-slate-500 dark:text-slate-400">© 2024 Sagara Tech. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-slate-500 dark:text-slate-400">
+                    <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+                    <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/careers.js"></script>
+</body>
+
+</html>
