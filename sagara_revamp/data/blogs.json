@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "title": "Getting Started with Digital Transformation",
+        "title_id": "Memulai Transformasi Digital",
+        "content": "Digital transformation is no longer optional for businesses that want to stay competitive. It involves integrating digital technology into all areas of business, fundamentally changing how you operate and deliver value to customers. \n\nAt Sagara, we've helped over 50 enterprises successfully navigate their digital transformation journey. Our approach focuses on people, processes, and technology working together seamlessly.\n\nKey areas we focus on include:\n- Cloud migration and infrastructure modernization\n- Process automation and workflow optimization\n- Data-driven decision making\n- Customer experience enhancement\n\nReady to start your transformation journey? Contact our team for a free consultation.",
+        "excerpt": "Learn the fundamentals of digital transformation and how Sagara can help your business thrive in the digital age.",
+        "author": "Sagara Team",
+        "date": "2024-03-15T00:00:00.000Z",
+        "category": "Digital Transformation",
+        "image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format",
+        "readTime": "5 min read"
+    },
+    {
+        "id": 2,
+        "title": "The Future of Cloud Computing",
+        "title_id": "Masa Depan Cloud Computing",
+        "content": "Cloud computing has revolutionized how businesses operate, and the future holds even more exciting possibilities. Edge computing, serverless architecture, and multi-cloud strategies are becoming mainstream. \n\nAt Sagara, we specialize in helping businesses migrate to and optimize their cloud infrastructure. Our certified cloud architects have expertise across AWS, Azure, and Google Cloud Platform.\n\nBenefits of cloud adoption include:\n- Reduced infrastructure costs\n- Improved scalability and flexibility\n- Enhanced security and compliance\n- Faster time to market\n\nWhether you're just starting your cloud journey or looking to optimize existing infrastructure, Sagara can help.",
+        "excerpt": "Explore emerging trends in cloud computing and how they can benefit your organization.",
+        "author": "Sagara Team",
+        "date": "2024-03-10T00:00:00.000Z",
+        "category": "Cloud Computing",
+        "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format",
+        "readTime": "4 min read"
+    },
+    {
+        "id": 3,
+        "title": "Cybersecurity Best Practices for 2024",
+        "title_id": "Praktik Terbaik Keamanan Siber 2024",
+        "content": "As cyber threats continue to evolve, organizations must stay ahead of potential vulnerabilities. Here are key cybersecurity practices every business should implement:\n\n1. Zero Trust Architecture - Never trust, always verify\n2. Regular Security Audits - Identify vulnerabilities before attackers do\n3. Employee Training - Human error remains the biggest security risk\n4. Multi-Factor Authentication - Add an extra layer of protection\n5. Incident Response Plan - Be prepared for potential breaches\n\nSagara offers comprehensive cybersecurity audit services to help businesses identify and address security gaps. Our team of certified security experts will assess your systems and provide actionable recommendations.",
+        "excerpt": "Stay ahead of cyber threats with these essential security practices for your business.",
+        "author": "Sagara Team",
+        "date": "2024-03-05T00:00:00.000Z",
+        "category": "Cybersecurity",
+        "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format",
+        "readTime": "6 min read"
+    },
+    {
+        "id": 4,
+        "title": "Building Scalable Web Applications",
+        "title_id": "Membangun Aplikasi Web yang Scalable",
+        "content": "In today's digital landscape, web applications need to handle millions of users without compromising performance. Here are key considerations for building scalable applications:\n\nArchitecture Choices:\n- Microservices vs Monolith\n- Database optimization and sharding\n- Caching strategies\n- Load balancing and auto-scaling\n\nTechnology Stack Recommendations:\n- Frontend: React, Next.js, or Vue.js\n- Backend: Node.js, Python, or Go\n- Database: PostgreSQL, MongoDB, or Redis\n- Cloud: AWS, Azure, or GCP\n\nSagara's expert developers have built numerous high-performance web applications for enterprise clients. Contact us to discuss your project requirements.",
+        "excerpt": "Learn how to build web applications that can scale with your growing user base.",
+        "author": "Sagara Team",
+        "date": "2024-02-28T00:00:00.000Z",
+        "category": "Software Development",
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format",
+        "readTime": "5 min read"
+    },
+    {
+        "id": 5,
+        "title": "Smart City Solutions: The Future of Urban Living",
+        "title_id": "Solusi Kota Cerdas: Masa Depan Kehidupan Perkotaan",
+        "content": "Smart cities leverage technology to improve quality of life, enhance sustainability, and optimize resource utilization. Key components include:\n\n- IoT Sensors for real-time data collection\n- AI-powered traffic management systems\n- Smart energy grids and waste management\n- Citizen engagement platforms\n- Public safety and emergency response systems\n\nSagara has successfully implemented smart city solutions for multiple municipalities, reducing energy costs by 30% and improving citizen satisfaction scores significantly.",
+        "excerpt": "Discover how smart city technology is transforming urban living and creating sustainable communities.",
+        "author": "Sagara Team",
+        "date": "2024-02-20T00:00:00.000Z",
+        "category": "Smart City",
+        "image": "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format",
+        "readTime": "4 min read"
+    },
+    {
+        "id": 6,
+        "title": "The Role of AI in Modern Business",
+        "title_id": "Peran AI dalam Bisnis Modern",
+        "content": "Artificial Intelligence is no longer science fiction - it's transforming how businesses operate today. From customer service chatbots to predictive analytics, AI applications are diverse and impactful.\n\nKey AI applications in business:\n- Customer service automation\n- Sales forecasting and lead scoring\n- Fraud detection and security\n- Process automation and RPA\n- Personalized recommendations\n\nSagara's AI solutions have helped clients achieve up to 95% improvement in operational efficiency. Our team can help identify opportunities for AI integration in your business.",
+        "excerpt": "Explore how artificial intelligence can drive efficiency and innovation in your organization.",
+        "author": "Sagara Team",
+        "date": "2024-02-15T00:00:00.000Z",
+        "category": "Artificial Intelligence",
+        "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2072&auto=format",
+        "readTime": "5 min read"
+    }
+]

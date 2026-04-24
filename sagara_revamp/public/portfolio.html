@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Sagara Impactful Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .nav-link-active {
+            color: #137fec !important;
+            position: relative;
+        }
+
+        .nav-link-active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background-color: #137fec;
+            border-radius: 9999px;
+            transform-origin: center;
+        }
+
+        .filter-btn {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: #137fec !important;
+            color: white !important;
+            box-shadow: 0 4px 15px rgba(19, 127, 236, 0.3);
+        }
+
+        .filter-btn.active .material-symbols-outlined {
+            color: white !important;
+        }
+
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .project-card.hide {
+            display: none;
+        }
+
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+
+        /* Modal animation */
+        .modal-content {
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-gray-100 font-display min-h-screen flex flex-col smooth-scroll">
+
+    <script>
+        let currentFilter = 'all';
+        
+        // Portfolio data (static - bisa diganti dengan API nanti)
+        const portfolioItems = [
+            {
+                id: 1,
+                industry: "Healthcare",
+                industryKey: "healthcare",
+                impact: "95% Diagnosis Accuracy",
+                impactId: "Akurasi Diagnosis 95%",
+                title: "AI Diagnostic Platform",
+                titleId: "Platform Diagnostik AI",
+                description: "An advanced machine learning solution revolutionizing patient triage by analyzing symptoms and medical history in real-time.",
+                descriptionId: "Solusi pembelajaran mesin canggih yang merevolusi triase pasien dengan menganalisis gejala dan riwayat medis secara real-time.",
+                fullDescription: "Our AI Diagnostic Platform leverages state-of-the-art deep learning algorithms to assist medical professionals in making faster and more accurate diagnoses. The system analyzes patient symptoms, medical history, and relevant data points to provide real-time recommendations, reducing diagnostic errors by up to 95% in clinical trials.",
+                fullDescriptionId: "Platform Diagnostik AI kami memanfaatkan algoritma deep learning tercanggih untuk membantu profesional medis membuat diagnosis yang lebih cepat dan akurat. Sistem ini menganalisis gejala pasien, riwayat medis, dan poin data relevan untuk memberikan rekomendasi real-time, mengurangi kesalahan diagnosis hingga 95% dalam uji klinis.",
+                technologies: ["TensorFlow", "PyTorch", "React", "FastAPI", "PostgreSQL"],
+                timeline: "6 months",
+                testimonial: "Revolutionized our patient triage process completely.",
+                testimonialId: "Merevolusi proses triase pasien kami sepenuhnya.",
+                author: "CTO, Metro Hospital",
+                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format"
+            },
+            {
+                id: 2,
+                industry: "Smart City",
+                industryKey: "smartcity",
+                impact: "30% Energy Cost Reduction",
+                impactId: "Pengurangan Biaya Energi 30%",
+                title: "Smart Village Ecosystem",
+                titleId: "Ekosistem Desa Cerdas",
+                description: "Integrated IoT sensors and renewable energy management systems to create a sustainable, connected living environment for rural communities.",
+                descriptionId: "Sensor IoT terintegrasi dan sistem manajemen energi terbarukan untuk menciptakan lingkungan hidup yang berkelanjutan dan terhubung bagi komunitas pedesaan.",
+                fullDescription: "The Smart Village Ecosystem integrates IoT sensors, solar panels, and smart grid technology to optimize energy consumption in rural communities. The system automatically adjusts lighting, heating, and appliance usage based on occupancy and time of day, resulting in 30% energy cost reduction and significant carbon footprint decrease.",
+                fullDescriptionId: "Ekosistem Desa Cerdas mengintegrasikan sensor IoT, panel surya, dan teknologi smart grid untuk mengoptimalkan konsumsi energi di komunitas pedesaan. Sistem secara otomatis menyesuaikan pencahayaan, pemanasan, dan penggunaan peralatan berdasarkan hunian dan waktu, menghasilkan pengurangan biaya energi 30% dan penurunan jejak karbon yang signifikan.",
+                technologies: ["IoT Sensors", "LoRaWAN", "React", "Node.js", "InfluxDB"],
+                timeline: "8 months",
+                testimonial: "A sustainable model for the future of rural living.",
+                testimonialId: "Model berkelanjutan untuk masa depan kehidupan pedesaan.",
+                author: "Regional Planner",
+                image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format"
+            },
+            {
+                id: 3,
+                industry: "Government",
+                industryKey: "government",
+                impact: "2M+ Citizens Served Weekly",
+                impactId: "2Jt+ Warga Terlayani Mingguan",
+                title: "E-Government Portal",
+                titleId: "Portal E-Government",
+                description: "A centralized digital gateway streamlining public services, reducing bureaucracy, and improving citizen engagement through intuitive design.",
+                descriptionId: "Gerbang digital terpusat yang menyederhanakan layanan publik, mengurangi birokrasi, dan meningkatkan keterlibatan warga melalui desain intuitif.",
+                fullDescription: "The E-Government Portal consolidates over 200 public services into a single, user-friendly platform. Citizens can access tax filing, permit applications, public records, and more from any device. The system has reduced processing times by 70% and serves over 2 million citizens weekly.",
+                fullDescriptionId: "Portal E-Government menggabungkan lebih dari 200 layanan publik ke dalam satu platform yang ramah pengguna. Warga dapat mengakses pengisian pajak, aplikasi izin, catatan publik, dan lainnya dari perangkat apa pun. Sistem ini telah mengurangi waktu pemrosesan hingga 70% dan melayani lebih dari 2 juta warga setiap minggu.",
+                technologies: ["Vue.js", "Node.js", "MongoDB", "Redis", "Docker"],
+                timeline: "12 months",
+                testimonial: "Streamlined public services dramatically for everyone.",
+                testimonialId: "Menyederhanakan layanan publik secara dramatis untuk semua orang.",
+                author: "Ministry Official",
+                image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070&auto=format"
+            },
+            {
+                id: 4,
+                industry: "Healthcare",
+                industryKey: "healthcare",
+                impact: "75% Faster Patient Intake",
+                impactId: "75% Lebih Cepat Pendaftaran Pasien",
+                title: "Telemedicine Platform",
+                titleId: "Platform Telemedicine",
+                description: "End-to-end telemedicine solution enabling remote consultations, e-prescriptions, and integrated electronic health records.",
+                descriptionId: "Solusi telemedicine end-to-end yang memungkinkan konsultasi jarak jauh, resep elektronik, dan catatan kesehatan elektronik terintegrasi.",
+                fullDescription: "Our Telemedicine Platform connects patients with healthcare providers through secure video consultations. Features include e-prescriptions, appointment scheduling, electronic health records, and medication delivery integration. The platform has reduced patient wait times by 75% and expanded healthcare access to remote areas.",
+                fullDescriptionId: "Platform Telemedicine kami menghubungkan pasien dengan penyedia layanan kesehatan melalui konsultasi video yang aman. Fitur termasuk resep elektronik, penjadwalan janji temu, catatan kesehatan elektronik, dan integrasi pengiriman obat. Platform ini telah mengurangi waktu tunggu pasien hingga 75% dan memperluas akses layanan kesehatan ke daerah terpencil.",
+                technologies: ["WebRTC", "React Native", "Node.js", "PostgreSQL", "AWS"],
+                timeline: "10 months",
+                testimonial: "Transformed how we deliver healthcare to remote communities.",
+                testimonialId: "Mengubah cara kami memberikan layanan kesehatan ke komunitas terpencil.",
+                author: "Head of Digital Health",
+                image: "https://images.unsplash.com/photo-1651008371611-825f6b5c3cfa?q=80&w=2067&auto=format"
+            },
+            {
+                id: 5,
+                industry: "Smart City",
+                industryKey: "smartcity",
+                impact: "40% Traffic Reduction",
+                impactId: "40% Pengurangan Lalu Lintas",
+                title: "Smart Traffic Management",
+                titleId: "Manajemen Lalu Lintas Cerdas",
+                description: "AI-powered traffic optimization system that reduced congestion by 40% and improved emergency response times by 60%.",
+                descriptionId: "Sistem optimalisasi lalu lintas bertenaga AI yang mengurangi kemacetan hingga 40% dan meningkatkan waktu respons darurat hingga 60%.",
+                fullDescription: "The Smart Traffic Management system uses computer vision and reinforcement learning to optimize traffic light timing in real-time. The system analyzes traffic flow from CCTV cameras and adjusts signal patterns to minimize congestion. Emergency vehicles receive priority routing, reducing response times by 60%.",
+                fullDescriptionId: "Sistem Manajemen Lalu Lintas Cerdas menggunakan computer vision dan reinforcement learning untuk mengoptimalkan waktu lampu lalu lintas secara real-time. Sistem menganalisis arus lalu lintas dari kamera CCTV dan menyesuaikan pola sinyal untuk meminimalkan kemacetan. Kendaraan darurat menerima routing prioritas, mengurangi waktu respons hingga 60%.",
+                technologies: ["Python", "TensorFlow", "OpenCV", "React", "Redis"],
+                timeline: "9 months",
+                testimonial: "Game-changer for our city's mobility challenges.",
+                testimonialId: "Pengubah permainan untuk tantangan mobilitas kota kami.",
+                author: "Transportation Director",
+                image: "https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1974&auto=format"
+            },
+            {
+                id: 6,
+                industry: "Government",
+                industryKey: "government",
+                impact: "99.9% Data Security",
+                impactId: "99.9% Keamanan Data",
+                title: "National ID System",
+                titleId: "Sistem KTP Nasional",
+                description: "Secure biometric identification system protecting sensitive citizen data while ensuring fast and reliable access to public services.",
+                descriptionId: "Sistem identifikasi biometrik aman yang melindungi data sensitif warga sekaligus memastikan akses cepat dan andal ke layanan publik.",
+                fullDescription: "The National ID System uses advanced biometric authentication (fingerprint and facial recognition) to ensure secure and unique identification for every citizen. The system is designed with military-grade encryption and has achieved 99.9% uptime while processing over 10 million transactions daily.",
+                fullDescriptionId: "Sistem KTP Nasional menggunakan autentikasi biometrik canggih (sidik jari dan pengenalan wajah) untuk memastikan identifikasi yang aman dan unik bagi setiap warga. Sistem ini dirancang dengan enkripsi tingkat militer dan telah mencapai uptime 99.9% sambil memproses lebih dari 10 juta transaksi setiap hari.",
+                technologies: ["Go", "React", "PostgreSQL", "Redis", "Kubernetes"],
+                timeline: "18 months",
+                testimonial: "Setting the gold standard for digital identity management.",
+                testimonialId: "Menetapkan standar emas untuk manajemen identitas digital.",
+                author: "Digital Transformation Lead",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format"
+            }
+        ];
+
+        function switchLanguage(lang) {
+            localStorage.setItem('language', lang);
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                if (el.getAttribute('data-lang') === lang) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+
+            const btnEn = document.getElementById('btn-en');
+            const btnId = document.getElementById('btn-id');
+            if (btnEn && btnId) {
+                if (lang === 'en') {
+                    btnEn.classList.add('text-primary');
+                    btnEn.classList.remove('text-slate-500');
+                    btnId.classList.remove('text-primary');
+                    btnId.classList.add('text-slate-500');
+                } else {
+                    btnId.classList.add('text-primary');
+                    btnId.classList.remove('text-slate-500');
+                    btnEn.classList.remove('text-primary');
+                    btnEn.classList.add('text-slate-500');
+                }
+            }
+
+            const btnEnMobile = document.getElementById('btn-en-mobile');
+            const btnIdMobile = document.getElementById('btn-id-mobile');
+            if (btnEnMobile && btnIdMobile) {
+                if (lang === 'en') {
+                    btnEnMobile.classList.add('text-primary');
+                    btnEnMobile.classList.remove('text-slate-500');
+                    btnIdMobile.classList.remove('text-primary');
+                    btnIdMobile.classList.add('text-slate-500');
+                } else {
+                    btnIdMobile.classList.add('text-primary');
+                    btnIdMobile.classList.remove('text-slate-500');
+                    btnEnMobile.classList.remove('text-primary');
+                    btnEnMobile.classList.add('text-slate-500');
+                }
+            }
+
+            renderPortfolio();
+            filterPortfolio(currentFilter);
+        }
+
+        function filterPortfolio(industry) {
+            currentFilter = industry;
+            const cards = document.querySelectorAll('.project-card');
+            
+            cards.forEach(card => {
+                const cardIndustry = card.getAttribute('data-industry');
+                if (industry === 'all' || cardIndustry === industry) {
+                    card.classList.remove('hide');
+                } else {
+                    card.classList.add('hide');
+                }
+            });
+
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-filter') === industry) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function scrollToProjects() {
+            const projectsSection = document.getElementById('projects-section');
+            if (projectsSection) {
+                projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Modal functions
+        function openModal(projectId) {
+            const project = portfolioItems.find(p => p.id === projectId);
+            if (!project) return;
+            
+            const lang = localStorage.getItem('language') || 'en';
+            const title = lang === 'en' ? project.title : project.titleId;
+            const description = lang === 'en' ? project.fullDescription : project.fullDescriptionId;
+            const impact = lang === 'en' ? project.impact : project.impactId;
+            const testimonial = lang === 'en' ? project.testimonial : project.testimonialId;
+            const industry = lang === 'en' ? project.industry : 
+                (project.industry === 'Healthcare' ? 'Kesehatan' : 
+                 project.industry === 'Government' ? 'Pemerintah' : 'Kota Cerdas');
+            
+            const modalContent = `
+                <div class="modal-content">
+                    <img src="${project.image}" alt="${title}" class="w-full h-64 object-cover rounded-xl mb-4">
+                    <h2 class="text-2xl font-bold mb-2 text-[#111418] dark:text-white">${title}</h2>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">${industry}</span>
+                        <span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-3 py-1 rounded-full text-xs font-bold">${impact}</span>
+                        <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-full text-xs font-bold">⏱️ ${project.timeline}</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">${description}</p>
+                    
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-[#111418] dark:text-white mb-2">🛠️ Technologies Used:</h3>
+                        <div class="flex flex-wrap gap-2">
+                            ${project.technologies.map(tech => `<span class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-xs">${tech}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl mt-4">
+                        <p class="italic text-gray-600 dark:text-gray-300">"${testimonial}"</p>
+                        <p class="font-bold mt-2 text-[#111418] dark:text-white">— ${project.author}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('modalContent').innerHTML = modalContent;
+            document.getElementById('projectModal').classList.remove('hidden');
+            document.getElementById('projectModal').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').classList.add('hidden');
+            document.getElementById('projectModal').classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        function renderPortfolio() {
+            const container = document.getElementById('portfolioGrid');
+            if (!container) return;
+            
+            const lang = localStorage.getItem('language') || 'en';
+            
+            container.innerHTML = portfolioItems.map(item => {
+                const title = lang === 'en' ? item.title : item.titleId;
+                const description = lang === 'en' ? item.description : item.descriptionId;
+                const impact = lang === 'en' ? item.impact : item.impactId;
+                const testimonial = lang === 'en' ? item.testimonial : item.testimonialId;
+                const industry = lang === 'en' ? item.industry : 
+                    (item.industry === 'Healthcare' ? 'Kesehatan' : 
+                     item.industry === 'Government' ? 'Pemerintah' : 'Kota Cerdas');
+                
+                return `
+                    <article class="project-card bg-white dark:bg-[#1a2632] rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800 group h-full" data-industry="${item.industryKey}" onclick="openModal(${item.id})">
+                        <div class="relative h-60 w-full overflow-hidden rounded-t-xl">
+                            <div class="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500"
+                                style='background-image: url("${item.image}"); background-size: cover; background-position: center;'>
+                            </div>
+                            <div class="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider text-primary shadow-sm">
+                                ${industry}
+                            </div>
+                        </div>
+                        <div class="flex flex-col flex-1 p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="material-symbols-outlined text-primary">trending_up</span>
+                                <span class="text-primary font-bold text-sm uppercase tracking-wide">${impact}</span>
+                            </div>
+                            <h3 class="text-[#111418] dark:text-white text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                                ${title}
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                                ${description}
+                            </p>
+                            <div class="mt-auto pt-6 border-t border-gray-100 dark:border-gray-700">
+                                <div class="flex items-start gap-3">
+                                    <div class="size-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0">
+                                        <span class="material-symbols-outlined text-primary text-xl">format_quote</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-medium text-[#111418] dark:text-white italic line-clamp-2">
+                                            "${testimonial}"
+                                        </p>
+                                        <p class="text-[10px] text-gray-500 dark:text-gray-400 mt-1 uppercase font-bold">
+                                            ${item.author}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const lang = localStorage.getItem('language') || 'en';
+            switchLanguage(lang);
+            renderPortfolio();
+            filterPortfolio('all');
+        });
+    </script>
+
+    <!-- Navigation -->
+   <nav class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <!-- LOGO (UPDATED - tanpa SVG kerucut biru) -->
+            <a class="flex items-center gap-3" href="index.html">
+                <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-10 w-auto rounded-lg" onerror="this.style.display='none'">
+                <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara</h2>
+            </a>
+
+                <div class="hidden md:flex flex-1 justify-end items-center gap-8">
+                    <div class="flex items-center gap-8">
+                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="index.html">Home</a>
+                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="index.html">Beranda</a>
+                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="services.html">Services</a>
+                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="services.html">Layanan</a>
+                        <a data-lang="en" class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portfolio</a>
+                        <a data-lang="id" class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portofolio</a>
+                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="about.html">About Us</a>
+                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="about.html">Tentang Kami</a>
+                    </div>
+
+                    <div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
+                        <button onclick="switchLanguage('id')" class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer" id="btn-id">ID</button>
+                        <span class="text-slate-300">|</span>
+                        <button onclick="switchLanguage('en')" class="font-bold text-sm text-primary cursor-pointer" id="btn-en">EN</button>
+                    </div>
+
+                    <a data-lang="en" class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Consult Now</a>
+                    <a data-lang="id" class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Konsultasi</a>
+                </div>
+
+                <div class="md:hidden flex items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <button onclick="switchLanguage('id')" class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile">ID</button>
+                        <span class="text-slate-300 text-xs">|</span>
+                        <button onclick="switchLanguage('en')" class="font-bold text-xs text-primary" id="btn-en-mobile">EN</button>
+                    </div>
+                    <button class="text-slate-700 dark:text-white">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="flex-grow">
+        <div class="relative bg-white dark:bg-[#111418]">
+            <div class="@container">
+                <div class="px-4 py-8 md:px-10 md:py-12">
+                    <div class="flex min-h-[360px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-xl items-center justify-center p-8 text-center relative overflow-hidden group"
+                        style='background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url("https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format")'>
+                        <div class="flex flex-col gap-4 max-w-3xl z-10">
+                            <h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl lg:text-6xl">
+                                <span data-lang="en">Transforming Industries through Technology</span>
+                                <span data-lang="id" class="hidden">Mentransformasi Industri melalui Teknologi</span>
+                            </h1>
+                            <h2 class="text-gray-200 text-base font-normal leading-relaxed md:text-lg max-w-2xl mx-auto">
+                                <span data-lang="en">Explore our impactful case studies driving digital transformation for enterprises, healthcare systems, and governments worldwide. Click on any project to see detailed information.</span>
+                                <span data-lang="id" class="hidden">Jelajahi studi kasus berdampak kami yang mendorong transformasi digital untuk perusahaan, sistem kesehatan, dan pemerintah di seluruh dunia. Klik proyek apa pun untuk melihat informasi detail.</span>
+                            </h2>
+                        </div>
+                        <div class="flex gap-4 z-10 mt-2">
+                            <button onclick="scrollToProjects()" class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary hover:bg-blue-600 transition-all text-white text-base font-bold shadow-lg hover:shadow-xl">
+                                <span data-lang="en">View Case Studies</span>
+                                <span data-lang="id" class="hidden">Lihat Studi Kasus</span>
+                                <span class="material-symbols-outlined ml-2 text-xl">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter & Grid Section -->
+        <div id="projects-section" class="layout-container flex flex-col px-4 md:px-10 pb-16 max-w-[1440px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+                <h2 class="text-[#111418] dark:text-white text-2xl font-bold leading-tight tracking-[-0.015em] self-start md:self-center">
+                    <span data-lang="en">Featured Projects</span>
+                    <span data-lang="id" class="hidden">Proyek Unggulan</span>
+                </h2>
+                <div class="flex gap-2 flex-wrap self-start md:self-center">
+                    <button data-filter="all" onclick="filterPortfolio('all')" class="filter-btn active flex h-9 items-center justify-center gap-x-2 rounded-full bg-[#111418] dark:bg-white text-white dark:text-[#111418] px-4 hover:opacity-90 transition-opacity">
+                        <span class="material-symbols-outlined text-[18px]">check</span>
+                        <p class="text-sm font-medium">
+                            <span data-lang="en">All Industries</span>
+                            <span data-lang="id" class="hidden">Semua Industri</span>
+                        </p>
+                    </button>
+                    <button data-filter="healthcare" onclick="filterPortfolio('healthcare')" class="filter-btn flex h-9 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-gray-800 border border-[#e5e7eb] dark:border-gray-700 text-[#111418] dark:text-gray-300 px-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">medical_services</span>
+                        <p class="text-sm font-medium">
+                            <span data-lang="en">Healthcare</span>
+                            <span data-lang="id" class="hidden">Kesehatan</span>
+                        </p>
+                    </button>
+                    <button data-filter="government" onclick="filterPortfolio('government')" class="filter-btn flex h-9 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-gray-800 border border-[#e5e7eb] dark:border-gray-700 text-[#111418] dark:text-gray-300 px-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">account_balance</span>
+                        <p class="text-sm font-medium">
+                            <span data-lang="en">Government</span>
+                            <span data-lang="id" class="hidden">Pemerintah</span>
+                        </p>
+                    </button>
+                    <button data-filter="smartcity" onclick="filterPortfolio('smartcity')" class="filter-btn flex h-9 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-gray-800 border border-[#e5e7eb] dark:border-gray-700 text-[#111418] dark:text-gray-300 px-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">domain</span>
+                        <p class="text-sm font-medium">
+                            <span data-lang="en">Smart City</span>
+                            <span data-lang="id" class="hidden">Kota Cerdas</span>
+                        </p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Project Grid -->
+            <div id="portfolioGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Projects will be rendered here -->
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="bg-white dark:bg-[#111418] py-16 border-t border-[#f0f2f4] dark:border-gray-800">
+            <div class="layout-container px-4 md:px-10 max-w-[960px] mx-auto text-center">
+                <div class="bg-gradient-to-br from-[#137fec]/10 to-[#137fec]/5 dark:from-[#137fec]/20 dark:to-[#137fec]/5 rounded-2xl p-10 md:p-14 border border-primary/10">
+                    <h2 class="text-[#111418] dark:text-white text-3xl md:text-4xl font-bold mb-4 tracking-tight">
+                        <span data-lang="en">Ready to Innovate?</span>
+                        <span data-lang="id" class="hidden">Siap Berinovasi?</span>
+                    </h2>
+                    <p class="text-gray-600 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+                        <span data-lang="en">Join the leading enterprises and governments leveraging Sagara's technology to build a smarter future.</span>
+                        <span data-lang="id" class="hidden">Bergabunglah dengan perusahaan terkemuka dan pemerintah yang memanfaatkan teknologi Sagara untuk membangun masa depan yang lebih cerdas.</span>
+                    </p>
+                    <a class="inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-primary hover:bg-blue-600 transition-colors text-white text-base font-bold shadow-md hover:shadow-lg" href="contact.html">
+                        <span data-lang="en">Start Your Digital Transformation</span>
+                        <span data-lang="id" class="hidden">Mulai Transformasi Digital Anda</span>
+                        <span class="material-symbols-outlined ml-2 text-xl">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Popup -->
+    <div id="projectModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[1000] hidden items-center justify-center p-4" onclick="if(event.target===this) closeModal()">
+        <div class="bg-white dark:bg-[#1a2632] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white text-3xl z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">&times;</button>
+            <div id="modalContent" class="p-6">
+                <!-- Content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-[#111418] border-t border-[#f0f2f4] dark:border-gray-800 py-10 px-10">
+        <div class="layout-container flex flex-col md:flex-row justify-between items-center gap-6 max-w-[1440px] mx-auto">
+            <div class="flex items-center gap-2 text-[#111418] dark:text-white">
+                <div class="size-6 text-primary">
+                    <span class="material-symbols-outlined text-2xl">change_history</span>
+                </div>
+                <h2 class="text-lg font-bold leading-tight">Sagara</h2>
+            </div>
+            <div class="flex gap-6 text-sm text-gray-500 dark:text-gray-400">
+                <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+                <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+                <a class="hover:text-primary transition-colors" href="#">LinkedIn</a>
+                <a class="hover:text-primary transition-colors" href="#">Twitter</a>
+            </div>
+            <p class="text-sm text-gray-400">
+                <span data-lang="en">© 2024 Sagara Inc. All rights reserved.</span>
+                <span data-lang="id" class="hidden">© 2024 Sagara Inc. Hak cipta dilindungi undang-undang.</span>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

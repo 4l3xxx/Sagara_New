@@ -1,0 +1,116 @@
+[
+    {
+        "id": 1,
+        "title": "Senior Full Stack Developer",
+        "location": "Jakarta, Indonesia",
+        "type": "Full-time",
+        "salary": "IDR 15-25 Million",
+        "experience": "Min. 3 years",
+        "description": "We are looking for a talented Senior Full Stack Developer to join our growing engineering team. You will be responsible for designing, developing, and maintaining web applications for our enterprise clients.\n\nResponsibilities:\n- Develop and maintain web applications using modern frameworks\n- Collaborate with cross-functional teams to define and ship new features\n- Write clean, maintainable, and efficient code\n- Participate in code reviews and technical discussions\n- Mentor junior developers\n\nWhy join Sagara?\n- Work on challenging enterprise-level projects\n- Competitive salary and benefits\n- Professional development opportunities\n- Flexible working arrangements",
+        "requirements": [
+            "3+ years of experience with React or Vue.js",
+            "Strong experience with Node.js or Python",
+            "Experience with databases (PostgreSQL, MongoDB)",
+            "Understanding of cloud services (AWS/GCP/Azure)",
+            "Excellent problem-solving skills",
+            "Good communication in English"
+        ],
+        "created_at": "2024-03-01T00:00:00.000Z",
+        "is_active": true
+    },
+    {
+        "id": 2,
+        "title": "Cloud Architect",
+        "location": "Jakarta, Indonesia / Remote",
+        "type": "Full-time",
+        "salary": "IDR 20-35 Million",
+        "experience": "Min. 5 years",
+        "description": "We are seeking an experienced Cloud Architect to lead our cloud migration and optimization projects. You will design and implement cloud solutions for enterprise clients across various industries.\n\nResponsibilities:\n- Design cloud architecture for scalability and reliability\n- Lead cloud migration projects\n- Optimize cloud costs and performance\n- Implement security best practices\n- Mentor team members on cloud technologies\n\nWhy join Sagara?\n- Work with latest cloud technologies\n- Competitive compensation package\n- Career growth opportunities\n- Collaborative work environment",
+        "requirements": [
+            "5+ years of cloud architecture experience",
+            "AWS Certified Solutions Architect (or equivalent)",
+            "Experience with infrastructure as code (Terraform)",
+            "Knowledge of containerization (Docker, Kubernetes)",
+            "Strong understanding of security best practices",
+            "Excellent communication skills"
+        ],
+        "created_at": "2024-03-05T00:00:00.000Z",
+        "is_active": true
+    },
+    {
+        "id": 3,
+        "title": "UI/UX Designer",
+        "location": "Jakarta, Indonesia",
+        "type": "Full-time",
+        "salary": "IDR 10-18 Million",
+        "experience": "Min. 2 years",
+        "description": "Join our design team to create beautiful and intuitive user interfaces for enterprise applications. You will work closely with developers and product managers to deliver exceptional user experiences.\n\nResponsibilities:\n- Create wireframes, prototypes, and high-fidelity designs\n- Conduct user research and usability testing\n- Collaborate with developers to implement designs\n- Maintain design systems and guidelines\n- Stay updated with design trends and best practices\n\nWhy join Sagara?\n- Creative and collaborative environment\n- Opportunity to work on diverse projects\n- Professional growth and learning\n- Competitive benefits package",
+        "requirements": [
+            "2+ years of UI/UX design experience",
+            "Proficiency in Figma or Adobe XD",
+            "Understanding of responsive design principles",
+            "Portfolio demonstrating design work",
+            "Knowledge of HTML/CSS is a plus",
+            "Good communication and collaboration skills"
+        ],
+        "created_at": "2024-03-10T00:00:00.000Z",
+        "is_active": true
+    },
+    {
+        "id": 4,
+        "title": "Cybersecurity Analyst",
+        "location": "Jakarta, Indonesia",
+        "type": "Full-time",
+        "salary": "IDR 12-20 Million",
+        "experience": "Min. 2 years",
+        "description": "We are looking for a Cybersecurity Analyst to join our security team. You will be responsible for conducting security assessments, vulnerability testing, and implementing security measures for our clients.\n\nResponsibilities:\n- Conduct security audits and vulnerability assessments\n- Perform penetration testing\n- Implement security monitoring and incident response\n- Stay updated with latest security threats\n- Provide security recommendations to clients\n\nWhy join Sagara?\n- Work with enterprise security challenges\n- Continuous learning opportunities\n- Competitive salary and benefits\n- Supportive team environment",
+        "requirements": [
+            "2+ years of cybersecurity experience",
+            "Knowledge of security frameworks (ISO 27001, NIST)",
+            "Experience with vulnerability scanning tools",
+            "Understanding of network security",
+            "Security certification is a plus (CEH, CISSP)",
+            "Analytical and problem-solving skills"
+        ],
+        "created_at": "2024-03-12T00:00:00.000Z",
+        "is_active": true
+    },
+    {
+        "id": 5,
+        "title": "Project Manager",
+        "location": "Jakarta, Indonesia",
+        "type": "Full-time",
+        "salary": "IDR 15-25 Million",
+        "experience": "Min. 4 years",
+        "description": "We are seeking an experienced Project Manager to lead software development projects for our enterprise clients. You will be responsible for project planning, execution, and delivery.\n\nResponsibilities:\n- Manage project timelines, budgets, and resources\n- Coordinate with clients and internal teams\n- Ensure project deliverables meet quality standards\n- Identify and mitigate project risks\n- Prepare project documentation and reports\n\nWhy join Sagara?\n- Lead impactful enterprise projects\n- Collaborative work culture\n- Professional development support\n- Competitive compensation package",
+        "requirements": [
+            "4+ years of IT project management experience",
+            "Experience with Agile/Scrum methodology",
+            "PMP or Scrum Master certification is a plus",
+            "Excellent communication and leadership skills",
+            "Problem-solving and decision-making abilities",
+            "Experience with Jira or similar tools"
+        ],
+        "created_at": "2024-03-15T00:00:00.000Z",
+        "is_active": true
+    },
+    {
+        "id": 6,
+        "title": "DevOps Engineer",
+        "location": "Jakarta, Indonesia / Remote",
+        "type": "Full-time",
+        "salary": "IDR 15-25 Million",
+        "experience": "Min. 3 years",
+        "description": "Join our DevOps team to build and maintain CI/CD pipelines, manage cloud infrastructure, and automate deployment processes for our clients.\n\nResponsibilities:\n- Design and implement CI/CD pipelines\n- Manage cloud infrastructure (AWS/Azure/GCP)\n- Implement monitoring and alerting systems\n- Automate deployment and scaling processes\n- Ensure system reliability and performance\n\nWhy join Sagara?\n- Work with modern DevOps tools\n- Remote work flexibility\n- Competitive salary and benefits\n- Learning and growth opportunities",
+        "requirements": [
+            "3+ years of DevOps experience",
+            "Experience with CI/CD tools (Jenkins, GitLab CI, GitHub Actions)",
+            "Knowledge of containerization (Docker, Kubernetes)",
+            "Cloud platform experience (AWS/Azure/GCP)",
+            "Infrastructure as Code (Terraform, CloudFormation)",
+            "Scripting skills (Bash, Python)"
+        ],
+        "created_at": "2024-03-18T00:00:00.000Z",
+        "is_active": true
+    }
+]

@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1776656884477,
+    "userMessage": "kalo dosen lihat gambar kecil, salah ga kalo bilang \"gedein lah mam?",
+    "botResponse": "Itu tergantung konteksnya, tapi secara umum, mengatakan \"gedein lah mam\" kepada dosen mungkin tidaklah tepat. Ini karena:\n\n1. **Bahasa formal**: Di lingkungan akademis, biasanya digunakan bahasa yang formal dan sopan. Menggunakan kata-kata yang kasual atau santai seperti \"gedein\" mungkin tidak sesuai dengan etika berkomunikasi di kampus.\n2. **Sikap hormat**: Dosen adalah figur otoritas dan penjaga ilmu, jadi sebaiknya kita menjaga sikap hormat dan sopan ketika berinteraksi dengan mereka. Menggunakan bahasa yang terlalu kasual atau santai mungkin dianggap tidak hormat.\n\nJika kamu ingin meminta dosen untuk memperbesar gambar, lebih baik menggunakan kalimat yang lebih formal dan sopan, seperti:\n\n* \"Maaf, Pak/Bu, apakah Bapak/Ibu bisa memperbesar gambar itu agar lebih jelas?\"\n* \"Perkenankan saya bertanya, apakah ada cara untuk memperbesar gambar ini agar lebih mudah dilihat?\"\n\nDengan menggunakan bahasa yang lebih formal dan sopan, kamu dapat menunjukkan rasa hormat dan kesopanan kepada dosen, serta membuat komunikasi menjadi lebih efektif dan efisien.",
+    "timestamp": "2026-04-20T03:48:04.478Z"
+  },
+  {
+    "id": 1776656906105,
+    "userMessage": "maksudnya dallam bahasa formal",
+    "botResponse": "Jika kamu ingin mengatakan \"gedein lah mam\" dalam bahasa formal, maka itu bisa diterjemahkan menjadi:\n\n* \"Tolong perbesarlah, Bu\"\n* \"Bisa dibesarkan, Pak/Bu?\"\n* \"Perlu dibesarkan agar lebih jelas, Pak/Bu\"\n\nAtau dalam bahasa yang lebih formal lagi:\n\n* \"Apakah Bapak/Ibu bisa memperbesar gambar tersebut agar lebih mudah dilihat?\"\n* \"Perkenankan saya meminta Bapak/Ibu untuk memperbesar gambar ini agar lebih jelas?\"\n\nDengan menggunakan kalimat-kalimat tersebut, kamu dapat menyampaikan permintaanmu dengan bahasa yang formal dan sopan, serta menunjukkan rasa hormat kepada dosen.",
+    "timestamp": "2026-04-20T03:48:26.105Z"
+  },
+  {
+    "id": 1776656929029,
+    "userMessage": "tapi kami malah dimint untk merubah tulisannya",
+    "botResponse": "Jika dosen meminta kamu untuk merubah tulisan yang kecil menjadi lebih besar, maka itu berarti kamu diminta untuk meningkatkan ukuran font atau menulis ulang teks tersebut dengan ukuran yang lebih besar.\n\nDalam bahasa formal, kamu bisa menjawab:\n\n* \"Baik, Bu. Saya akan memperbesar tulisan tersebut.\"\n* \"Saya akan meningkatkan ukuran font, Pak.\"\n* \"Saya akan menulis ulang teks tersebut dengan ukuran yang lebih besar, Bu.\"\n\nAtau jika kamu ingin bertanya untuk memastikan:\n\n* \"Apakah Bapak/Ibu ingin saya memperbesar ukuran font atau menulis ulang teks tersebut?\"\n* \"Perlu saya menulis ulang teks tersebut dengan ukuran yang lebih besar, Pak/Bu?\"\n\nDengan menjawab atau bertanya seperti itu, kamu dapat menunjukkan bahwa kamu memahami permintaan dosen dan siap untuk melakukan perubahan yang diperlukan.",
+    "timestamp": "2026-04-20T03:48:49.029Z"
+  },
+  {
+    "id": 1776656945843,
+    "userMessage": "clear chat",
+    "botResponse": "Chat telah dibersihkan! Mari mulai lagi dari awal. Apa yang ingin kamu tanyakan atau bahas?",
+    "timestamp": "2026-04-20T03:49:05.843Z"
+  },
+  {
+    "id": 1776661488709,
+    "userMessage": "halo",
+    "botResponse": "Halo! Senang bisa ngobrol denganmu. Ada yang ingin dibicarakan atau pertanyaan tentang apa?",
+    "timestamp": "2026-04-20T05:04:48.709Z"
+  },
+  {
+    "id": 1776661500427,
+    "userMessage": "kenal amba ga",
+    "botResponse": "Amba? Hmm, sepertinya kamu mungkin sedang berpikir tentang Amba, sang tokoh dari seri Game of Thrones? Atau mungkin Amba yang lain? Bisa kasih hint atau konteks sedikit tentang Amba yang kamu maksud?",
+    "timestamp": "2026-04-20T05:05:00.427Z"
+  },
+  {
+    "id": 1776662100586,
+    "userMessage": "Tech stack apa aja?",
+    "botResponse": "Tech stack yang aku kenal cukup luas, tapi aku akan coba rangkum beberapa contoh yang umum digunakan:\n\n**Front-end:**\n\n1. HTML/CSS\n2. JavaScript (seperti React, Angular, Vue.js)\n3. Framework seperti Bootstrap, Material-UI\n4. Library seperti jQuery, Lodash\n\n**Back-end:**\n\n1. Bahasa pemrograman seperti Python, Java, Ruby, PHP\n2. Framework seperti Django, Flask, Ruby on Rails, Laravel\n3. Database seperti MySQL, PostgreSQL, MongoDB, Redis\n4. Server seperti Apache, Nginx, IIS\n\n**Mobile App:**\n\n1. iOS (Swift, Objective-C)\n2. Android (Java, Kotlin)\n3. React Native, Flutter untuk cross-platform\n\n**Machine Learning dan AI:**\n\n1. TensorFlow, PyTorch, Keras\n2. Scikit-learn, NLTK untuk NLP\n3. OpenCV untuk computer vision\n\n**DevOps:**\n\n1. Containerization seperti Docker\n2. Orchestration seperti Kubernetes\n3. CI/CD seperti Jenkins, GitLab CI/CD\n4. Monitoring seperti Prometheus, Grafana\n\nItu hanya beberapa contoh, masih banyak teknologi lainnya yang digunakan di industri. Kamu ingin tahu lebih lanjut tentang salah satu tech stack tertentu?",
+    "timestamp": "2026-04-20T05:15:00.586Z"
+  },
+  {
+    "id": 1776662124082,
+    "userMessage": "owow",
+    "botResponse": "Hehe, aku tahu, tech stack itu banyak banget! Tapi jangan khawatir, kamu tidak perlu menguasai semuanya. Yang penting adalah kamu tahu apa yang kamu butuhkan untuk projek atau pekerjaanmu, dan kamu bisa fokus pada teknologi yang relevan.\n\nKalau kamu ingin tahu lebih lanjut tentang salah satu tech stack, atau kamu punya pertanyaan tentang bagaimana menggunakan teknologi tertentu, jangan ragu untuk bertanya! Aku di sini untuk membantu.",
+    "timestamp": "2026-04-20T05:15:24.082Z"
+  },
+  {
+    "id": 1776662136350,
+    "userMessage": "dunnnoooo",
+    "botResponse": "Jangan khawatir! Aku ada di sini untuk membantu. Kalau kamu tidak tahu harus mulai dari mana, kita bisa mulai dengan membahas apa yang kamu ingin lakukan atau apa yang kamu ingin capai.\n\nMisalnya, kamu ingin membuat aplikasi, website, atau sistem? Atau kamu ingin belajar tentang teknologi tertentu? Beritahu aku, dan kita bisa mulai dari situ!",
+    "timestamp": "2026-04-20T05:15:36.350Z"
+  },
+  {
+    "id": 1776662157986,
+    "userMessage": "okok",
+    "botResponse": "Hehe, okok! Jadi, kita mulai dari awal. Kamu ingin tahu tentang teknologi, tapi tidak tahu harus mulai dari mana. Aku punya beberapa pertanyaan untuk membantu kita memulai:\n\n1. Apa yang kamu suka lakukan di waktu luangmu? (misalnya, bermain game, membaca, atau membuat sesuatu)\n2. Apa yang kamu ingin capai dengan teknologi? (misalnya, membuat aplikasi, website, atau sistem)\n3. Apa yang kamu sudah tahu tentang teknologi? (misalnya, sudah tahu tentang programming, atau belum)\n\nBeritahu aku, dan kita bisa mulai dari situ!",
+    "timestamp": "2026-04-20T05:15:57.986Z"
+  },
+  {
+    "id": 1776741957229,
+    "userMessage": "Tech stack apa aja?",
+    "botResponse": "Sayangnya, data tentang tech stack Sagara tidak disertakan di sini. Saya hanya bisa menjawab tentang informasi yang sudah tersedia terkait perusahaan Sagara. Jika kamu ingin tahu lebih banyak tentang layanan atau pencapaian Sagara, saya dengan senang hati akan membantu!",
+    "timestamp": "2026-04-21T03:25:57.229Z"
+  },
+  {
+    "id": 1776741966236,
+    "userMessage": "hmm sagara itu apa",
+    "botResponse": "Sagara adalah perusahaan konsultan IT yang didirikan pada tahun 2019. Mereka memiliki visi untuk menjadi perusahaan konsultan IT terkemuka di Asia Tenggara dan misi untuk memberikan solusi IT inovatif untuk transformasi digital.\n\nMereka menawarkan beberapa layanan seperti IT Consulting, Custom Software Development, Cloud Infrastructure & Migration, Cybersecurity Audit, dan Government Solutions. Beberapa klien mereka yang terkenal adalah Bank Mandiri, Telkom Indonesia, Gojek, Tokopedia, dan Pemerintah DKI Jakarta.\n\nSagara juga telah mencapai beberapa penghargaan seperti Top IT Consultant 2023, Best Digital Transformation Partner, dan Microsoft Gold Partner. Semoga itu membantu!",
+    "timestamp": "2026-04-21T03:26:06.236Z"
+  },
+  {
+    "id": 1776741978019,
+    "userMessage": "siapa yang mendirikan sagara",
+    "botResponse": "Sayangnya, data tentang pendiri Sagara tidak disertakan di sini. Saya hanya bisa memberikan informasi tentang perusahaan Sagara secara umum, seperti visi, misi, layanan, dan pencapaian mereka. Tapi tidak ada informasi tentang siapa pendiri perusahaan ini. Mungkin kamu bisa mencari informasi lebih lanjut dari sumber lain?",
+    "timestamp": "2026-04-21T03:26:18.019Z"
+  }
+]

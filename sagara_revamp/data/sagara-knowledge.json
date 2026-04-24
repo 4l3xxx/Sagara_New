@@ -1,0 +1,43 @@
+{
+  "company": {
+    "name": "Sagara",
+    "founded": 2019,
+    "vision": "Menjadi perusahaan konsultan IT terkemuka di Asia Tenggara",
+    "mission": "Memberikan solusi IT inovatif untuk transformasi digital"
+  },
+  "services": [
+    {
+      "name": "IT Consulting",
+      "description": "Konsultasi strategi digital untuk perusahaan"
+    },
+    {
+      "name": "Custom Software Development",
+      "description": "Pengembangan aplikasi custom sesuai kebutuhan"
+    },
+    {
+      "name": "Cloud Infrastructure & Migration",
+      "description": "Implementasi dan migrasi infrastruktur cloud"
+    },
+    {
+      "name": "Cybersecurity Audit",
+      "description": "Audit keamanan sistem dan data"
+    },
+    {
+      "name": "Government Solutions",
+      "description": "Solusi IT khusus untuk sektor pemerintahan"
+    }
+  ],
+  "clients": [
+    "Bank Mandiri",
+    "Telkom Indonesia",
+    "Gojek",
+    "Tokopedia",
+    "Pemerintah DKI Jakarta"
+  ],
+  "achievements": [
+    "Top IT Consultant 2023",
+    "Best Digital Transformation Partner",
+    "ISO 27001 Certified",
+    "Microsoft Gold Partner"
+  ]
+}
