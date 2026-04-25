@@ -1,1 +1,15 @@
-﻿sagara_revamp/.env
+# Root gitignore for Sagara project
+sagara_revamp/node_modules/
+sagara_revamp/.env
+sagara_revamp/.env.local
+sagara_revamp/.env.production
+sagara_revamp/*.log
+sagara_revamp/npm-debug.log*
+sagara_revamp/yarn-debug.log*
+sagara_revamp/yarn-error.log*
+sagara_revamp/.DS_Store
+sagara_revamp/data/
+
+# TestSprite
+sagara_revamp/testsprite_tests/
+sagara_revamp/.testsprite/

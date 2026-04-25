@@ -130,5 +130,37 @@
     "created_at": "2026-04-24T14:57:37.589Z",
     "notes": "Automated: Admin sent an email response.",
     "updated_at": "2026-04-24T14:59:13.296Z"
+  },
+  {
+    "id": 1777092154100,
+    "full_name": "Test Lead",
+    "business_email": "testlead.sagara.qa@gmail.com",
+    "service_type": "Web development",
+    "message": "Need a consultation for a small web project; please advise next steps.",
+    "company_size": null,
+    "budget": null,
+    "industry": null,
+    "sentiment": "neutral",
+    "sentiment_score": 0,
+    "nlp_category": "GENERAL",
+    "lead_score": 0.5,
+    "status": "New",
+    "created_at": "2026-04-25T04:42:34.100Z"
+  },
+  {
+    "id": 1777092211312,
+    "full_name": "Test Lead",
+    "business_email": "testlead.sagara.qa@gmail.com",
+    "service_type": "Web development",
+    "message": "Initial invalid email; then corrected.",
+    "company_size": null,
+    "budget": null,
+    "industry": null,
+    "sentiment": "neutral",
+    "sentiment_score": 0,
+    "nlp_category": "GENERAL",
+    "lead_score": 0.5,
+    "status": "New",
+    "created_at": "2026-04-25T04:43:31.312Z"
   }
 ]

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -12,7 +13,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
@@ -41,14 +44,25 @@
             font-family: 'Open Sans', sans-serif;
         }
 
-        h1, h2, h3, h4, h5, h6, .font-display {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .font-display {
             font-family: 'Inter', sans-serif;
         }
 
         /* Continuous Scroll Animation */
         @keyframes scroll-right {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
         }
 
         .marquee-container {
@@ -94,13 +108,13 @@
             --bg3: #141420;
             --surface: #1a1a28;
             --surface2: #22223a;
-            --border: rgba(255,255,255,0.06);
-            --border2: rgba(255,255,255,0.1);
+            --border: rgba(255, 255, 255, 0.06);
+            --border2: rgba(255, 255, 255, 0.1);
             --accent: #4fffb0;
             --accent2: #00d68f;
-            --accent-dim: rgba(79,255,176,0.1);
+            --accent-dim: rgba(79, 255, 176, 0.1);
             --blue: #4f8fff;
-            --blue-dim: rgba(79,143,255,0.1);
+            --blue-dim: rgba(79, 143, 255, 0.1);
             --text: #f0f0f8;
             --text2: #8888aa;
             --text3: #44445a;
@@ -122,17 +136,33 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 24px rgba(79,255,176,0.4);
+            box-shadow: 0 4px 24px rgba(79, 255, 176, 0.4);
             z-index: 9990;
-            transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
-            animation: fabIn 0.6s cubic-bezier(0.34,1.56,0.64,1) 1s both;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fabIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1s both;
         }
+
         @keyframes fabIn {
-            from { opacity: 0; transform: scale(0); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
-        #sagara-ai-fab:hover { transform: scale(1.1); }
-        #sagara-ai-fab svg { width: 24px; height: 24px; }
+
+        #sagara-ai-fab:hover {
+            transform: scale(1.1);
+        }
+
+        #sagara-ai-fab svg {
+            width: 24px;
+            height: 24px;
+        }
+
         .fab-tooltip {
             position: absolute;
             right: 70px;
@@ -150,6 +180,7 @@
             transition: all 0.2s;
             font-family: 'Outfit', sans-serif;
         }
+
         .fab-tooltip::after {
             content: '';
             position: absolute;
@@ -162,7 +193,11 @@
             border-right: 1px solid var(--border2);
             border-top: 1px solid var(--border2);
         }
-        #sagara-ai-fab:hover .fab-tooltip { opacity: 1; transform: translateX(0); }
+
+        #sagara-ai-fab:hover .fab-tooltip {
+            opacity: 1;
+            transform: translateX(0);
+        }
 
         #sagara-ai-panel {
             position: fixed;
@@ -173,7 +208,7 @@
             background: var(--bg2);
             border: 1px solid var(--border2);
             border-radius: 20px;
-            box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
             display: flex;
             flex-direction: column;
             z-index: 9989;
@@ -182,13 +217,15 @@
             opacity: 0;
             pointer-events: none;
             transform-origin: bottom right;
-            transition: transform 0.3s cubic-bezier(0.34,1.4,0.64,1), opacity 0.22s ease;
+            transition: transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.22s ease;
         }
+
         #sagara-ai-panel.open {
             transform: scale(1) translateY(0);
             opacity: 1;
             pointer-events: all;
         }
+
         .mp-header {
             padding: 16px 18px;
             display: flex;
@@ -198,12 +235,13 @@
             background: var(--bg3);
             flex-shrink: 0;
         }
+
         .mp-avatar {
             width: 38px;
             height: 38px;
             border-radius: 50%;
             background: var(--accent-dim);
-            border: 1.5px solid rgba(79,255,176,0.25);
+            border: 1.5px solid rgba(79, 255, 176, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -213,8 +251,17 @@
             color: var(--accent);
             flex-shrink: 0;
         }
-        .mp-meta { flex: 1; }
-        .mp-name { font-size: 14px; font-weight: 600; color: var(--text); }
+
+        .mp-meta {
+            flex: 1;
+        }
+
+        .mp-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
         .mp-status {
             font-size: 11px;
             color: var(--text3);
@@ -223,7 +270,14 @@
             gap: 5px;
             margin-top: 2px;
         }
-        .mp-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+        .mp-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
         .mp-close {
             width: 30px;
             height: 30px;
@@ -237,8 +291,17 @@
             justify-content: center;
             transition: all 0.15s;
         }
-        .mp-close:hover { background: var(--surface2); color: var(--text); }
-        .mp-close svg { width: 14px; height: 14px; }
+
+        .mp-close:hover {
+            background: var(--surface2);
+            color: var(--text);
+        }
+
+        .mp-close svg {
+            width: 14px;
+            height: 14px;
+        }
+
         .mp-msgs {
             flex: 1;
             overflow-y: auto;
@@ -248,10 +311,26 @@
             gap: 14px;
             scroll-behavior: smooth;
         }
-        .mp-msgs::-webkit-scrollbar { width: 3px; }
-        .mp-msgs::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
-        .msg { display: flex; align-items: flex-end; gap: 8px; }
-        .msg.user { flex-direction: row-reverse; }
+
+        .mp-msgs::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .mp-msgs::-webkit-scrollbar-thumb {
+            background: var(--surface2);
+            border-radius: 2px;
+        }
+
+        .msg {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .msg.user {
+            flex-direction: row-reverse;
+        }
+
         .m-av {
             width: 28px;
             height: 28px;
@@ -267,13 +346,24 @@
             flex-shrink: 0;
             font-family: 'Syne', sans-serif;
         }
+
         .msg.user .m-av {
             background: var(--accent-dim);
-            border-color: rgba(79,255,176,0.2);
+            border-color: rgba(79, 255, 176, 0.2);
             color: var(--accent);
         }
-        .m-wrap { display: flex; flex-direction: column; max-width: 80%; gap: 4px; }
-        .msg.user .m-wrap { align-items: flex-end; }
+
+        .m-wrap {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+            gap: 4px;
+        }
+
+        .msg.user .m-wrap {
+            align-items: flex-end;
+        }
+
         .m-bubble {
             padding: 10px 14px;
             border-radius: 14px;
@@ -282,22 +372,31 @@
             color: var(--text);
             word-break: break-word;
         }
+
         .msg.bot .m-bubble {
             background: var(--surface);
             border: 1px solid var(--border);
             border-bottom-left-radius: 4px;
         }
+
         .msg.user .m-bubble {
             background: var(--accent);
             color: #050f0a;
             border-bottom-right-radius: 4px;
         }
+
         .msg.err .m-bubble {
-            background: rgba(255,92,122,0.1);
-            border: 1px solid rgba(255,92,122,0.2);
+            background: rgba(255, 92, 122, 0.1);
+            border: 1px solid rgba(255, 92, 122, 0.2);
             color: var(--danger);
         }
-        .m-time { font-size: 10px; color: var(--text3); padding: 0 2px; }
+
+        .m-time {
+            font-size: 10px;
+            color: var(--text3);
+            padding: 0 2px;
+        }
+
         .cursor::after {
             content: '▋';
             display: inline;
@@ -305,13 +404,20 @@
             color: var(--accent);
             font-size: 12px;
         }
-        @keyframes blink-c { 50% { opacity: 0; } }
+
+        @keyframes blink-c {
+            50% {
+                opacity: 0;
+            }
+        }
+
         .typing {
             display: flex;
             gap: 5px;
             align-items: center;
             padding: 3px 0;
         }
+
         .typing span {
             width: 7px;
             height: 7px;
@@ -319,12 +425,30 @@
             background: var(--text3);
             animation: blink-d 1.2s ease-in-out infinite;
         }
-        .typing span:nth-child(2) { animation-delay: 0.2s; }
-        .typing span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes blink-d {
-            0%,80%,100%{opacity:0.2;transform:scale(0.85)}
-            40%{opacity:1;transform:scale(1)}
+
+        .typing span:nth-child(2) {
+            animation-delay: 0.2s;
         }
+
+        .typing span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes blink-d {
+
+            0%,
+            80%,
+            100% {
+                opacity: 0.2;
+                transform: scale(0.85)
+            }
+
+            40% {
+                opacity: 1;
+                transform: scale(1)
+            }
+        }
+
         .mp-quick {
             padding: 0 14px 10px;
             display: flex;
@@ -332,6 +456,7 @@
             flex-wrap: wrap;
             flex-shrink: 0;
         }
+
         .q-btn {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -344,7 +469,13 @@
             transition: all 0.15s;
             white-space: nowrap;
         }
-        .q-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+        .q-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
         .mp-input-wrap {
             padding: 12px 14px;
             border-top: 1px solid var(--border);
@@ -354,6 +485,7 @@
             flex-shrink: 0;
             background: var(--bg3);
         }
+
         .mp-input {
             flex: 1;
             background: var(--surface);
@@ -370,8 +502,15 @@
             line-height: 1.5;
             transition: border-color 0.15s;
         }
-        .mp-input::placeholder { color: var(--text3); }
-        .mp-input:focus { border-color: rgba(79,255,176,0.4); }
+
+        .mp-input::placeholder {
+            color: var(--text3);
+        }
+
+        .mp-input:focus {
+            border-color: rgba(79, 255, 176, 0.4);
+        }
+
         .mp-send {
             width: 38px;
             height: 38px;
@@ -384,11 +523,25 @@
             justify-content: center;
             transition: transform 0.2s, opacity 0.15s;
             flex-shrink: 0;
-            box-shadow: 0 2px 10px rgba(79,255,176,0.3);
+            box-shadow: 0 2px 10px rgba(79, 255, 176, 0.3);
         }
-        .mp-send:hover { transform: scale(1.1); }
-        .mp-send:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
-        .mp-send svg { width: 16px; height: 16px; stroke: #050f0a; }
+
+        .mp-send:hover {
+            transform: scale(1.1);
+        }
+
+        .mp-send:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .mp-send svg {
+            width: 16px;
+            height: 16px;
+            stroke: #050f0a;
+        }
+
         .mp-footer {
             text-align: center;
             font-size: 10px;
@@ -397,22 +550,37 @@
             flex-shrink: 0;
             background: var(--bg3);
         }
-        .m-bubble strong { font-weight: 600; }
+
+        .m-bubble strong {
+            font-weight: 600;
+        }
+
         .m-bubble code {
-            background: rgba(79,255,176,0.1);
+            background: rgba(79, 255, 176, 0.1);
             padding: 1px 6px;
             border-radius: 5px;
             font-size: 12px;
             font-family: 'Courier New', monospace;
             color: var(--accent);
         }
+
         .msg.user .m-bubble code {
-            background: rgba(5,15,10,0.25);
+            background: rgba(5, 15, 10, 0.25);
             color: #050f0a;
         }
+
         @media (max-width: 480px) {
-            #sagara-ai-panel { right: 12px; left: 12px; width: auto; bottom: 100px; }
-            #sagara-ai-fab { right: 20px; bottom: 20px; }
+            #sagara-ai-panel {
+                right: 12px;
+                left: 12px;
+                width: auto;
+                bottom: 100px;
+            }
+
+            #sagara-ai-fab {
+                right: 20px;
+                bottom: 20px;
+            }
         }
 
 
@@ -451,8 +619,13 @@
 
         /* Loading animation */
         @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
+            0% {
+                background-position: -1000px 0;
+            }
+
+            100% {
+                background-position: 1000px 0;
+            }
         }
 
         .skeleton {
@@ -472,218 +645,258 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
+
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-x-hidden w-full">
+
     <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-x-hidden w-full">
-    
-    <!-- ========== LOADING SCREEN (NEW) ========== -->
-    <div id="loadingScreen" class="fixed inset-0 bg-background-light dark:bg-background-dark z-[9999] flex items-center justify-center transition-opacity duration-500">
-        <div class="text-center">
-            <div class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p class="text-slate-600 dark:text-slate-300 font-medium">Loading Sagara...</p>
+
+        <!-- ========== LOADING SCREEN (NEW) ========== -->
+        <div id="loadingScreen"
+            class="fixed inset-0 bg-background-light dark:bg-background-dark z-[9999] flex items-center justify-center transition-opacity duration-500">
+            <div class="text-center">
+                <div
+                    class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4">
+                </div>
+                <p class="text-slate-600 dark:text-slate-300 font-medium">Loading Sagara...</p>
+            </div>
         </div>
-    </div>
-    <!-- ========== END LOADING SCREEN ========== -->
+        <!-- ========== END LOADING SCREEN ========== -->
 
-    <script>
-        // Hide loading screen setelah page load
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const loader = document.getElementById('loadingScreen');
-                if (loader) {
-                    loader.style.opacity = '0';
-                    setTimeout(function() {
-                        loader.style.display = 'none';
-                    }, 500);
-                }
-            }, 500);
-        });
-    </script>
+        <script>
+            // Hide loading screen setelah page load
+            window.addEventListener('load', function () {
+                setTimeout(function () {
+                    const loader = document.getElementById('loadingScreen');
+                    if (loader) {
+                        loader.style.opacity = '0';
+                        setTimeout(function () {
+                            loader.style.display = 'none';
+                        }, 500);
+                    }
+                }, 500);
+            });
+        </script>
 
-    <script>
-        function switchLanguage(lang) {
-            localStorage.setItem('language', lang);
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                if (el.getAttribute('data-lang') === lang) {
-                    el.classList.remove('hidden');
-                } else {
-                    el.classList.add('hidden');
+        <script>
+            function switchLanguage(lang) {
+                localStorage.setItem('language', lang);
+                document.querySelectorAll('[data-lang]').forEach(el => {
+                    if (el.getAttribute('data-lang') === lang) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                });
+
+                const btnEn = document.getElementById('btn-en');
+                const btnId = document.getElementById('btn-id');
+                if (btnEn && btnId) {
+                    if (lang === 'en') {
+                        btnEn.classList.add('text-primary');
+                        btnEn.classList.remove('text-slate-500');
+                        btnId.classList.remove('text-primary');
+                        btnId.classList.add('text-slate-500');
+                    } else {
+                        btnId.classList.add('text-primary');
+                        btnId.classList.remove('text-slate-500');
+                        btnEn.classList.remove('text-primary');
+                        btnEn.classList.add('text-slate-500');
+                    }
                 }
+
+                const btnEnMobile = document.getElementById('btn-en-mobile');
+                const btnIdMobile = document.getElementById('btn-id-mobile');
+                if (btnEnMobile && btnIdMobile) {
+                    if (lang === 'en') {
+                        btnEnMobile.classList.add('text-primary');
+                        btnEnMobile.classList.remove('text-slate-500');
+                        btnIdMobile.classList.remove('text-primary');
+                        btnIdMobile.classList.add('text-slate-500');
+                    } else {
+                        btnIdMobile.classList.add('text-primary');
+                        btnIdMobile.classList.remove('text-slate-500');
+                        btnEnMobile.classList.remove('text-primary');
+                        btnEnMobile.classList.add('text-slate-500');
+                    }
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const lang = localStorage.getItem('language') || 'en';
+                switchLanguage(lang);
             });
 
-            const btnEn = document.getElementById('btn-en');
-            const btnId = document.getElementById('btn-id');
-            if (btnEn && btnId) {
-                if (lang === 'en') {
-                    btnEn.classList.add('text-primary');
-                    btnEn.classList.remove('text-slate-500');
-                    btnId.classList.remove('text-primary');
-                    btnId.classList.add('text-slate-500');
-                } else {
-                    btnId.classList.add('text-primary');
-                    btnId.classList.remove('text-slate-500');
-                    btnEn.classList.remove('text-primary');
-                    btnEn.classList.add('text-slate-500');
-                }
+            // Function untuk redirect ke about.html (Learn About Our Impact)
+            function goToAbout() {
+                window.location.href = '/about.html';
             }
 
-            const btnEnMobile = document.getElementById('btn-en-mobile');
-            const btnIdMobile = document.getElementById('btn-id-mobile');
-            if (btnEnMobile && btnIdMobile) {
-                if (lang === 'en') {
-                    btnEnMobile.classList.add('text-primary');
-                    btnEnMobile.classList.remove('text-slate-500');
-                    btnIdMobile.classList.remove('text-primary');
-                    btnIdMobile.classList.add('text-slate-500');
-                } else {
-                    btnIdMobile.classList.add('text-primary');
-                    btnIdMobile.classList.remove('text-slate-500');
-                    btnEnMobile.classList.remove('text-primary');
-                    btnEnMobile.classList.add('text-slate-500');
-                }
+            // Function untuk download brochure
+            function downloadBrochure() {
+                alert('📄 Company brochure will be downloaded soon.\n\n📄 Brosur perusahaan akan segera diunduh.');
             }
-        }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const lang = localStorage.getItem('language') || 'en';
-            switchLanguage(lang);
-        });
+            // ============================================
+            // NEWSLETTER FUNCTION (FIXED)
+            // ============================================
+            async function subscribeNewsletter() {
+                const emailInput = document.getElementById('newsletter-email');
+                const email = emailInput.value.trim();
+                const messageDiv = document.getElementById('newsletter-message');
+                const btn = event?.target.closest('button');
+                const originalHtml = btn?.innerHTML;
 
-        // Function untuk redirect ke about.html (Learn About Our Impact)
-        function goToAbout() {
-            window.location.href = '/about.html';
-        }
-
-        // Function untuk download brochure
-        function downloadBrochure() {
-            alert('📄 Company brochure will be downloaded soon.\n\n📄 Brosur perusahaan akan segera diunduh.');
-        }
-
-        // ============================================
-        // NEWSLETTER FUNCTION (FIXED)
-        // ============================================
-        async function subscribeNewsletter() {
-            const emailInput = document.getElementById('newsletter-email');
-            const email = emailInput.value.trim();
-            const messageDiv = document.getElementById('newsletter-message');
-            const btn = event?.target.closest('button');
-            const originalHtml = btn?.innerHTML;
-            
-            // Validasi email kosong
-            if (!email) {
-                messageDiv.innerHTML = '❌ Please enter your email address';
-                messageDiv.style.color = '#ff5c7a';
-                messageDiv.classList.remove('hidden');
-                setTimeout(() => messageDiv.classList.add('hidden'), 3000);
-                return;
-            }
-            
-            // Validasi format email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                messageDiv.innerHTML = '❌ Please enter a valid email address';
-                messageDiv.style.color = '#ff5c7a';
-                messageDiv.classList.remove('hidden');
-                setTimeout(() => messageDiv.classList.add('hidden'), 3000);
-                return;
-            }
-            
-            // Loading state
-            if (btn) {
-                btn.innerHTML = '<div class="loading-spinner mx-auto"></div>';
-                btn.disabled = true;
-            }
-            
-            try {
-                // Coba kirim ke backend (opsional)
-                const response = await fetch('/api/newsletter/subscribe', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email })
-                }).catch(() => null);
-                
-                // Simpan ke localStorage sebagai backup
-                let subscribers = JSON.parse(localStorage.getItem('sagara_newsletter') || '[]');
-                if (subscribers.includes(email)) {
-                    messageDiv.innerHTML = '❌ Email already subscribed!';
+                // Validasi email kosong
+                if (!email) {
+                    messageDiv.innerHTML = '❌ Please enter your email address';
                     messageDiv.style.color = '#ff5c7a';
-                } else {
-                    subscribers.push(email);
-                    localStorage.setItem('sagara_newsletter', JSON.stringify(subscribers));
-                    messageDiv.innerHTML = '✅ Successfully subscribed to newsletter!';
-                    messageDiv.style.color = '#10b981';
-                    emailInput.value = '';
+                    messageDiv.classList.remove('hidden');
+                    setTimeout(() => messageDiv.classList.add('hidden'), 3000);
+                    return;
                 }
-            } catch (error) {
-                // Fallback: simpan ke localStorage
-                let subscribers = JSON.parse(localStorage.getItem('sagara_newsletter') || '[]');
-                if (subscribers.includes(email)) {
-                    messageDiv.innerHTML = '❌ Email already subscribed!';
+
+                // Validasi format email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    messageDiv.innerHTML = '❌ Please enter a valid email address';
                     messageDiv.style.color = '#ff5c7a';
-                } else {
-                    subscribers.push(email);
-                    localStorage.setItem('sagara_newsletter', JSON.stringify(subscribers));
-                    messageDiv.innerHTML = '✅ Successfully subscribed to newsletter!';
-                    messageDiv.style.color = '#10b981';
-                    emailInput.value = '';
+                    messageDiv.classList.remove('hidden');
+                    setTimeout(() => messageDiv.classList.add('hidden'), 3000);
+                    return;
                 }
-            } finally {
-                messageDiv.classList.remove('hidden');
-                setTimeout(() => messageDiv.classList.add('hidden'), 3000);
-                
+
+                // Loading state
                 if (btn) {
-                    btn.innerHTML = originalHtml;
-                    btn.disabled = false;
+                    btn.innerHTML = '<div class="loading-spinner mx-auto"></div>';
+                    btn.disabled = true;
+                }
+
+                try {
+                    // Coba kirim ke backend (opsional)
+                    const response = await fetch('/api/newsletter/subscribe', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: email })
+                    }).catch(() => null);
+
+                    // Simpan ke localStorage sebagai backup
+                    let subscribers = JSON.parse(localStorage.getItem('sagara_newsletter') || '[]');
+                    if (subscribers.includes(email)) {
+                        messageDiv.innerHTML = '❌ Email already subscribed!';
+                        messageDiv.style.color = '#ff5c7a';
+                    } else {
+                        subscribers.push(email);
+                        localStorage.setItem('sagara_newsletter', JSON.stringify(subscribers));
+                        messageDiv.innerHTML = '✅ Successfully subscribed to newsletter!';
+                        messageDiv.style.color = '#10b981';
+                        emailInput.value = '';
+                    }
+                } catch (error) {
+                    // Fallback: simpan ke localStorage
+                    let subscribers = JSON.parse(localStorage.getItem('sagara_newsletter') || '[]');
+                    if (subscribers.includes(email)) {
+                        messageDiv.innerHTML = '❌ Email already subscribed!';
+                        messageDiv.style.color = '#ff5c7a';
+                    } else {
+                        subscribers.push(email);
+                        localStorage.setItem('sagara_newsletter', JSON.stringify(subscribers));
+                        messageDiv.innerHTML = '✅ Successfully subscribed to newsletter!';
+                        messageDiv.style.color = '#10b981';
+                        emailInput.value = '';
+                    }
+                } finally {
+                    messageDiv.classList.remove('hidden');
+                    setTimeout(() => messageDiv.classList.add('hidden'), 3000);
+
+                    if (btn) {
+                        btn.innerHTML = originalHtml;
+                        btn.disabled = false;
+                    }
                 }
             }
-        }
-    </script>
-    <nav class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-20">
-            <!-- LOGO (UPDATED - tanpa SVG kerucut biru) -->
-            <a class="flex items-center gap-3" href="index.html">
-                <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-10 w-auto rounded-lg" onerror="this.style.display='none'">
-                <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara</h2>
-            </a>
-            <div class="hidden md:flex flex-1 justify-end items-center gap-8">
-                <div class="flex items-center gap-8">
-                    <!-- Home -->
-                    <a data-lang="en" class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="index.html">Home</a>
-                    <a data-lang="id" class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="index.html">Beranda</a>
-                    
-                    <!-- Services -->
-                    <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="services.html">Services</a>
-                    <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="services.html">Layanan</a>
-                    
-                    <!-- Portfolio -->
-                    <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portfolio</a>
-                    <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portofolio</a>
-                    
-                    <!-- Blog (NEW) -->
-                    <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="blog.html">Blog</a>
-                    <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="blog.html">Blog</a>
-                    
-                    <!-- About Us -->
-                    <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="about.html">About Us</a>
-                    <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold" href="about.html">Tentang Kami</a>
-                </div>
-                <div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
-                    <button onclick="switchLanguage('id')" class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer" id="btn-id">ID</button>
-                    <span class="text-slate-300">|</span>
-                    <button onclick="switchLanguage('en')" class="font-bold text-sm text-primary cursor-pointer" id="btn-en">EN</button>
-                </div>
-                <a data-lang="en" class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Consult Now</a>
-                <a data-lang="id" class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Konsultasi</a>
-            </div>
-            <div class="md:hidden flex items-center gap-4">
+        </script>
+        <nav
+            class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <!-- LOGO (UPDATED - tanpa SVG kerucut biru) -->
+                    <a class="flex items-center gap-3" href="index.html">
+                        <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-10 w-auto rounded-lg"
+                            onerror="this.style.display='none'">
+                        <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara
+                        </h2>
+                    </a>
+                    <div class="hidden md:flex flex-1 justify-end items-center gap-8">
+                        <div class="flex items-center gap-8">
+                            <!-- Home -->
+                            <a data-lang="en"
+                                class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                                href="index.html">Home</a>
+                            <a data-lang="id"
+                                class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                                href="index.html">Beranda</a>
+
+                            <!-- Services -->
+                            <a data-lang="en"
+                                class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                                href="services.html">Services</a>
+                            <a data-lang="id"
+                                class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                                href="services.html">Layanan</a>
+
+                            <!-- Portfolio -->
+                            <a data-lang="en"
+                                class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                                href="portfolio.html">Portfolio</a>
+                            <a data-lang="id"
+                                class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                                href="portfolio.html">Portofolio</a>
+
+                            <!-- Blog (NEW) -->
+                            <a data-lang="en"
+                                class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                                href="blog.html">Blog</a>
+                            <a data-lang="id"
+                                class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
+                                href="blog.html">Blog</a>
+
+                            <!-- About Us -->
+                            <a data-lang="en"
+                                class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                                href="about.html">About Us</a>
+                            <a data-lang="id"
+                                class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                                href="about.html">Tentang Kami</a>
+                        </div>
+                        <div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
+                            <button onclick="switchLanguage('id')"
+                                class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer"
+                                id="btn-id">ID</button>
+                            <span class="text-slate-300">|</span>
+                            <button onclick="switchLanguage('en')" class="font-bold text-sm text-primary cursor-pointer"
+                                id="btn-en">EN</button>
+                        </div>
+                        <a data-lang="en"
+                            class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105"
+                            href="contact.html">Consult Now</a>
+                        <a data-lang="id"
+                            class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105"
+                            href="contact.html">Konsultasi</a>
+                    </div>
+                    <div class="md:hidden flex items-center gap-4">
                         <div class="flex items-center gap-2">
-                            <button onclick="switchLanguage('id')" class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile">ID</button>
+                            <button onclick="switchLanguage('id')"
+                                class="font-bold text-xs text-slate-500 hover:text-primary"
+                                id="btn-id-mobile">ID</button>
                             <span class="text-slate-300 text-xs">|</span>
-                            <button onclick="switchLanguage('en')" class="font-bold text-xs text-primary" id="btn-en-mobile">EN</button>
+                            <button onclick="switchLanguage('en')" class="font-bold text-xs text-primary"
+                                id="btn-en-mobile">EN</button>
                         </div>
                         <button class="text-slate-700 dark:text-white">
                             <span class="material-symbols-outlined">menu</span>
@@ -692,47 +905,65 @@
                 </div>
             </div>
         </nav>
-        
+
         <!-- Hero Section -->
         <header class="relative bg-white dark:bg-background-dark pt-10 pb-16 lg:pt-16 lg:pb-24 overflow-hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
                     <div class="text-center lg:text-left">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-primary text-xs font-bold uppercase tracking-wider mb-6 border border-blue-100 dark:border-blue-800">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-primary text-xs font-bold uppercase tracking-wider mb-6 border border-blue-100 dark:border-blue-800">
                             <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
                             <span data-lang="en">Leading IT Consultancy</span>
                             <span data-lang="id" class="hidden">Konsultan IT Terkemuka</span>
                         </div>
-                        <h1 class="text-4xl lg:text-6xl font-display font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight mb-6">
-                            <span data-lang="en">IT Solutions Built for <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Corporate Innovation</span></span>
-                            <span data-lang="id" class="hidden">Solusi IT untuk <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Inovasi Perusahaan</span></span>
+                        <h1
+                            class="text-4xl lg:text-6xl font-display font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight mb-6">
+                            <span data-lang="en">IT Solutions Built for <span
+                                    class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Corporate
+                                    Innovation</span></span>
+                            <span data-lang="id" class="hidden">Solusi IT untuk <span
+                                    class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Inovasi
+                                    Perusahaan</span></span>
                         </h1>
-                        <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-body">
-                            <span data-lang="en">Empowering your vision with top-tier talent and streamlined consulting. We bridge the gap between complex technology and business goals.</span>
-                            <span data-lang="id" class="hidden">Memberdayakan visi Anda dengan talenta terbaik dan konsultasi terpadu. Kami menjembatani kesenjangan antara teknologi kompleks dan tujuan bisnis.</span>
+                        <p
+                            class="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-body">
+                            <span data-lang="en">Empowering your vision with top-tier talent and streamlined consulting.
+                                We bridge the gap between complex technology and business goals.</span>
+                            <span data-lang="id" class="hidden">Memberdayakan visi Anda dengan talenta terbaik dan
+                                konsultasi terpadu. Kami menjembatani kesenjangan antara teknologi kompleks dan tujuan
+                                bisnis.</span>
                         </p>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <a class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg font-bold transition-all shadow-lg shadow-primary/25 hover:-translate-y-0.5" href="case-studies.html">
+                            <a class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg font-bold transition-all shadow-lg shadow-primary/25 hover:-translate-y-0.5"
+                                href="case-studies.html">
                                 <span data-lang="en">Explore Solutions</span>
                                 <span data-lang="id" class="hidden">Jelajahi Solusi</span>
                                 <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
                             </a>
-                            <a class="inline-flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white px-8 py-4 rounded-lg font-bold transition-all border border-slate-200 dark:border-slate-700" href="portfolio.html">
+                            <a class="inline-flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white px-8 py-4 rounded-lg font-bold transition-all border border-slate-200 dark:border-slate-700"
+                                href="portfolio.html">
                                 <span data-lang="en">View Case Studies</span>
                                 <span data-lang="id" class="hidden">Lihat Studi Kasus</span>
                             </a>
                         </div>
                     </div>
                     <div class="relative lg:h-[540px] w-full rounded-2xl overflow-hidden shadow-2xl group">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
-                        <img alt="Team of diverse IT professionals collaborating in a modern office environment" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxhLzhRUgheCrLI7xNVLkBZMUAn4iRXoJ7wVLOyRz-dHCffQS7kKB851Ro7iHc5WwBZ7TdHFKWh1scVhSYN65cKmAa80pvuCDYPiSJ_iqtOAzr19-fSX2n3TSQVzL9Xf22wmvq3e1It5bGtLB1kbARhcKaIqMoj3YJ0E0mevuslCgaYj6-wYqiAyVY3_7ajc1brw3xXuC7xpVWkIFP-SCNjeoePbbWFFrSthkQpHHtoCqhttn-zSk4pplyQGR1INir-xgfBC5U-l8" />
-                        <div class="absolute bottom-8 left-8 z-20 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm p-5 rounded-xl shadow-xl border border-white/20 max-w-xs">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10">
+                        </div>
+                        <img alt="Team of diverse IT professionals collaborating in a modern office environment"
+                            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxhLzhRUgheCrLI7xNVLkBZMUAn4iRXoJ7wVLOyRz-dHCffQS7kKB851Ro7iHc5WwBZ7TdHFKWh1scVhSYN65cKmAa80pvuCDYPiSJ_iqtOAzr19-fSX2n3TSQVzL9Xf22wmvq3e1It5bGtLB1kbARhcKaIqMoj3YJ0E0mevuslCgaYj6-wYqiAyVY3_7ajc1brw3xXuC7xpVWkIFP-SCNjeoePbbWFFrSthkQpHHtoCqhttn-zSk4pplyQGR1INir-xgfBC5U-l8" />
+                        <div
+                            class="absolute bottom-8 left-8 z-20 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm p-5 rounded-xl shadow-xl border border-white/20 max-w-xs">
                             <div class="flex items-center gap-4 mb-3">
                                 <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg text-secondary">
                                     <span class="material-symbols-outlined">trending_up</span>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase">Efficiency Boost</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase">
+                                        Efficiency Boost</p>
                                     <p class="text-lg font-bold text-slate-900 dark:text-white">+45% Productivity</p>
                                 </div>
                             </div>
@@ -744,7 +975,7 @@
                 </div>
             </div>
         </header>
-        
+
         <!-- Trust Badge Strip -->
         <section class="py-10 border-y border-slate-100 dark:border-slate-800 bg-white dark:bg-background-dark">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -755,84 +986,167 @@
                 <div class="marquee-container">
                     <div class="marquee-content opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
                         <div class="flex items-center gap-12">
-                            <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200"><span class="material-symbols-outlined text-3xl">verified_user</span> ISO 27001</div>
-                            <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200"><span class="material-symbols-outlined text-3xl">corporate_fare</span> TechCorp</div>
-                            <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200"><span class="material-symbols-outlined text-3xl">account_balance</span> GovSystems</div>
-                            <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200"><span class="material-symbols-outlined text-3xl">rocket_launch</span> SME Growth</div>
-                            <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200"><span class="material-symbols-outlined text-3xl">security</span> SecureNet</div>
+                            <div
+                                class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
+                                <span class="material-symbols-outlined text-3xl">verified_user</span> ISO 27001</div>
+                            <div
+                                class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
+                                <span class="material-symbols-outlined text-3xl">corporate_fare</span> TechCorp</div>
+                            <div
+                                class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
+                                <span class="material-symbols-outlined text-3xl">account_balance</span> GovSystems</div>
+                            <div
+                                class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
+                                <span class="material-symbols-outlined text-3xl">rocket_launch</span> SME Growth</div>
+                            <div
+                                class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
+                                <span class="material-symbols-outlined text-3xl">security</span> SecureNet</div>
                         </div>
                         <div class="flex items-center gap-12">
-                            <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200"><span class="material-symbols-outlined text-3xl">verified_user</span> ISO 27001</div>
-                            <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200"><span class="material-symbols-outlined text-3xl">corporate_fare</span> TechCorp</div>
-                            <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200"><span class="material-symbols-outlined text-3xl">account_balance</span> GovSystems</div>
-                            <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200"><span class="material-symbols-outlined text-3xl">rocket_launch</span> SME Growth</div>
-                            <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200"><span class="material-symbols-outlined text-3xl">security</span> SecureNet</div>
+                            <div
+                                class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
+                                <span class="material-symbols-outlined text-3xl">verified_user</span> ISO 27001</div>
+                            <div
+                                class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
+                                <span class="material-symbols-outlined text-3xl">corporate_fare</span> TechCorp</div>
+                            <div
+                                class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
+                                <span class="material-symbols-outlined text-3xl">account_balance</span> GovSystems</div>
+                            <div
+                                class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
+                                <span class="material-symbols-outlined text-3xl">rocket_launch</span> SME Growth</div>
+                            <div
+                                class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
+                                <span class="material-symbols-outlined text-3xl">security</span> SecureNet</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- Talent Visualizer Section -->
         <section class="py-24 bg-slate-50 dark:bg-slate-900/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-2 gap-16 items-center">
                     <div>
                         <h2 class="text-3xl lg:text-4xl font-display font-bold text-slate-900 dark:text-white mb-6">
-                            <span data-lang="en">IT Outsourcing Solutions for <span class="text-primary">Your Business Efficiency</span></span>
-                            <span data-lang="id" class="hidden">Solusi IT Outsourcing untuk <span class="text-primary">Efisiensi Bisnis Anda</span></span>
+                            <span data-lang="en">IT Outsourcing Solutions for <span class="text-primary">Your Business
+                                    Efficiency</span></span>
+                            <span data-lang="id" class="hidden">Solusi IT Outsourcing untuk <span
+                                    class="text-primary">Efisiensi Bisnis Anda</span></span>
                         </h2>
                         <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 font-body">
-                            <span data-lang="en">Access verified IT talent without the long recruitment process. Save costs, accelerate productivity.</span>
-                            <span data-lang="id" class="hidden">Akses talenta IT terverifikasi tanpa proses rekrutmen panjang. Hemat biaya, percepat produktivitas.</span>
+                            <span data-lang="en">Access verified IT talent without the long recruitment process. Save
+                                costs, accelerate productivity.</span>
+                            <span data-lang="id" class="hidden">Akses talenta IT terverifikasi tanpa proses rekrutmen
+                                panjang. Hemat biaya, percepat produktivitas.</span>
                         </p>
                         <div class="space-y-6">
-                            <div class="flex gap-4 p-4 bg-white dark:bg-background-dark rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
-                                <div class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-primary"><span class="material-symbols-outlined">monetization_on</span></div>
-                                <div><h3 class="font-bold text-slate-900 dark:text-white text-lg"><span data-lang="en">Save Recruitment Costs</span><span data-lang="id" class="hidden">Hemat Biaya Rekrutmen</span></h3><p class="text-slate-500 dark:text-slate-400 text-sm"><span data-lang="en">IT team ready without training & overhead costs.</span><span data-lang="id" class="hidden">Tim IT siap tanpa biaya training & overhead.</span></p></div>
+                            <div
+                                class="flex gap-4 p-4 bg-white dark:bg-background-dark rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                                <div
+                                    class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-primary">
+                                    <span class="material-symbols-outlined">monetization_on</span></div>
+                                <div>
+                                    <h3 class="font-bold text-slate-900 dark:text-white text-lg"><span
+                                            data-lang="en">Save Recruitment Costs</span><span data-lang="id"
+                                            class="hidden">Hemat Biaya Rekrutmen</span></h3>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm"><span data-lang="en">IT team
+                                            ready without training & overhead costs.</span><span data-lang="id"
+                                            class="hidden">Tim IT siap tanpa biaya training & overhead.</span></p>
+                                </div>
                             </div>
-                            <div class="flex gap-4 p-4 bg-white dark:bg-background-dark rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
-                                <div class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-orange-50 dark:bg-orange-900/20 text-accent"><span class="material-symbols-outlined">bolt</span></div>
-                                <div><h3 class="font-bold text-slate-900 dark:text-white text-lg"><span data-lang="en">Rapid Onboarding</span><span data-lang="id" class="hidden">Onboarding Cepat</span></h3><p class="text-slate-500 dark:text-slate-400 text-sm"><span data-lang="en">Integrate with your team within days.</span><span data-lang="id" class="hidden">Integrasi dengan tim Anda dalam hitungan hari.</span></p></div>
+                            <div
+                                class="flex gap-4 p-4 bg-white dark:bg-background-dark rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                                <div
+                                    class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-orange-50 dark:bg-orange-900/20 text-accent">
+                                    <span class="material-symbols-outlined">bolt</span></div>
+                                <div>
+                                    <h3 class="font-bold text-slate-900 dark:text-white text-lg"><span
+                                            data-lang="en">Rapid Onboarding</span><span data-lang="id"
+                                            class="hidden">Onboarding Cepat</span></h3>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm"><span data-lang="en">Integrate
+                                            with your team within days.</span><span data-lang="id"
+                                            class="hidden">Integrasi dengan tim Anda dalam hitungan hari.</span></p>
+                                </div>
                             </div>
-                            <div class="flex gap-4 p-4 bg-white dark:bg-background-dark rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
-                                <div class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-green-50 dark:bg-green-900/20 text-secondary"><span class="material-symbols-outlined">verified</span></div>
-                                <div><h3 class="font-bold text-slate-900 dark:text-white text-lg"><span data-lang="en">Verified Talent</span><span data-lang="id" class="hidden">Talent Terverifikasi</span></h3><p class="text-slate-500 dark:text-slate-400 text-sm"><span data-lang="en">Developers & consultants with proven track records.</span><span data-lang="id" class="hidden">Developer & consultant dengan track record terbukti.</span></p></div>
+                            <div
+                                class="flex gap-4 p-4 bg-white dark:bg-background-dark rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                                <div
+                                    class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-green-50 dark:bg-green-900/20 text-secondary">
+                                    <span class="material-symbols-outlined">verified</span></div>
+                                <div>
+                                    <h3 class="font-bold text-slate-900 dark:text-white text-lg"><span
+                                            data-lang="en">Verified Talent</span><span data-lang="id"
+                                            class="hidden">Talent Terverifikasi</span></h3>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm"><span
+                                            data-lang="en">Developers & consultants with proven track
+                                            records.</span><span data-lang="id" class="hidden">Developer & consultant
+                                            dengan track record terbukti.</span></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="relative bg-white/80 dark:bg-background-dark/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white dark:border-slate-800 overflow-hidden group">
-                        <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-colors duration-700"></div>
-                        <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-accent/10 rounded-full blur-3xl group-hover:bg-accent/20 transition-colors duration-700"></div>
+                    <div
+                        class="relative bg-white/80 dark:bg-background-dark/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white dark:border-slate-800 overflow-hidden group">
+                        <div
+                            class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-colors duration-700">
+                        </div>
+                        <div
+                            class="absolute -bottom-24 -left-24 w-64 h-64 bg-accent/10 rounded-full blur-3xl group-hover:bg-accent/20 transition-colors duration-700">
+                        </div>
                         <div class="relative z-10">
-                            <h3 class="font-display font-black text-2xl mb-2 text-center bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">Talent Ecosystem</h3>
-                            <p class="text-center text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest mb-8">Expertise Coverage</p>
+                            <h3
+                                class="font-display font-black text-2xl mb-2 text-center bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
+                                Talent Ecosystem</h3>
+                            <p
+                                class="text-center text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest mb-8">
+                                Expertise Coverage</p>
                             <div class="relative aspect-square max-w-[280px] mx-auto mb-10">
                                 <svg viewbox="0 0 200 200" class="w-full h-full drop-shadow-2xl">
-                                    <circle cx="100" cy="100" r="90" fill="none" class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
-                                    <circle cx="100" cy="100" r="60" fill="none" class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
-                                    <circle cx="100" cy="100" r="30" fill="none" class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
-                                    <line x1="100" y1="10" x2="100" y2="100" class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
-                                    <line x1="190" y1="100" x2="100" y2="100" class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
-                                    <line x1="100" y1="190" x2="100" y2="100" class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
-                                    <line x1="10" y1="100" x2="100" y2="100" class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
-                                    <polygon points="100,20 170,70 160,140 100,180 40,140 30,70" class="fill-primary/20 stroke-primary" stroke-width="3" stroke-linejoin="round"><animate attributeName="opacity" values="0.6;0.9;0.6" dur="3s" repeatCount="indefinite" /></polygon>
+                                    <circle cx="100" cy="100" r="90" fill="none"
+                                        class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
+                                    <circle cx="100" cy="100" r="60" fill="none"
+                                        class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
+                                    <circle cx="100" cy="100" r="30" fill="none"
+                                        class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
+                                    <line x1="100" y1="10" x2="100" y2="100"
+                                        class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
+                                    <line x1="190" y1="100" x2="100" y2="100"
+                                        class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
+                                    <line x1="100" y1="190" x2="100" y2="100"
+                                        class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
+                                    <line x1="10" y1="100" x2="100" y2="100"
+                                        class="stroke-slate-100 dark:stroke-slate-800" stroke-width="1" />
+                                    <polygon points="100,20 170,70 160,140 100,180 40,140 30,70"
+                                        class="fill-primary/20 stroke-primary" stroke-width="3" stroke-linejoin="round">
+                                        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3s"
+                                            repeatCount="indefinite" />
+                                    </polygon>
                                     <circle cx="100" cy="20" r="4" class="fill-primary" />
                                     <circle cx="170" cy="70" r="4" class="fill-accent" />
                                     <circle cx="160" cy="140" r="4" class="fill-secondary" />
                                     <circle cx="100" cy="180" r="4" class="fill-blue-400" />
                                 </svg>
-                                <div class="absolute -top-2 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-md text-[10px] font-black uppercase text-primary border border-primary/20">Frontend</div>
-                                <div class="absolute top-1/2 -right-4 -translate-y-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-md text-[10px] font-black uppercase text-accent border border-accent/20">Backend</div>
-                                <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-md text-[10px] font-black uppercase text-secondary border border-secondary/20">Cloud</div>
-                                <div class="absolute top-1/2 -left-4 -translate-y-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-md text-[10px] font-black uppercase text-blue-500 border border-blue-500/20">AI & Data</div>
+                                <div
+                                    class="absolute -top-2 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-md text-[10px] font-black uppercase text-primary border border-primary/20">
+                                    Frontend</div>
+                                <div
+                                    class="absolute top-1/2 -right-4 -translate-y-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-md text-[10px] font-black uppercase text-accent border border-accent/20">
+                                    Backend</div>
+                                <div
+                                    class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-md text-[10px] font-black uppercase text-secondary border border-secondary/20">
+                                    Cloud</div>
+                                <div
+                                    class="absolute top-1/2 -left-4 -translate-y-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-md text-[10px] font-black uppercase text-blue-500 border border-blue-500/20">
+                                    AI & Data</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- ========== AI CLASSIFICATION METRICS SECTION ========== -->
         <section class="py-16 bg-slate-50 dark:bg-slate-900/30">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -840,25 +1154,36 @@
                     <span data-lang="en">AI Classification Metrics</span>
                     <span data-lang="id" class="hidden">Metrik Klasifikasi AI</span>
                 </h2>
-                
+
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="glass-card p-6">
                         <div class="flex items-center gap-3 mb-4">
                             <span class="text-3xl">🏛️</span>
-                            <h3 class="text-xl font-bold"><span data-lang="en">Government</span><span data-lang="id" class="hidden">Pemerintah</span></h3>
+                            <h3 class="text-xl font-bold"><span data-lang="en">Government</span><span data-lang="id"
+                                    class="hidden">Pemerintah</span></h3>
                         </div>
                         <div class="space-y-3">
                             <div>
-                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Match Score</span><span data-lang="id" class="hidden">Skor Kecocokan</span></p>
-                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden"><div class="h-full bg-orange-500 rounded-full" style="width: 85%"></div></div>
-                                <p class="text-xs mt-1 text-slate-500 dark:text-slate-400"><span data-lang="en">85% - Based on regulatory compliance & scale</span><span data-lang="id" class="hidden">85% - Berdasarkan kepatuhan regulasi & skala</span></p>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Match
+                                        Score</span><span data-lang="id" class="hidden">Skor Kecocokan</span></p>
+                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-orange-500 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <p class="text-xs mt-1 text-slate-500 dark:text-slate-400"><span data-lang="en">85% -
+                                        Based on regulatory compliance & scale</span><span data-lang="id"
+                                        class="hidden">85% - Berdasarkan kepatuhan regulasi & skala</span></p>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Criteria:</span><span data-lang="id" class="hidden">Kriteria:</span></p>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span
+                                        data-lang="en">Criteria:</span><span data-lang="id"
+                                        class="hidden">Kriteria:</span></p>
                                 <ul class="text-xs list-disc list-inside text-slate-500 dark:text-slate-400">
-                                    <li><span data-lang="en">Regulatory compliance: +30%</span><span data-lang="id" class="hidden">Kepatuhan regulasi: +30%</span></li>
-                                    <li><span data-lang="en">Project scale > 1M: +25%</span><span data-lang="id" class="hidden">Skala proyek > 1M: +25%</span></li>
-                                    <li><span data-lang="en">Security requirements: +30%</span><span data-lang="id" class="hidden">Kebutuhan keamanan: +30%</span></li>
+                                    <li><span data-lang="en">Regulatory compliance: +30%</span><span data-lang="id"
+                                            class="hidden">Kepatuhan regulasi: +30%</span></li>
+                                    <li><span data-lang="en">Project scale > 1M: +25%</span><span data-lang="id"
+                                            class="hidden">Skala proyek > 1M: +25%</span></li>
+                                    <li><span data-lang="en">Security requirements: +30%</span><span data-lang="id"
+                                            class="hidden">Kebutuhan keamanan: +30%</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -870,16 +1195,26 @@
                         </div>
                         <div class="space-y-3">
                             <div>
-                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Match Score</span><span data-lang="id" class="hidden">Skor Kecocokan</span></p>
-                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden"><div class="h-full bg-green-500 rounded-full" style="width: 70%"></div></div>
-                                <p class="text-xs mt-1 text-slate-500 dark:text-slate-400"><span data-lang="en">70% - Based on business agility & growth potential</span><span data-lang="id" class="hidden">70% - Berdasarkan agility bisnis & potensi pertumbuhan</span></p>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Match
+                                        Score</span><span data-lang="id" class="hidden">Skor Kecocokan</span></p>
+                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500 rounded-full" style="width: 70%"></div>
+                                </div>
+                                <p class="text-xs mt-1 text-slate-500 dark:text-slate-400"><span data-lang="en">70% -
+                                        Based on business agility & growth potential</span><span data-lang="id"
+                                        class="hidden">70% - Berdasarkan agility bisnis & potensi pertumbuhan</span></p>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Criteria:</span><span data-lang="id" class="hidden">Kriteria:</span></p>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span
+                                        data-lang="en">Criteria:</span><span data-lang="id"
+                                        class="hidden">Kriteria:</span></p>
                                 <ul class="text-xs list-disc list-inside text-slate-500 dark:text-slate-400">
-                                    <li><span data-lang="en">Digital readiness: +25%</span><span data-lang="id" class="hidden">Kesiapan digital: +25%</span></li>
-                                    <li><span data-lang="en">Growth potential: +25%</span><span data-lang="id" class="hidden">Potensi pertumbuhan: +25%</span></li>
-                                    <li><span data-lang="en">Budget flexibility: +20%</span><span data-lang="id" class="hidden">Fleksibilitas anggaran: +20%</span></li>
+                                    <li><span data-lang="en">Digital readiness: +25%</span><span data-lang="id"
+                                            class="hidden">Kesiapan digital: +25%</span></li>
+                                    <li><span data-lang="en">Growth potential: +25%</span><span data-lang="id"
+                                            class="hidden">Potensi pertumbuhan: +25%</span></li>
+                                    <li><span data-lang="en">Budget flexibility: +20%</span><span data-lang="id"
+                                            class="hidden">Fleksibilitas anggaran: +20%</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -887,20 +1222,31 @@
                     <div class="glass-card p-6">
                         <div class="flex items-center gap-3 mb-4">
                             <span class="text-3xl">🏢</span>
-                            <h3 class="text-xl font-bold"><span data-lang="en">Corporate</span><span data-lang="id" class="hidden">Perusahaan</span></h3>
+                            <h3 class="text-xl font-bold"><span data-lang="en">Corporate</span><span data-lang="id"
+                                    class="hidden">Perusahaan</span></h3>
                         </div>
                         <div class="space-y-3">
                             <div>
-                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Match Score</span><span data-lang="id" class="hidden">Skor Kecocokan</span></p>
-                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden"><div class="h-full bg-blue-500 rounded-full" style="width: 95%"></div></div>
-                                <p class="text-xs mt-1 text-slate-500 dark:text-slate-400"><span data-lang="en">95% - Based on enterprise readiness & integration</span><span data-lang="id" class="hidden">95% - Berdasarkan kesiapan enterprise & integrasi</span></p>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Match
+                                        Score</span><span data-lang="id" class="hidden">Skor Kecocokan</span></p>
+                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-500 rounded-full" style="width: 95%"></div>
+                                </div>
+                                <p class="text-xs mt-1 text-slate-500 dark:text-slate-400"><span data-lang="en">95% -
+                                        Based on enterprise readiness & integration</span><span data-lang="id"
+                                        class="hidden">95% - Berdasarkan kesiapan enterprise & integrasi</span></p>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-400 dark:text-slate-400"><span data-lang="en">Criteria:</span><span data-lang="id" class="hidden">Kriteria:</span></p>
+                                <p class="text-sm text-gray-400 dark:text-slate-400"><span
+                                        data-lang="en">Criteria:</span><span data-lang="id"
+                                        class="hidden">Kriteria:</span></p>
                                 <ul class="text-xs list-disc list-inside text-slate-500 dark:text-slate-400">
-                                    <li><span data-lang="en">Enterprise integration: +35%</span><span data-lang="id" class="hidden">Integrasi enterprise: +35%</span></li>
-                                    <li><span data-lang="en">Scalability needs: +30%</span><span data-lang="id" class="hidden">Kebutuhan skalabilitas: +30%</span></li>
-                                    <li><span data-lang="en">Support requirements: +30%</span><span data-lang="id" class="hidden">Kebutuhan dukungan: +30%</span></li>
+                                    <li><span data-lang="en">Enterprise integration: +35%</span><span data-lang="id"
+                                            class="hidden">Integrasi enterprise: +35%</span></li>
+                                    <li><span data-lang="en">Scalability needs: +30%</span><span data-lang="id"
+                                            class="hidden">Kebutuhan skalabilitas: +30%</span></li>
+                                    <li><span data-lang="en">Support requirements: +30%</span><span data-lang="id"
+                                            class="hidden">Kebutuhan dukungan: +30%</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -908,59 +1254,147 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- Smart Village Initiative Spotlight -->
         <section class="py-24 relative overflow-hidden">
             <div class="absolute inset-0 bg-slate-900 z-0">
-                <img alt="Rural community engaging with digital technology on tablets" class="w-full h-full object-cover opacity-20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5LU13BhMaSE9q4xwyT6tkugeazlH0pEJ70mhE-oc1jjyKATVzxOk9GouY1KRyMzc78DTJtVXFOgRd5hlW4WM3R9DKSElw5fGQSod4mTvEXXD5RruRAaxg-VpgqgDGYjroyHZF0w2J17tG2yCtP23QjrYtYNAH2X3NkkLtFC6jbT94uCCeYnkbOLxPK0vZGRvrpZzLmsIVxx6GcAcFLwpTsdkKaoUX3D44q8vM0sMzmXGjzHfS9QGP0pIModJFmZhCjNio3mI-Dfs" />
+                <img alt="Rural community engaging with digital technology on tablets"
+                    class="w-full h-full object-cover opacity-20"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5LU13BhMaSE9q4xwyT6tkugeazlH0pEJ70mhE-oc1jjyKATVzxOk9GouY1KRyMzc78DTJtVXFOgRd5hlW4WM3R9DKSElw5fGQSod4mTvEXXD5RruRAaxg-VpgqgDGYjroyHZF0w2J17tG2yCtP23QjrYtYNAH2X3NkkLtFC6jbT94uCCeYnkbOLxPK0vZGRvrpZzLmsIVxx6GcAcFLwpTsdkKaoUX3D44q8vM0sMzmXGjzHfS9QGP0pIModJFmZhCjNio3mI-Dfs" />
             </div>
             <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-900/40 z-10"></div>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
                 <div class="flex flex-col lg:flex-row gap-12 items-center">
                     <div class="flex-1">
-                        <div class="inline-block px-3 py-1 rounded-full bg-secondary/20 border border-secondary/30 text-secondary text-xs font-bold uppercase tracking-wider mb-6">
-                            <span data-lang="en">Social Impact</span><span data-lang="id" class="hidden">Dampak Sosial</span>
+                        <div
+                            class="inline-block px-3 py-1 rounded-full bg-secondary/20 border border-secondary/30 text-secondary text-xs font-bold uppercase tracking-wider mb-6">
+                            <span data-lang="en">Social Impact</span><span data-lang="id" class="hidden">Dampak
+                                Sosial</span>
                         </div>
-                        <h2 class="text-3xl lg:text-5xl font-display font-bold text-white mb-6"><span data-lang="en">Technology with Heart: <br />The Smart Village Initiative</span><span data-lang="id" class="hidden">Teknologi dengan Hati: <br />Inisiatif Desa Cerdas</span></h2>
-                        <p class="text-lg text-slate-300 mb-8 max-w-xl font-body"><span data-lang="en">We believe in technology as a force for good. Sagara actively invests in digitizing rural communities, providing education, and building sustainable infrastructure.</span><span data-lang="id" class="hidden">Kami percaya pada teknologi sebagai kekuatan untuk kebaikan. Sagara secara aktif berinvestasi dalam digitalisasi masyarakat pedesaan.</span></p>
-                        <button onclick="goToAbout()" class="bg-secondary hover:bg-secondary/90 text-white px-8 py-3.5 rounded-lg font-bold transition-all shadow-lg shadow-secondary/25 cursor-pointer">
+                        <h2 class="text-3xl lg:text-5xl font-display font-bold text-white mb-6"><span
+                                data-lang="en">Technology with Heart: <br />The Smart Village Initiative</span><span
+                                data-lang="id" class="hidden">Teknologi dengan Hati: <br />Inisiatif Desa Cerdas</span>
+                        </h2>
+                        <p class="text-lg text-slate-300 mb-8 max-w-xl font-body"><span data-lang="en">We believe in
+                                technology as a force for good. Sagara actively invests in digitizing rural communities,
+                                providing education, and building sustainable infrastructure.</span><span data-lang="id"
+                                class="hidden">Kami percaya pada teknologi sebagai kekuatan untuk kebaikan. Sagara
+                                secara aktif berinvestasi dalam digitalisasi masyarakat pedesaan.</span></p>
+                        <button onclick="goToAbout()"
+                            class="bg-secondary hover:bg-secondary/90 text-white px-8 py-3.5 rounded-lg font-bold transition-all shadow-lg shadow-secondary/25 cursor-pointer">
                             <span data-lang="en">Learn About Our Impact</span>
                             <span data-lang="id" class="hidden">Pelajari Dampak Kami</span>
                         </button>
                     </div>
                     <div class="flex-1 w-full">
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-xl"><h4 class="text-4xl font-bold text-secondary mb-2">50+</h4><p class="text-white text-sm">Villages Digitized</p></div>
-                            <div class="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-xl"><h4 class="text-4xl font-bold text-secondary mb-2">10k+</h4><p class="text-white text-sm">Students Educated</p></div>
-                            <div class="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-xl col-span-2"><p class="text-white italic text-lg leading-relaxed">"Sagara's initiative didn't just bring internet; it brought opportunity to our entire region."</p><div class="mt-4 flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-white/20"></div><span class="text-sm text-slate-300 font-semibold">Community Leader, West Java</span></div></div>
+                            <div class="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-xl">
+                                <h4 class="text-4xl font-bold text-secondary mb-2">50+</h4>
+                                <p class="text-white text-sm">Villages Digitized</p>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-xl">
+                                <h4 class="text-4xl font-bold text-secondary mb-2">10k+</h4>
+                                <p class="text-white text-sm">Students Educated</p>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-xl col-span-2">
+                                <p class="text-white italic text-lg leading-relaxed">"Sagara's initiative didn't just
+                                    bring internet; it brought opportunity to our entire region."</p>
+                                <div class="mt-4 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-white/20"></div><span
+                                        class="text-sm text-slate-300 font-semibold">Community Leader, West Java</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- Case Study Preview -->
         <section class="py-24 bg-white dark:bg-background-dark">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-end mb-12">
-                    <div><h2 class="text-3xl font-display font-bold text-slate-900 dark:text-white mb-2"><span data-lang="en">Success Stories</span><span data-lang="id" class="hidden">Kisah Sukses</span></h2><p class="text-slate-500 dark:text-slate-400"><span data-lang="en">See how we transform businesses across sectors.</span><span data-lang="id" class="hidden">Lihat bagaimana kami mentransformasi bisnis di berbagai sektor.</span></p></div>
+                    <div>
+                        <h2 class="text-3xl font-display font-bold text-slate-900 dark:text-white mb-2"><span
+                                data-lang="en">Success Stories</span><span data-lang="id" class="hidden">Kisah
+                                Sukses</span></h2>
+                        <p class="text-slate-500 dark:text-slate-400"><span data-lang="en">See how we transform
+                                businesses across sectors.</span><span data-lang="id" class="hidden">Lihat bagaimana
+                                kami mentransformasi bisnis di berbagai sektor.</span></p>
+                    </div>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="group cursor-pointer"><div class="relative h-64 rounded-xl overflow-hidden mb-6"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCziWsQV_DUf-vLJ_7GL0M4wc5Aesflbox7FEcy8Nz3Tr1kVglF1JQEGWX8wpjVIanyBxGyPmxSEVD5hKrkMmpNrSgQvzDGyVpWYawY6daTTM5l-LQUyHDpQe4TejWnfSavIdT78qfqcLNgqygMVaNFE0WUbiYhFpSI581jeyknZlbuF7X3-xy9CecZaWPu-u9VBUPpwIJVSQhii9icz6CRDe7uYIMSPtRbjdmQhanwhBRB7XynNjzI7vLWOabRaTj98QQ4Go8Cly0" /><div class="absolute top-4 left-4 z-20 bg-white/90 dark:bg-slate-900/90 px-3 py-1 rounded text-xs font-bold text-primary uppercase tracking-wider">Corporate</div></div><h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Fintech Digital Transformation</h3><p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Revamping legacy systems for a leading national bank.</p><a class="text-primary font-bold text-sm inline-flex items-center gap-1 hover:underline" href="#">Read Case Study <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a></div>
-                    <div class="group cursor-pointer"><div class="relative h-64 rounded-xl overflow-hidden mb-6"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxa7olSqG3LGHT9lgcS7LmB9-mvmQlZZW-Xy12kPrGywcwrU3V0VccWJcu4rBFzxz_YPK8xzK6bEFxaIKxmKrY38wR4Bbt5edcdkfGkTS_X52czX-HQIPubs8r7iuooOFVXuC4muvqg3gQE2oRrlP6Mip56c8FsF-t-wucZQnUBvh7kmshiXzJLQrRBurAvo9Kn_Z-18n78FwZ698pGDYRoq1WyPJ2C3rgHmV2MYqT4mLT1aLQ-m3V6MWqd7YRuonyjEGvk13_1AM" /><div class="absolute top-4 left-4 z-20 bg-white/90 dark:bg-slate-900/90 px-3 py-1 rounded text-xs font-bold text-accent uppercase tracking-wider">SME</div></div><h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Retail E-commerce Scale-up</h3><p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Helping a local fashion brand reach global markets.</p><a class="text-primary font-bold text-sm inline-flex items-center gap-1 hover:underline" href="#">Read Case Study <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a></div>
-                    <div class="group cursor-pointer"><div class="relative h-64 rounded-xl overflow-hidden mb-6"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChDzVDzpNYb_0q1SnBPdAD4xBzwfCKc2PyM2nhZsZ5_GAwrhNtocXDMyR5YWhzxIbPKy3TY9F83t6GynklCZF2WxCeoD23gIOjQEv9maxEamoyTaHz2o3IVgSaumNS21FLgZS4Ug_0KcnDaz76428WJCnixyUPd_fQKVubG0UDcNbdc2AFBTGIancDBWw2v5LMjhz5GCgIkYGn2Ic0uOmsLT5vORe4uBKNtWyczjs8mOpHXhM0ejGoaz2pVrujv1SKCUKuHw0nkRo" /><div class="absolute top-4 left-4 z-20 bg-white/90 dark:bg-slate-900/90 px-3 py-1 rounded text-xs font-bold text-slate-700 dark:text-white uppercase tracking-wider">Government</div></div><h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Smart City Data Integration</h3><p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Unifying public services into a single citizen app.</p><a class="text-primary font-bold text-sm inline-flex items-center gap-1 hover:underline" href="#">Read Case Study <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a></div>
+                    <div class="group cursor-pointer">
+                        <div class="relative h-64 rounded-xl overflow-hidden mb-6"><img
+                                class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCziWsQV_DUf-vLJ_7GL0M4wc5Aesflbox7FEcy8Nz3Tr1kVglF1JQEGWX8wpjVIanyBxGyPmxSEVD5hKrkMmpNrSgQvzDGyVpWYawY6daTTM5l-LQUyHDpQe4TejWnfSavIdT78qfqcLNgqygMVaNFE0WUbiYhFpSI581jeyknZlbuF7X3-xy9CecZaWPu-u9VBUPpwIJVSQhii9icz6CRDe7uYIMSPtRbjdmQhanwhBRB7XynNjzI7vLWOabRaTj98QQ4Go8Cly0" />
+                            <div
+                                class="absolute top-4 left-4 z-20 bg-white/90 dark:bg-slate-900/90 px-3 py-1 rounded text-xs font-bold text-primary uppercase tracking-wider">
+                                Corporate</div>
+                        </div>
+                        <h3
+                            class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
+                            Fintech Digital Transformation</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Revamping legacy systems for a
+                            leading national bank.</p><a
+                            class="text-primary font-bold text-sm inline-flex items-center gap-1 hover:underline"
+                            href="#">Read Case Study <span
+                                class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                    </div>
+                    <div class="group cursor-pointer">
+                        <div class="relative h-64 rounded-xl overflow-hidden mb-6"><img
+                                class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxa7olSqG3LGHT9lgcS7LmB9-mvmQlZZW-Xy12kPrGywcwrU3V0VccWJcu4rBFzxz_YPK8xzK6bEFxaIKxmKrY38wR4Bbt5edcdkfGkTS_X52czX-HQIPubs8r7iuooOFVXuC4muvqg3gQE2oRrlP6Mip56c8FsF-t-wucZQnUBvh7kmshiXzJLQrRBurAvo9Kn_Z-18n78FwZ698pGDYRoq1WyPJ2C3rgHmV2MYqT4mLT1aLQ-m3V6MWqd7YRuonyjEGvk13_1AM" />
+                            <div
+                                class="absolute top-4 left-4 z-20 bg-white/90 dark:bg-slate-900/90 px-3 py-1 rounded text-xs font-bold text-accent uppercase tracking-wider">
+                                SME</div>
+                        </div>
+                        <h3
+                            class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
+                            Retail E-commerce Scale-up</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Helping a local fashion brand reach
+                            global markets.</p><a
+                            class="text-primary font-bold text-sm inline-flex items-center gap-1 hover:underline"
+                            href="#">Read Case Study <span
+                                class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                    </div>
+                    <div class="group cursor-pointer">
+                        <div class="relative h-64 rounded-xl overflow-hidden mb-6"><img
+                                class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuChDzVDzpNYb_0q1SnBPdAD4xBzwfCKc2PyM2nhZsZ5_GAwrhNtocXDMyR5YWhzxIbPKy3TY9F83t6GynklCZF2WxCeoD23gIOjQEv9maxEamoyTaHz2o3IVgSaumNS21FLgZS4Ug_0KcnDaz76428WJCnixyUPd_fQKVubG0UDcNbdc2AFBTGIancDBWw2v5LMjhz5GCgIkYGn2Ic0uOmsLT5vORe4uBKNtWyczjs8mOpHXhM0ejGoaz2pVrujv1SKCUKuHw0nkRo" />
+                            <div
+                                class="absolute top-4 left-4 z-20 bg-white/90 dark:bg-slate-900/90 px-3 py-1 rounded text-xs font-bold text-slate-700 dark:text-white uppercase tracking-wider">
+                                Government</div>
+                        </div>
+                        <h3
+                            class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
+                            Smart City Data Integration</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Unifying public services into a
+                            single citizen app.</p><a
+                            class="text-primary font-bold text-sm inline-flex items-center gap-1 hover:underline"
+                            href="#">Read Case Study <span
+                                class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                    </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- Final CTA -->
         <section class="py-24 bg-slate-50 dark:bg-slate-900/30">
             <div class="max-w-4xl mx-auto px-4 text-center">
-                <h2 class="text-3xl lg:text-5xl font-display font-black text-slate-900 dark:text-white mb-6"><span data-lang="en">Ready to transform your IT Strategy?</span><span data-lang="id" class="hidden">Siap mengubah Strategi IT Anda?</span></h2>
-                <p class="text-xl text-slate-600 dark:text-slate-300 mb-10 font-body"><span data-lang="en">Let's build something extraordinary together. Our experts are ready to discuss your vision.</span><span data-lang="id" class="hidden">Mari membangun sesuatu yang luar biasa bersama. Ahli kami siap mendiskusikan visi Anda.</span></p>
+                <h2 class="text-3xl lg:text-5xl font-display font-black text-slate-900 dark:text-white mb-6"><span
+                        data-lang="en">Ready to transform your IT Strategy?</span><span data-lang="id"
+                        class="hidden">Siap mengubah Strategi IT Anda?</span></h2>
+                <p class="text-xl text-slate-600 dark:text-slate-300 mb-10 font-body"><span data-lang="en">Let's build
+                        something extraordinary together. Our experts are ready to discuss your vision.</span><span
+                        data-lang="id" class="hidden">Mari membangun sesuatu yang luar biasa bersama. Ahli kami siap
+                        mendiskusikan visi Anda.</span></p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a class="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-lg font-bold text-lg shadow-xl shadow-primary/30 transition-transform hover:-translate-y-1 inline-block text-center" href="contact.html"><span data-lang="en">Consult Now</span><span data-lang="id" class="hidden">Konsultasi Sekarang</span></a>
-                    <button onclick="downloadBrochure()" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white px-10 py-4 rounded-lg font-bold text-lg border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer">
+                    <a class="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-lg font-bold text-lg shadow-xl shadow-primary/30 transition-transform hover:-translate-y-1 inline-block text-center"
+                        href="contact.html"><span data-lang="en">Consult Now</span><span data-lang="id"
+                            class="hidden">Konsultasi Sekarang</span></a>
+                    <button onclick="downloadBrochure()"
+                        class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white px-10 py-4 rounded-lg font-bold text-lg border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer">
                         <span data-lang="en">Download Brochure</span>
                         <span data-lang="id" class="hidden">Unduh Brosur</span>
                     </button>
@@ -976,70 +1410,111 @@
                         <div class="flex items-center gap-2">
                             <div class="size-6 text-primary">
                                 <svg class="h-full w-full" fill="none" viewbox="0 0 48 48">
-                                    <path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
-                                    <path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764Z" fill="currentColor" fill-rule="evenodd"></path>
+                                    <path
+                                        d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z"
+                                        fill="currentColor"></path>
+                                    <path clip-rule="evenodd"
+                                        d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764Z"
+                                        fill="currentColor" fill-rule="evenodd"></path>
                                 </svg>
                             </div>
                             <span class="text-xl font-display font-bold text-slate-900 dark:text-white">Sagara</span>
                         </div>
-                        <p class="text-slate-500 text-sm leading-relaxed"><span data-lang="en">Premier IT consultancy delivering high-impact solutions for corporate, SME, and government sectors.</span><span data-lang="id" class="hidden">Konsultan IT terkemuka yang memberikan solusi berdampak tinggi untuk sektor korporasi, UKM, dan pemerintah.</span></p>
+                        <p class="text-slate-500 text-sm leading-relaxed"><span data-lang="en">Premier IT consultancy
+                                delivering high-impact solutions for corporate, SME, and government sectors.</span><span
+                                data-lang="id" class="hidden">Konsultan IT terkemuka yang memberikan solusi berdampak
+                                tinggi untuk sektor korporasi, UKM, dan pemerintah.</span></p>
                     </div>
-                    <div><h4 class="font-bold text-slate-900 dark:text-white mb-4">Services</h4><ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400"><li><a class="hover:text-primary transition-colors" href="#">Digital Transformation</a></li><li><a class="hover:text-primary transition-colors" href="#">IT Consulting</a></li><li><a class="hover:text-primary transition-colors" href="#">Custom Software Dev</a></li><li><a class="hover:text-primary transition-colors" href="#">Talent Augmentation</a></li></ul></div>
-                    <div><h4 class="font-bold text-slate-900 dark:text-white mb-4">Company</h4><ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400"><li><a class="hover:text-primary transition-colors" href="about.html">About Us</a></li><li><a class="hover:text-primary transition-colors" href="portfolio.html">Portfolio</a></li><li><a class="hover:text-primary transition-colors" href="#">Careers</a></li><li><a class="hover:text-primary transition-colors" href="about.html#smart-village">Smart Village</a></li></ul></div>
-                    
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-4">Services</h4>
+                        <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                            <li><a class="hover:text-primary transition-colors" href="#">Digital Transformation</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">IT Consulting</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">Custom Software Dev</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">Talent Augmentation</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-4">Company</h4>
+                        <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                            <li><a class="hover:text-primary transition-colors" href="about.html">About Us</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="portfolio.html">Portfolio</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="careers.html">Careers</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="blog.html">Blog</a></li>
+                        </ul>
+                    </div>
+
                     <!-- NEWSLETTER SECTION (FIXED) -->
                     <div>
                         <h4 class="font-bold text-slate-900 dark:text-white mb-4">Newsletter</h4>
                         <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
                             <span data-lang="en">Get the latest insights on tech and innovation.</span>
-                            <span data-lang="id" class="hidden">Dapatkan wawasan terbaru tentang teknologi dan inovasi.</span>
+                            <span data-lang="id" class="hidden">Dapatkan wawasan terbaru tentang teknologi dan
+                                inovasi.</span>
                         </p>
                         <div class="flex">
-                            <input id="newsletter-email" class="flex-1 bg-slate-100 dark:bg-slate-800 border-none rounded-l-lg text-sm px-4 py-2 focus:ring-2 focus:ring-primary outline-none" type="email" placeholder="Your email" />
-                            <button onclick="subscribeNewsletter()" class="bg-primary text-white px-4 py-2 rounded-r-lg hover:bg-primary/90 transition-colors">
+                            <input id="newsletter-email"
+                                class="flex-1 bg-slate-100 dark:bg-slate-800 border-none rounded-l-lg text-sm px-4 py-2 focus:ring-2 focus:ring-primary outline-none"
+                                type="email" placeholder="Your email" />
+                            <button onclick="subscribeNewsletter()"
+                                class="bg-primary text-white px-4 py-2 rounded-r-lg hover:bg-primary/90 transition-colors">
                                 <span class="material-symbols-outlined text-[20px]">send</span>
                             </button>
                         </div>
                         <div id="newsletter-message" class="text-xs mt-2 hidden"></div>
                     </div>
                 </div>
-                <div class="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p class="text-xs text-slate-400">© 2024 Sagara Tech. All rights reserved. Sagara AI Assistant included.</p>
-                    <div class="flex gap-6 text-xs text-slate-400">
+                <div
+                    class="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-xs text-slate-400">© 2024 Sagara Tech. All rights reserved. Sagara AI Assistant
+                        included.</p>
+                    <div class="flex gap-6 text-sm text-gray-500 dark:text-gray-400">
+                        <a class="hover:text-primary transition-colors" href="index.html">Home</a>
+                        <a class="hover:text-primary transition-colors" href="careers.html">Careers</a>
+                        <a class="hover:text-primary transition-colors" href="blog.html">Blog</a>
                         <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
                         <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
                     </div>
                     <!-- Latest Blog Posts Section -->
-<section class="py-20 bg-white dark:bg-background-dark">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold mb-4">Latest Insights</h2>
-            <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Read our latest articles on technology, innovation, and digital transformation</p>
-        </div>
-        <div id="homepageBlogs" class="grid md:grid-cols-3 gap-8">
-            <div class="col-span-3 text-center py-10">Loading articles...</div>
-        </div>
-        <div class="text-center mt-10">
-            <a href="blog.html" class="inline-flex items-center gap-2 text-primary hover:underline font-medium">View All Articles →</a>
-        </div>
-    </div>
-</section>
+                    <section class="py-20 bg-white dark:bg-background-dark">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="text-center mb-12">
+                                <h2 class="text-3xl font-bold mb-4">Latest Insights</h2>
+                                <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Read our latest articles
+                                    on technology, innovation, and digital transformation</p>
+                            </div>
+                            <div id="homepageBlogs" class="grid md:grid-cols-3 gap-8">
+                                <div class="col-span-3 text-center py-10">Loading articles...</div>
+                            </div>
+                            <div class="text-center mt-10">
+                                <a href="blog.html"
+                                    class="inline-flex items-center gap-2 text-primary hover:underline font-medium">View
+                                    All Articles →</a>
+                            </div>
+                        </div>
+                    </section>
 
-<script>
-    // Load latest 3 blogs untuk homepage
-    async function loadHomepageBlogs() {
-        try {
-            const response = await fetch('/api/blogs');
-            const blogs = await response.json();
-            const latestBlogs = blogs.slice(0, 3);
-            const container = document.getElementById('homepageBlogs');
-            
-            if (latestBlogs.length === 0) {
-                container.innerHTML = '<div class="col-span-3 text-center text-slate-500">No articles yet. Check back soon!</div>';
-                return;
-            }
-            
-            container.innerHTML = latestBlogs.map(blog => `
+                    <script>
+                        // Load latest 3 blogs untuk homepage
+                        async function loadHomepageBlogs() {
+                            try {
+                                const response = await fetch('/api/blogs');
+                                const blogs = await response.json();
+
+                                let blogData = blogs;
+                                if (blogs && !Array.isArray(blogs) && blogs.value && Array.isArray(blogs.value)) {
+                                    blogData = blogs.value;
+                                }
+
+                                const container = document.getElementById('homepageBlogs');
+                                if (!Array.isArray(blogData) || blogData.length === 0) {
+                                    container.innerHTML = '<div class="col-span-3 text-center text-slate-500">No articles yet. Check back soon!</div>';
+                                    return;
+                                }
+
+                                const latestBlogs = blogData.slice(0, 3);
+
+                                container.innerHTML = latestBlogs.map(blog => `
                 <div class="bg-white dark:bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-all cursor-pointer" onclick="window.location.href='/blog-detail.html?id=${blog.id}'">
                     <img src="${blog.image}" alt="${blog.title}" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -1050,193 +1525,224 @@
                     </div>
                 </div>
             `).join('');
-        } catch (error) {
-            console.error('Error loading blogs:', error);
-        }
-    }
-    
-    document.addEventListener('DOMContentLoaded', loadHomepageBlogs);
-</script>
+                            } catch (error) {
+                                console.error('Error loading blogs:', error);
+                            }
+                        }
+
+                        document.addEventListener('DOMContentLoaded', loadHomepageBlogs);
+                    </script>
                 </div>
             </div>
         </footer>
-    </div>
-
-
-    <!-- ========== SAGARA AI CHATBOT ========== -->
-    <button id="sagara-ai-fab" onclick="togglePanel()">
-        <svg id="fab-chat" viewBox="0 0 24 24" fill="none" stroke="#050f0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        <svg id="fab-close" viewBox="0 0 24 24" fill="none" stroke="#050f0a" stroke-width="2.5" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        <div class="fab-tooltip">Chat with Sagara AI</div>
-    </button>
-
-    <div id="sagara-ai-panel">
-        <div class="mp-header">
-            <div class="mp-avatar">S</div>
-            <div class="mp-meta"><div class="mp-name">Sagara AI</div><div class="mp-status"><span class="mp-dot"></span> Ready to assist</div></div>
-            <button class="mp-close" onclick="togglePanel()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
         </div>
-        <div class="mp-msgs" id="msgs">
-            <div class="msg bot">
-                <div class="m-av">S</div>
-                <div class="m-wrap"><div class="m-bubble">Hello! I'm <strong>Sagara AI</strong> 👋<br><br>Your intelligent assistant for all things related to Sagara's IT solutions, services, and expertise. How may I assist you today?</div><div class="m-time" id="greet-time"></div></div>
+
+
+        <!-- ========== SAGARA AI CHATBOT ========== -->
+        <button id="sagara-ai-fab" onclick="togglePanel()">
+            <svg id="fab-chat" viewBox="0 0 24 24" fill="none" stroke="#050f0a" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            <svg id="fab-close" viewBox="0 0 24 24" fill="none" stroke="#050f0a" stroke-width="2.5"
+                style="display:none">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+            <div class="fab-tooltip">Chat with Sagara AI</div>
+        </button>
+
+        <div id="sagara-ai-panel">
+            <div class="mp-header">
+                <div class="mp-avatar">S</div>
+                <div class="mp-meta">
+                    <div class="mp-name">Sagara AI</div>
+                    <div class="mp-status"><span class="mp-dot"></span> Ready to assist</div>
+                </div>
+                <button class="mp-close" onclick="togglePanel()" aria-label="Close Chat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        style="pointer-events: none;">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
             </div>
+            <div class="mp-msgs" id="msgs">
+                <div class="msg bot">
+                    <div class="m-av">S</div>
+                    <div class="m-wrap">
+                        <div class="m-bubble">Hello! I'm <strong>Sagara AI</strong> 👋<br><br>Your intelligent assistant
+                            for all things related to Sagara's IT solutions, services, and expertise. How may I assist
+                            you today?</div>
+                        <div class="m-time" id="greet-time"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mp-quick" id="quick-wrap">
+                <button class="q-btn" onclick="sendQ(this)">What services do you offer?</button>
+                <button class="q-btn" onclick="sendQ(this)">Tell me about your portfolio</button>
+                <button class="q-btn" onclick="sendQ(this)">Ask me anything</button>
+            </div>
+            <div class="mp-input-wrap">
+                <textarea class="mp-input" id="inp" rows="1" placeholder="Ask Sagara AI anything..."
+                    onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+                <button class="mp-send" id="send-btn" onclick="sendMsg()"><svg viewBox="0 0 24 24" fill="none"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13" />
+                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                    </svg></button>
+            </div>
+            <div class="mp-footer">Powered by Groq LLaMA · Enterprise AI Assistant</div>
         </div>
-        <div class="mp-quick" id="quick-wrap">
-            <button class="q-btn" onclick="sendQ(this)">What services do you offer?</button>
-            <button class="q-btn" onclick="sendQ(this)">Tell me about your portfolio</button>
-            <button class="q-btn" onclick="sendQ(this)">Ask me anything</button>
-        </div>
-        <div class="mp-input-wrap">
-            <textarea class="mp-input" id="inp" rows="1" placeholder="Ask Sagara AI anything..." onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-            <button class="mp-send" id="send-btn" onclick="sendMsg()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-        </div>
-        <div class="mp-footer">Powered by Groq LLaMA · Enterprise AI Assistant</div>
-    </div>
 
-    <script>
-        // ============================================
-        // SAGARA AI CHAT FUNCTIONS
-        // ============================================
-        function getTime() { return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }); }
-        document.getElementById('greet-time').textContent = getTime();
-        
-        let isOpen = false, isLoading = false, history = [];
+        <script>
+            // ============================================
+            // SAGARA AI CHAT FUNCTIONS
+            // ============================================
+            function getTime() { return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }); }
+            document.getElementById('greet-time').textContent = getTime();
 
-        function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
-        function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); } }
-        function scrollBottom() { const m = document.getElementById('msgs'); m.scrollTo({ top: m.scrollHeight, behavior: 'smooth' }); }
+            let isOpen = false, isLoading = false, history = [];
 
-        function togglePanel() {
-            isOpen = !isOpen;
-            document.getElementById('sagara-ai-panel').classList.toggle('open', isOpen);
-            document.getElementById('fab-chat').style.display = isOpen ? 'none' : '';
-            document.getElementById('fab-close').style.display = isOpen ? '' : 'none';
-            if (isOpen) setTimeout(() => document.getElementById('inp').focus(), 300);
-        }
+            function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
+            function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); } }
+            function scrollBottom() { const m = document.getElementById('msgs'); m.scrollTo({ top: m.scrollHeight, behavior: 'smooth' }); }
 
-        function sendQ(btn) {
-            document.getElementById('inp').value = btn.textContent;
-            document.getElementById('quick-wrap').style.display = 'none';
-            sendMsg();
-        }
+            function togglePanel() {
+                isOpen = !isOpen;
+                document.getElementById('sagara-ai-panel').classList.toggle('open', isOpen);
+                document.getElementById('fab-chat').style.display = isOpen ? 'none' : '';
+                document.getElementById('fab-close').style.display = isOpen ? '' : 'none';
+                if (isOpen) setTimeout(() => document.getElementById('inp').focus(), 300);
+            }
 
-        function renderMd(raw) {
-            return raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-                .replace(/`([^`]+)`/g,'<code>$1</code>')
-                .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g,'<em>$1</em>')
-                .replace(/\n/g,'<br>');
-        }
+            function sendQ(btn) {
+                document.getElementById('inp').value = btn.textContent;
+                document.getElementById('quick-wrap').style.display = 'none';
+                sendMsg();
+            }
 
-        function addMsg(role, content, isErr = false) {
-            const msgs = document.getElementById('msgs');
-            const row = document.createElement('div');
-            row.className = `msg ${isErr ? 'err' : role}`;
-            row.innerHTML = `<div class="m-av">${role==='user'?'U':'S'}</div><div class="m-wrap"><div class="m-bubble">${renderMd(content)}</div><div class="m-time">${getTime()}</div></div>`;
-            msgs.appendChild(row);
-            scrollBottom();
-        }
+            function renderMd(raw) {
+                return raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                    .replace(/`([^`]+)`/g, '<code>$1</code>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/\n/g, '<br>');
+            }
 
-        function showTyping() {
-            const msgs = document.getElementById('msgs');
-            const row = document.createElement('div');
-            row.className = 'msg bot'; row.id = 'typing-row';
-            row.innerHTML = `<div class="m-av">S</div><div class="m-wrap"><div class="m-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
-            msgs.appendChild(row); scrollBottom();
-        }
-        
-        function removeTyping() { document.getElementById('typing-row')?.remove(); }
-
-        async function sendMsg() {
-            const inp = document.getElementById('inp');
-            const text = inp.value.trim();
-            if (!text || isLoading) return;
-            isLoading = true;
-            document.getElementById('send-btn').disabled = true;
-            document.getElementById('quick-wrap').style.display = 'none';
-            inp.value = ''; inp.style.height = 'auto';
-            addMsg('user', text);
-            history.push({ role: 'user', content: text });
-
-            showTyping();
-            
-            try {
-                const res = await fetch('/api/chat/stream', { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify({ messages: history }) 
-                });
-                if (!res.ok) throw new Error('fail');
-                const reader = res.body.getReader();
-                const decoder = new TextDecoder();
-                let buffer = '', fullText = '';
-                removeTyping();
+            function addMsg(role, content, isErr = false) {
                 const msgs = document.getElementById('msgs');
                 const row = document.createElement('div');
-                row.className = 'msg bot';
-                row.innerHTML = `<div class="m-av">S</div><div class="m-wrap"><div class="m-bubble cursor"></div><div class="m-time">${getTime()}</div></div>`;
+                row.className = `msg ${isErr ? 'err' : role}`;
+                row.innerHTML = `<div class="m-av">${role === 'user' ? 'U' : 'S'}</div><div class="m-wrap"><div class="m-bubble">${renderMd(content)}</div><div class="m-time">${getTime()}</div></div>`;
                 msgs.appendChild(row);
-                const bubble = row.querySelector('.m-bubble');
                 scrollBottom();
-                
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
-                    buffer += decoder.decode(value, { stream: true });
-                    const lines = buffer.split('\n'); buffer = lines.pop();
-                    for (const line of lines) {
-                        if (!line.startsWith('data: ')) continue;
-                        const raw = line.slice(6).trim();
-                        if (raw === '[DONE]') { bubble.classList.remove('cursor'); continue; }
-                        try {
-                            const ev = JSON.parse(raw);
-                            if (ev.text) { fullText += ev.text; bubble.innerHTML = renderMd(fullText); scrollBottom(); }
-                            if (ev.error) { bubble.classList.remove('cursor'); bubble.innerHTML = `<span style="color:var(--danger)">${ev.error}</span>`; }
-                        } catch (_) {}
-                    }
-                }
-                bubble.classList.remove('cursor');
-                if (fullText) history.push({ role: 'assistant', content: fullText });
-            } catch {
-                removeTyping(); showTyping();
-                setTimeout(() => {
+            }
+
+            function showTyping() {
+                const msgs = document.getElementById('msgs');
+                const row = document.createElement('div');
+                row.className = 'msg bot'; row.id = 'typing-row';
+                row.innerHTML = `<div class="m-av">S</div><div class="m-wrap"><div class="m-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
+                msgs.appendChild(row); scrollBottom();
+            }
+
+            function removeTyping() { document.getElementById('typing-row')?.remove(); }
+
+            async function sendMsg() {
+                const inp = document.getElementById('inp');
+                const text = inp.value.trim();
+                if (!text || isLoading) return;
+                isLoading = true;
+                document.getElementById('send-btn').disabled = true;
+                document.getElementById('quick-wrap').style.display = 'none';
+                inp.value = ''; inp.style.height = 'auto';
+                addMsg('user', text);
+                history.push({ role: 'user', content: text });
+
+                showTyping();
+
+                try {
+                    // Limit history to last 10 messages to avoid context overflow
+                    const contextHistory = history.slice(-10);
+
+                    const res = await fetch('/api/chat/stream', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ messages: contextHistory })
+                    });
+                    if (!res.ok) throw new Error('fail');
+                    const reader = res.body.getReader();
+                    const decoder = new TextDecoder();
+                    let buffer = '', fullText = '';
                     removeTyping();
-                    const fallbackReply = `I apologize, but our server is currently experiencing high demand. Our team has been notified. Please feel free to reach out via our contact form, and we'll respond promptly. Thank you for your patience.`;
-                    addMsg('bot', fallbackReply);
-                    history.push({ role: 'assistant', content: fallbackReply });
-                }, 800);
+                    const msgs = document.getElementById('msgs');
+                    const row = document.createElement('div');
+                    row.className = 'msg bot';
+                    row.innerHTML = `<div class="m-av">S</div><div class="m-wrap"><div class="m-bubble cursor"></div><div class="m-time">${getTime()}</div></div>`;
+                    msgs.appendChild(row);
+                    const bubble = row.querySelector('.m-bubble');
+                    scrollBottom();
+
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        buffer += decoder.decode(value, { stream: true });
+                        const lines = buffer.split('\n'); buffer = lines.pop();
+                        for (const line of lines) {
+                            if (!line.startsWith('data: ')) continue;
+                            const raw = line.slice(6).trim();
+                            if (raw === '[DONE]') { bubble.classList.remove('cursor'); continue; }
+                            try {
+                                const ev = JSON.parse(raw);
+                                if (ev.text) { fullText += ev.text; bubble.innerHTML = renderMd(fullText); scrollBottom(); }
+                                if (ev.error) { bubble.classList.remove('cursor'); bubble.innerHTML = `<span style="color:var(--danger)">${ev.error}</span>`; }
+                            } catch (_) { }
+                        }
+                    }
+                    bubble.classList.remove('cursor');
+                    if (fullText) history.push({ role: 'assistant', content: fullText });
+                } catch {
+                    removeTyping(); showTyping();
+                    setTimeout(() => {
+                        removeTyping();
+                        const fallbackReply = `I apologize, but our server is currently experiencing high demand. Our team has been notified. Please feel free to reach out via our contact form, and we'll respond promptly. Thank you for your patience.`;
+                        addMsg('bot', fallbackReply);
+                        history.push({ role: 'assistant', content: fallbackReply });
+                    }, 800);
+                }
+                isLoading = false;
+                document.getElementById('send-btn').disabled = false;
+                inp.focus();
             }
-            isLoading = false;
-            document.getElementById('send-btn').disabled = false;
-            inp.focus();
-        }
 
 
-    </script>
+        </script>
         <!-- ========== BACK TO TOP BUTTON (NEW) ========== -->
-    <button onclick="scrollToTop()" id="backToTopBtn" class="fixed bottom-24 right-6 bg-primary text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 z-50 hover:bg-primary/90 hover:scale-110 cursor-pointer">
-        <span class="material-symbols-outlined text-[20px]">arrow_upward</span>
-    </button>
+        <button onclick="scrollToTop()" id="backToTopBtn"
+            class="fixed bottom-24 right-6 bg-primary text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 z-50 hover:bg-primary/90 hover:scale-110 cursor-pointer">
+            <span class="material-symbols-outlined text-[20px]">arrow_upward</span>
+        </button>
 
-    <script>
-        // Back to Top functionality
-        const backToTopBtn = document.getElementById('backToTopBtn');
-        
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.remove('opacity-0', 'invisible');
-                backToTopBtn.classList.add('opacity-100', 'visible');
-            } else {
-                backToTopBtn.classList.add('opacity-0', 'invisible');
-                backToTopBtn.classList.remove('opacity-100', 'visible');
+        <script>
+            // Back to Top functionality
+            const backToTopBtn = document.getElementById('backToTopBtn');
+
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.remove('opacity-0', 'invisible');
+                    backToTopBtn.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopBtn.classList.add('opacity-0', 'invisible');
+                    backToTopBtn.classList.remove('opacity-100', 'visible');
+                }
+            });
+
+            function scrollToTop() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-        });
-        
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
-    <!-- ========== END BACK TO TOP BUTTON ========== -->
-</body>
+        </script>
+        <!-- ========== END BACK TO TOP BUTTON ========== -->
+    </body>
+
 </html>
