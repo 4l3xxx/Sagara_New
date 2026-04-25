@@ -100,5 +100,59 @@
     "userMessage": "How do I request a consultation?",
     "botResponse": "Sayangnya, saya tidak bisa membantu kamu dengan proses permintaan konsultasi secara spesifik karena itu tidak ada di data yang saya miliki tentang Sagara. Saya hanya bisa memberikan gambaran umum tentang layanan dan profil perusahaan. \n\nTapi, kamu bisa mencoba menghubungi langsung Sagara melalui website resmi atau media sosial mereka untuk meminta informasi lebih lanjut tentang cara meminta konsultasi. Mereka pasti akan dengan senang hati membantu kamu dengan proses tersebut.",
     "timestamp": "2026-04-25T04:41:49.003Z"
+  },
+  {
+    "id": 1777095333378,
+    "userMessage": "What services do you offer for web development?",
+    "botResponse": "Untuk web development, Sagara menawarkan layanan Custom Software Development. Ini berarti kita bisa membantu klien mengembangkan aplikasi custom sesuai dengan kebutuhan mereka. Jadi, jika kamu butuh aplikasi yang tidak ada di pasaran atau butuh solusi yang lebih spesifik, kita bisa membantu mengembangkannya dari awal. Selain itu, kita juga bisa membantu dengan implementasi dan migrasi infrastruktur cloud, sehingga aplikasi kamu bisa berjalan dengan lancar dan aman.",
+    "timestamp": "2026-04-25T05:35:33.378Z"
+  },
+  {
+    "id": 1777095368685,
+    "userMessage": "Tell me about your services.",
+    "botResponse": "Kami di Sagara menyediakan beberapa layanan untuk membantu perusahaan dan organisasi dalam transformasi digital. Ini termasuk:\n\n1. **IT Consulting**: Kami membantu perusahaan membuat strategi digital yang efektif untuk mencapai tujuan mereka.\n2. **Custom Software Development**: Kami pengembang aplikasi custom yang sesuai dengan kebutuhan klien, sehingga mereka bisa meningkatkan efisiensi dan produktivitas.\n3. **Cloud Infrastructure & Migration**: Kami membantu perusahaan implementasi dan migrasi infrastruktur cloud, sehingga mereka bisa lebih fleksibel dan efisien dalam pengelolaan data.\n4. **Cybersecurity Audit**: Kami melakukan audit keamanan sistem dan data untuk memastikan klien kami aman dari ancaman cyber.\n5. **Government Solutions**: Kami menyediakan solusi IT khusus untuk sektor pemerintahan, sehingga mereka bisa lebih efektif dalam menyediakan layanan untuk masyarakat.\n\nSemua layanan kami dirancang untuk membantu klien kami mencapai transformasi digital yang sukses. Kami sudah bekerja sama dengan beberapa klien besar seperti Bank Mandiri, Telkom Indonesia, dan Pemerintah DKI Jakarta, jadi kami memiliki pengalaman yang luas dalam membantu perusahaan dan organisasi mencapai tujuan mereka.",
+    "timestamp": "2026-04-25T05:36:08.685Z"
+  },
+  {
+    "id": 1777095409506,
+    "userMessage": "How do I request a consultation?",
+    "botResponse": "Untuk meminta konsultasi dengan Sagara, kamu bisa menghubungi kami secara langsung. Sayangnya, saya tidak memiliki informasi tentang kontak atau proses pengajuan konsultasi yang spesifik. Namun, biasanya perusahaan seperti Sagara memiliki formulir kontak di situs web mereka atau alamat email yang bisa digunakan untuk mengirimkan pertanyaan atau permintaan konsultasi.\n\nKamu bisa mencoba mencari situs web resmi Sagara dan lihat apakah mereka memiliki informasi tentang cara meminta konsultasi. Atau, kamu bisa mencoba menghubungi mereka langsung melalui telepon atau email untuk meminta informasi lebih lanjut tentang proses konsultasi mereka.",
+    "timestamp": "2026-04-25T05:36:49.506Z"
+  },
+  {
+    "id": 1777096062137,
+    "userMessage": "Tell me about your services.",
+    "botResponse": "Sagara menawarkan beberapa layanan keren untuk membantu perusahaan seperti kamu mencapai tujuan digitalnya. Kami memiliki lima layanan utama:\n\n1. **IT Consulting**: Kami membantu perusahaan membuat strategi digital yang tepat untuk meningkatkan efisiensi dan produktivitas.\n2. **Custom Software Development**: Kami buat aplikasi custom yang sesuai dengan kebutuhan spesifik perusahaan kamu.\n3. **Cloud Infrastructure & Migration**: Kami membantu implementasi dan migrasi infrastruktur cloud untuk mempermudah pengelolaan data dan aplikasi.\n4. **Cybersecurity Audit**: Kami melakukan audit keamanan sistem dan data untuk memastikan bahwa perusahaan kamu aman dari ancaman cyber.\n5. **Government Solutions**: Kami menawarkan solusi IT khusus untuk sektor pemerintahan, membantu mereka dalam transformasi digital dan peningkatan layanan publik.\n\nDengan layanan-layanan ini, kami sudah membantu beberapa klien besar seperti Bank Mandiri, Telkom Indonesia, Gojek, Tokopedia, dan Pemerintah DKI Jakarta. Jadi, kami yakin bisa membantu perusahaan kamu juga!",
+    "timestamp": "2026-04-25T05:47:42.137Z"
+  },
+  {
+    "id": 1777096111926,
+    "userMessage": "How do I request a consultation?",
+    "botResponse": "Maaf, saya tidak bisa membantu kamu dengan itu karena saya hanya memiliki informasi umum tentang Sagara. Tapi, kamu bisa coba mengunjungi situs web resmi Sagara atau menghubungi mereka langsung untuk meminta konsultasi. Mereka pasti memiliki proses yang jelas untuk meminta konsultasi dan tim yang siap membantu kamu.",
+    "timestamp": "2026-04-25T05:48:31.926Z"
+  },
+  {
+    "id": 1777096154089,
+    "userMessage": "What services do you offer for web development?",
+    "botResponse": "Kami di Sagara menawarkan layanan Custom Software Development, yang artinya kami bisa membantu kamu mengembangkan aplikasi web custom sesuai dengan kebutuhanmu. Ini bisa berupa pengembangan aplikasi dari awal, atau bisa juga memperbarui aplikasi yang sudah ada sebelumnya. Jadi, apapun kebutuhan web development-mu, kami siap membantu!",
+    "timestamp": "2026-04-25T05:49:14.089Z"
+  },
+  {
+    "id": 1777096586708,
+    "userMessage": "Tell me about your services.",
+    "botResponse": "Kami di Sagara menyediakan beberapa layanan keren untuk membantu perusahaan seperti Bank Mandiri, Telkom Indonesia, hingga Gojek dan Tokopedia dalam transformasi digital mereka. Berikut adalah layanan yang kami tawarkan:\n\n1. **IT Consulting**: Kami membantu perusahaan merancang strategi digital yang tepat untuk mencapai tujuan mereka.\n2. **Custom Software Development**: Kami mengembangkan aplikasi custom yang sesuai dengan kebutuhan spesifik perusahaan.\n3. **Cloud Infrastructure & Migration**: Kami membantu perusahaan mengimplementasikan dan mengalihkan infrastruktur mereka ke cloud untuk meningkatkan efisiensi dan keamanan.\n4. **Cybersecurity Audit**: Kami melakukan audit keamanan sistem dan data untuk memastikan bahwa perusahaan terlindungi dari ancaman cyber.\n5. **Government Solutions**: Kami menyediakan solusi IT khusus untuk sektor pemerintahan, seperti Pemerintah DKI Jakarta, untuk membantu mereka dalam transformasi digital.\n\nJadi, kami seperti \"partner\" yang membantu perusahaan dalam perjalanan transformasi digital mereka, dari strategi hingga implementasi. Apa yang ingin kamu tahu lebih lanjut tentang layanan kami?",
+    "timestamp": "2026-04-25T05:56:26.708Z"
+  },
+  {
+    "id": 1777096615740,
+    "userMessage": "How do I request a consultation?",
+    "botResponse": "Untuk merequest konsultasi dengan Sagara, kamu bisa menghubungi kami langsung melalui website resmi kami atau melalui kontak resmi perusahaan. Sayangnya, saya tidak bisa memberikan informasi kontak secara spesifik karena saya hanya memiliki data umum tentang perusahaan.\n\nTapi, biasanya kamu bisa mencari informasi kontak kami di website resmi Sagara, seperti alamat email, nomor telepon, atau formulir kontak. Kamu juga bisa mencari kami di media sosial untuk mendapatkan informasi lebih lanjut tentang cara menghubungi kami.\n\nSetelah kamu menghubungi kami, tim kami akan dengan senang hati membantu menjadwalkan konsultasi dengan salah satu ahli kami. Mereka akan membantu kamu memahami kebutuhan perusahaanmu dan memberikan solusi yang tepat untuk transformasi digitalmu. Mudah, kan?",
+    "timestamp": "2026-04-25T05:56:55.740Z"
+  },
+  {
+    "id": 1777096631883,
+    "userMessage": "What services do you offer for web development?",
+    "botResponse": "Kami di Sagara memiliki layanan untuk pengembangan aplikasi custom, atau yang kita sebut \"Custom Software Development\". Ini berarti kita bisa membantu buat aplikasi yang sesuai dengan kebutuhan kamu, entah itu untuk web, mobile, atau bahkan sistem internal. Jadi, kalau kamu butuh bantuan untuk pengembangan aplikasi, kita bisa jadi mitra yang tepat!",
+    "timestamp": "2026-04-25T05:57:11.883Z"
   }
 ]

@@ -417,6 +417,48 @@ app.get('/api/blogs/:id', (req, res) => {
 });
 
 // ============================================
+// CONSULTATION API
+// ============================================
+app.post('/api/consultation', async (req, res) => {
+    const { full_name, business_email, service_type, message } = req.body;
+    
+    if (!full_name || !business_email || !service_type || !message) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    try {
+        // 1. Save to JSON File
+        const consultations = JSON.parse(fs.readFileSync(CONSULTATIONS_FILE));
+        const newEntry = {
+            id: Date.now(),
+            full_name,
+            business_email,
+            service_type,
+            message,
+            status: 'pending',
+            created_at: new Date().toISOString()
+        };
+        consultations.push(newEntry);
+        fs.writeFileSync(CONSULTATIONS_FILE, JSON.stringify(consultations, null, 2));
+
+        // 2. Save to Postgres (Optional but good if DB is running)
+        try {
+            await pool.query(
+                'INSERT INTO consultations (full_name, business_email, service_type, message, status) VALUES ($1, $2, $3, $4, $5)',
+                [full_name, business_email, service_type, message, 'pending']
+            );
+        } catch (dbErr) {
+            console.error('⚠️ DB Save skipped or failed, but file saved:', dbErr.message);
+        }
+
+        res.json({ success: true, message: 'Consultation request saved successfully' });
+    } catch (err) {
+        console.error('Error saving consultation:', err);
+        res.status(500).json({ error: 'Failed to process consultation request' });
+    }
+});
+
+// ============================================
 // JOBS API
 // ============================================
 app.get('/api/jobs', (req, res) => {
