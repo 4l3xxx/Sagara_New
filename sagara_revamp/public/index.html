@@ -654,8 +654,6 @@
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-x-hidden w-full">
 
-    <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-x-hidden w-full">
-
         <!-- ========== LOADING SCREEN (NEW) ========== -->
         <div id="loadingScreen"
             class="fixed inset-0 bg-background-light dark:bg-background-dark z-[9999] flex items-center justify-center transition-opacity duration-500">
@@ -873,6 +871,14 @@
                             <a data-lang="id"
                                 class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
                                 href="about.html">Tentang Kami</a>
+
+                            <!-- Contact (NEW) -->
+                            <a data-lang="en"
+                                class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                                href="contact.html">Contact</a>
+                            <a data-lang="id"
+                                class="hidden text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold"
+                                href="contact.html">Kontak</a>
                         </div>
                         <div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
                             <button onclick="switchLanguage('id')"
@@ -1402,6 +1408,66 @@
             </div>
         </section>
 
+        <!-- Latest Blog Posts Section (RESTORED) -->
+        <section class="py-20 bg-white dark:bg-background-dark">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">Latest Insights</h2>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Read our latest articles
+                        on technology, innovation, and digital transformation</p>
+                </div>
+                <div id="homepageBlogs" class="grid md:grid-cols-3 gap-8">
+                    <div class="col-span-3 text-center py-10">Loading articles...</div>
+                </div>
+                <div class="text-center mt-10">
+                    <a href="blog.html"
+                        class="inline-flex items-center gap-2 text-primary hover:underline font-medium">View
+                        All Articles →</a>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            // Load latest 3 blogs untuk homepage
+            async function loadHomepageBlogs() {
+                try {
+                    const response = await fetch('/api/blogs');
+                    const blogs = await response.json();
+
+                    let blogData = blogs;
+                    if (blogs && !Array.isArray(blogs) && blogs.value && Array.isArray(blogs.value)) {
+                        blogData = blogs.value;
+                    }
+
+                    const container = document.getElementById('homepageBlogs');
+                    if (!container) return;
+                    
+                    if (!Array.isArray(blogData) || blogData.length === 0) {
+                        container.innerHTML = '<div class="col-span-3 text-center text-slate-500">No articles yet. Check back soon!</div>';
+                        return;
+                    }
+
+                    const latestBlogs = blogData.slice(0, 3);
+
+                    container.innerHTML = latestBlogs.map(blog => `
+                        <div class="bg-white dark:bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-all cursor-pointer" onclick="window.location.href='/blog-detail.html?id=${blog.id}'">
+                            <img src="${blog.image}" alt="${blog.title}" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <div class="text-xs text-primary mb-2">${new Date(blog.date).toLocaleDateString()}</div>
+                                <h3 class="text-xl font-bold mb-2 hover:text-primary transition-colors">${blog.title}</h3>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">${blog.excerpt}</p>
+                                <div class="mt-4 text-primary text-sm font-medium">Read more →</div>
+                            </div>
+                        </div>
+                    `).join('');
+                } catch (error) {
+                    console.error('Error loading blogs:', error);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', loadHomepageBlogs);
+        </script>
+
         <!-- Footer dengan Newsletter FIXED -->
         <footer class="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1428,10 +1494,10 @@
                     <div>
                         <h4 class="font-bold text-slate-900 dark:text-white mb-4">Services</h4>
                         <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
-                            <li><a class="hover:text-primary transition-colors" href="#">Digital Transformation</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">IT Consulting</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Custom Software Dev</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Talent Augmentation</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="services.html">IT Consulting</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="services.html">Custom Software Dev</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="services.html">Digital Transformation</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="services.html">Talent Augmentation</a></li>
                         </ul>
                     </div>
                     <div>
@@ -1453,6 +1519,7 @@
                                 inovasi.</span>
                         </p>
                         <div class="flex">
+                            <label for="newsletter-email" class="sr-only">Email Address</label>
                             <input id="newsletter-email"
                                 class="flex-1 bg-slate-100 dark:bg-slate-800 border-none rounded-l-lg text-sm px-4 py-2 focus:ring-2 focus:ring-primary outline-none"
                                 type="email" placeholder="Your email" />
@@ -1472,66 +1539,9 @@
                         <a class="hover:text-primary transition-colors" href="index.html">Home</a>
                         <a class="hover:text-primary transition-colors" href="careers.html">Careers</a>
                         <a class="hover:text-primary transition-colors" href="blog.html">Blog</a>
+                        <a class="hover:text-primary transition-colors" href="contact.html">Contact</a>
                         <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
-                        <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
                     </div>
-                    <!-- Latest Blog Posts Section -->
-                    <section class="py-20 bg-white dark:bg-background-dark">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div class="text-center mb-12">
-                                <h2 class="text-3xl font-bold mb-4">Latest Insights</h2>
-                                <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Read our latest articles
-                                    on technology, innovation, and digital transformation</p>
-                            </div>
-                            <div id="homepageBlogs" class="grid md:grid-cols-3 gap-8">
-                                <div class="col-span-3 text-center py-10">Loading articles...</div>
-                            </div>
-                            <div class="text-center mt-10">
-                                <a href="blog.html"
-                                    class="inline-flex items-center gap-2 text-primary hover:underline font-medium">View
-                                    All Articles →</a>
-                            </div>
-                        </div>
-                    </section>
-
-                    <script>
-                        // Load latest 3 blogs untuk homepage
-                        async function loadHomepageBlogs() {
-                            try {
-                                const response = await fetch('/api/blogs');
-                                const blogs = await response.json();
-
-                                let blogData = blogs;
-                                if (blogs && !Array.isArray(blogs) && blogs.value && Array.isArray(blogs.value)) {
-                                    blogData = blogs.value;
-                                }
-
-                                const container = document.getElementById('homepageBlogs');
-                                if (!Array.isArray(blogData) || blogData.length === 0) {
-                                    container.innerHTML = '<div class="col-span-3 text-center text-slate-500">No articles yet. Check back soon!</div>';
-                                    return;
-                                }
-
-                                const latestBlogs = blogData.slice(0, 3);
-
-                                container.innerHTML = latestBlogs.map(blog => `
-                <div class="bg-white dark:bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-all cursor-pointer" onclick="window.location.href='/blog-detail.html?id=${blog.id}'">
-                    <img src="${blog.image}" alt="${blog.title}" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <div class="text-xs text-primary mb-2">${new Date(blog.date).toLocaleDateString()}</div>
-                        <h3 class="text-xl font-bold mb-2 hover:text-primary transition-colors">${blog.title}</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">${blog.excerpt}</p>
-                        <div class="mt-4 text-primary text-sm font-medium">Read more →</div>
-                    </div>
-                </div>
-            `).join('');
-                            } catch (error) {
-                                console.error('Error loading blogs:', error);
-                            }
-                        }
-
-                        document.addEventListener('DOMContentLoaded', loadHomepageBlogs);
-                    </script>
                 </div>
             </div>
         </footer>
