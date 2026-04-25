@@ -76,5 +76,29 @@
     "userMessage": "siapa yang mendirikan sagara",
     "botResponse": "Sayangnya, data tentang pendiri Sagara tidak disertakan di sini. Saya hanya bisa memberikan informasi tentang perusahaan Sagara secara umum, seperti visi, misi, layanan, dan pencapaian mereka. Tapi tidak ada informasi tentang siapa pendiri perusahaan ini. Mungkin kamu bisa mencari informasi lebih lanjut dari sumber lain?",
     "timestamp": "2026-04-21T03:26:18.019Z"
+  },
+  {
+    "id": 1777092056186,
+    "userMessage": "What services do you offer for web development?",
+    "botResponse": "Untuk web development, kami di Sagara menawarkan layanan Custom Software Development. Ini artinya kita bisa bikin aplikasi custom sesuai kebutuhan klien, jadi tidak perlu khawatir kalau kebutuhan klien tidak sesuai dengan solusi yang sudah ada. Kami juga bisa membantu dengan implementasi dan migrasi infrastruktur cloud, jadi klien bisa fokus pada bisnis mereka tanpa perlu khawatir tentang teknisnya. Tapi, kalau kamu cari layanan khusus web development, seperti pembuatan website atau e-commerce, mungkin lebih baik kita diskusikan lagi apa yang bisa kami lakukan untuk membantu.",
+    "timestamp": "2026-04-25T04:40:56.186Z"
+  },
+  {
+    "id": 1777092057071,
+    "userMessage": "Hello",
+    "botResponse": "Halo! Senang kamu menghubungi saya. Saya Sagara AI Assistant, siap membantu menjawab pertanyaan tentang Sagara, perusahaan konsultan IT yang fokus pada transformasi digital. Ada yang bisa saya bantu?",
+    "timestamp": "2026-04-25T04:40:57.071Z"
+  },
+  {
+    "id": 1777092057577,
+    "userMessage": "Tell me about your services.",
+    "botResponse": "Kami di Sagara menawarkan beberapa layanan keren untuk membantu perusahaan dan organisasi dalam transformasi digital. Ada beberapa pilihan, yaitu:\n\n1. **IT Consulting**: Kami membantu perusahaan membuat strategi digital yang tepat untuk kebutuhan mereka.\n2. **Custom Software Development**: Kami mengembangkan aplikasi custom yang sesuai dengan kebutuhan unik perusahaan.\n3. **Cloud Infrastructure & Migration**: Kami membantu implementasi dan migrasi infrastruktur cloud untuk mempermudah pengelolaan data dan aplikasi.\n4. **Cybersecurity Audit**: Kami melakukan audit keamanan sistem dan data untuk memastikan perusahaan aman dari ancaman cyber.\n5. **Government Solutions**: Kami menawarkan solusi IT khusus untuk sektor pemerintahan.\n\nIntinya, kami ingin membantu perusahaan dan organisasi untuk lebih efisien, efektif, dan aman dalam menghadapi tantangan digital.",
+    "timestamp": "2026-04-25T04:40:57.577Z"
+  },
+  {
+    "id": 1777092109003,
+    "userMessage": "How do I request a consultation?",
+    "botResponse": "Sayangnya, saya tidak bisa membantu kamu dengan proses permintaan konsultasi secara spesifik karena itu tidak ada di data yang saya miliki tentang Sagara. Saya hanya bisa memberikan gambaran umum tentang layanan dan profil perusahaan. \n\nTapi, kamu bisa mencoba menghubungi langsung Sagara melalui website resmi atau media sosial mereka untuk meminta informasi lebih lanjut tentang cara meminta konsultasi. Mereka pasti akan dengan senang hati membantu kamu dengan proses tersebut.",
+    "timestamp": "2026-04-25T04:41:49.003Z"
   }
 ]
