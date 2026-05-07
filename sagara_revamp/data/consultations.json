@@ -196,22 +196,6 @@
     "created_at": "2026-04-25T05:36:59.853Z"
   },
   {
-    "id": 1777096139799,
-    "full_name": "Test Lead",
-    "business_email": "testlead.sagara.qa@gmail.com",
-    "service_type": "Web development",
-    "message": "Need a consultation for a small web project; please advise next steps.",
-    "company_size": null,
-    "budget": null,
-    "industry": null,
-    "sentiment": "neutral",
-    "sentiment_score": 0,
-    "nlp_category": "GENERAL",
-    "lead_score": 0.5,
-    "status": "New",
-    "created_at": "2026-04-25T05:48:59.799Z"
-  },
-  {
     "id": 1777096178838,
     "full_name": "Test Lead",
     "business_email": "testlead.sagara.qa@gmail.com",
@@ -240,7 +224,43 @@
     "sentiment_score": 0,
     "nlp_category": "GENERAL",
     "lead_score": 0.5,
+    "status": "Contacted",
+    "created_at": "2026-04-25T05:57:17.267Z",
+    "notes": "Automated: Admin sent an email response.",
+    "updated_at": "2026-05-01T06:05:46.629Z"
+  },
+  {
+    "id": 1777615265873,
+    "full_name": "s",
+    "business_email": "alboyyy@gmail.com",
+    "service_type": "UI/UX design",
+    "message": "hi",
     "status": "New",
-    "created_at": "2026-04-25T05:57:17.267Z"
+    "created_at": "2026-05-01T06:01:05.873Z"
+  },
+  {
+    "id": 1777615519895,
+    "full_name": "Alexander Marisi Sinurat",
+    "business_email": "alexanderboymarisi@gmail.com",
+    "service_type": "Mobile app development",
+    "message": "saya",
+    "status": "New",
+    "created_at": "2026-05-01T06:05:19.895Z"
+  },
+  {
+    "id": 1778128234336,
+    "full_name": "Alexander Marisi Sinurat",
+    "business_email": "alexanderboymarisi@gmail.com",
+    "service_type": "Web development",
+    "message": "haiii",
+    "company_size": null,
+    "budget": null,
+    "industry": null,
+    "sentiment": "neutral",
+    "sentiment_score": 0,
+    "nlp_category": "GENERAL",
+    "lead_score": 0.5,
+    "status": "New",
+    "created_at": "2026-05-07T04:30:34.336Z"
   }
 ]
