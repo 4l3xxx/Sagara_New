@@ -29,7 +29,10 @@ class MLService {
       lower.includes('dinas') ||
       lower.includes('kementerian') ||
       lower.includes('pemda') ||
-      lower.includes('bumn')
+      lower.includes('bumn') ||
+      lower.includes('instansi') ||
+      lower.includes('layanan publik') ||
+      lower.includes('lelang')
     ) {
       return { type: 'GOVERNMENT', priority: 'HIGH', color: '#f59e0b', description: 'Sektor Pemerintahan', icon: '🏛️' };
     }

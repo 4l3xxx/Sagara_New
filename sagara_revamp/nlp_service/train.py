@@ -17,9 +17,9 @@ MODEL_PATH = os.path.join(MODEL_DIR, 'model_pipeline.pkl')
 
 class KeywordFeatureExtractor(BaseEstimator, TransformerMixin):
     def __init__(self):
-        self.gov_keywords = ['kementerian', 'dinas', 'pemerintah', 'pemprov', 'pemda', 'desa', 'apbd', 'apbn', 'instansi', 'lpse', 'puskesmas', 'kecamatan', 'kelurahan']
-        self.corp_keywords = ['holding', 'patungan', 'pt', 'enterprise', 'cloud', 'erp', 'sla', 'korporasi', 'swasta', 'manufaktur', 'tender']
-        self.umkm_keywords = ['startup', 'koperasi', 'bumdes', 'komunitas', 'yayasan', 'warung', 'toko', 'laundry', 'bengkel', 'rintisan', 'umkm', 'ukm']
+        self.gov_keywords = ['kementerian', 'dinas', 'pemerintah', 'pemprov', 'pemda', 'desa', 'apbd', 'apbn', 'instansi', 'lpse', 'puskesmas', 'kecamatan', 'kelurahan', 'tata kota', 'layanan publik', 'warga', 'pengadaan', 'lelang', 'birokrasi', 'masyarakat', 'publik']
+        self.corp_keywords = ['holding', 'patungan', 'pt', 'enterprise', 'cloud', 'erp', 'sla', 'korporasi', 'swasta', 'manufaktur', 'tender', 'cabang', 'skala besar', 'transaksi', 'downtime', 'b2b', 'logistik', 'industri', 'operasional']
+        self.umkm_keywords = ['startup', 'koperasi', 'bumdes', 'komunitas', 'yayasan', 'warung', 'toko', 'laundry', 'bengkel', 'rintisan', 'umkm', 'ukm', 'jualan', 'kasir', 'murah', 'pesanan', 'pelanggan', 'pos', 'usaha kecil', 'mikro']
         
     def fit(self, X, y=None):
         return self
