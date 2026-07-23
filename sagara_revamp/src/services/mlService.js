@@ -45,7 +45,8 @@ class MLService {
     // 2. JIKA TIDAK ADA KEYWORD, TANYA KE PYTHON NLP MODEL
     let mlCategory = null;
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/nlp/predict', {
+      const nlpUrl = process.env.NLP_API_URL || 'http://nlp-service:5000';
+      const response = await fetch(`${nlpUrl}/api/nlp/predict`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: message || '', service: serviceType || '' })
