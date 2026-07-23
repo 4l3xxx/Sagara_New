@@ -53,7 +53,7 @@ class MLService {
       });
       if (response.ok) {
         const data = await response.json();
-        if (data.category) mlCategory = data.category;
+        if (data.category) mlCategory = data.category.toUpperCase();
       }
     } catch (error) {
       console.error('[ML Service] Gagal menghubungi Python API:', error.message);
