@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html class="light" lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Sagara - Job Detail</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sagara - Job Detail</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -18,14 +19,61 @@
             }
         }
     </script>
-    <style>
-        .nav-link-active { color: #137fec !important; position: relative; }
-        .nav-link-active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background-color: #137fec; border-radius: 9999px; }
-    </style>
-</head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display">
+<style>
+        .nav-link-active {
+            color: #137fec !important;
+            position: relative;
+        }
 
-    <script>
+        .nav-link-active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #137fec;
+            border-radius: 9999px;
+        }
+    </style>
+<!-- Theme Script -->
+<script>
+        function initTheme() {
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+            }
+        }
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateThemeIcon();
+        }
+        function updateThemeIcon() {
+            const icons = document.querySelectorAll('.theme-icon-display');
+            const isDark = document.documentElement.classList.contains('dark');
+            icons.forEach(icon => {
+                icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+            });
+        }
+        initTheme();
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display pt-20">
+<script>
         function switchLanguage(lang) {
             localStorage.setItem('language', lang);
             document.querySelectorAll('[data-lang]').forEach(el => {
@@ -42,137 +90,220 @@
                 if (lang === 'en') { btnEnMobile.classList.add('text-primary'); btnEnMobile.classList.remove('text-slate-500'); btnIdMobile.classList.remove('text-primary'); btnIdMobile.classList.add('text-slate-500'); }
                 else { btnIdMobile.classList.add('text-primary'); btnIdMobile.classList.remove('text-slate-500'); btnEnMobile.classList.remove('text-primary'); btnEnMobile.classList.add('text-slate-500'); }
             }
+            if (typeof loadJobDetail === 'function') {
+                loadJobDetail();
+            }
         }
         document.addEventListener('DOMContentLoaded', () => { const lang = localStorage.getItem('language') || 'en'; switchLanguage(lang); });
     </script>
-
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <a class="flex items-center gap-3" href="index.html">
-                    <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-10 w-auto rounded-lg" onerror="this.style.display='none'">
-                    <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara</h2>
-                </a>
-                <div class="hidden md:flex flex-1 justify-end items-center gap-8">
-                    <div class="flex items-center gap-8">
-                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="index.html">Home</a>
-                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="index.html">Beranda</a>
-                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="services.html">Services</a>
-                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="services.html">Layanan</a>
-                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portfolio</a>
-                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portofolio</a>
-                        <a data-lang="en" class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="careers.html">Careers</a>
-                        <a data-lang="id" class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="careers.html">Karir</a>
-                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="about.html">About Us</a>
-                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="about.html">Tentang Kami</a>
-                    </div>
-                    <div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
-                        <button onclick="switchLanguage('id')" class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer" id="btn-id">ID</button>
-                        <span class="text-slate-300">|</span>
-                        <button onclick="switchLanguage('en')" class="font-bold text-sm text-primary cursor-pointer" id="btn-en">EN</button>
-                    </div>
-                    <a data-lang="en" class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Consult Now</a>
-                    <a data-lang="id" class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Konsultasi</a>
-                </div>
-                <div class="md:hidden flex items-center gap-4">
-                    <div class="flex items-center gap-2">
-                        <button onclick="switchLanguage('id')" class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile">ID</button>
-                        <span class="text-slate-300 text-xs">|</span>
-                        <button onclick="switchLanguage('en')" class="font-bold text-xs text-primary" id="btn-en-mobile">EN</button>
-                    </div>
-                    <button class="text-slate-700 dark:text-white"><span class="material-symbols-outlined">menu</span></button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Job Detail Content -->
-    <section class="py-20">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div id="jobDetail" class="bg-white dark:bg-slate-800/50 rounded-2xl p-8 md:p-12 border border-slate-100 dark:border-slate-700">
-                <div class="text-center py-20">Loading job details...</div>
-            </div>
-            <div class="mt-8 text-center">
-                <a href="careers.html" class="inline-flex items-center gap-2 text-primary hover:underline">← Back to all jobs</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-8 w-auto rounded-lg" onerror="this.style.display='none'">
-                    <span class="text-lg font-bold text-slate-900 dark:text-white">Sagara</span>
-                </div>
-                <p class="text-sm text-slate-500 dark:text-slate-400">© 2024 Sagara Tech. All rights reserved.</p>
-                <div class="flex gap-6 text-sm text-slate-500 dark:text-slate-400">
-                    <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
-                    <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<a class="flex items-center gap-3" href="index.html">
+<img alt="Sagara Logo" class="h-10 w-auto rounded-lg" onerror="this.style.display='none'" src="/assets/images/sagara_tech_logo.jpg"/>
+<h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara
+                    </h2>
+</a>
+<div class="hidden md:flex flex-1 justify-end items-center gap-8">
+<div class="flex items-center gap-8">
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="index.html">Home</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="index.html">Beranda</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="services.html">Services</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="services.html">Layanan</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="portfolio.html">Portfolio</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="portfolio.html">Portofolio</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="blog.html">Blog</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="blog.html">Blog</a>
+<a class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="careers.html">Careers</a>
+<a class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="careers.html">Karir</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="about.html">About Us</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="about.html">Tentang Kami</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="contact.html">Contact</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="contact.html">Kontak</a>
+</div>
+<!-- Theme Toggle Button -->
+<button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
+<span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
+</button>
+<div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
+<button class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer" id="btn-id" onclick="switchLanguage('id')">ID</button>
+<span class="text-slate-300">|</span>
+<button class="font-bold text-sm text-primary cursor-pointer" id="btn-en" onclick="switchLanguage('en')">EN</button>
+</div>
+<a class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" data-lang="en" href="contact.html">Consult Now</a>
+<a class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" data-lang="id" href="contact.html">Konsultasi</a>
+</div>
+<div class="md:hidden flex items-center gap-4">
+<!-- Theme Toggle Button (Mobile) -->
+<button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
+<span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
+</button>
+<div class="flex items-center gap-2">
+<button class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile" onclick="switchLanguage('id')">ID</button>
+<span class="text-slate-300 text-xs">|</span>
+<button class="font-bold text-xs text-primary" id="btn-en-mobile" onclick="switchLanguage('en')">EN</button>
+</div>
+<button class="text-slate-700 dark:text-white"><span class="material-symbols-outlined">menu</span></button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Job Detail Content -->
+<section class="py-20">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="bg-white dark:bg-slate-800/50 rounded-2xl p-8 md:p-12 border border-slate-100 dark:border-slate-700" id="jobDetail">
+<div class="text-center py-20">Loading job details...</div>
+</div>
+<div class="mt-8 text-center">
+<a class="inline-flex items-center gap-2 text-primary hover:underline" data-lang="en" href="careers.html">← Back to all jobs</a>
+<a class="hidden inline-flex items-center gap-2 text-primary hover:underline" data-lang="id" href="careers.html">← Kembali ke semua lowongan</a>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-2">
+<img alt="Sagara Logo" class="h-8 w-auto rounded-lg" onerror="this.style.display='none'" src="/assets/images/sagara_tech_logo.jpg"/>
+<span class="text-lg font-bold text-slate-900 dark:text-white">Sagara</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400">
+<span data-lang="en">© 2024 Sagara Tech. All rights reserved.</span>
+<span class="hidden" data-lang="id">© 2024 Sagara Tech. Hak cipta dilindungi undang-undang.</span>
+</p>
+<div class="flex gap-6 text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="privacy.html"><span data-lang="en">Privacy Policy</span><span class="hidden" data-lang="id">Kebijakan Privasi</span></a>
+<a class="hover:text-primary transition-colors" href="terms.html"><span data-lang="en">Terms of Service</span><span class="hidden" data-lang="id">Ketentuan Layanan</span></a>
+</div>
+</div>
+</div>
+</footer>
+<script>
         async function loadJobDetail() {
             const urlParams = new URLSearchParams(window.location.search);
             const jobId = urlParams.get('id');
-            
+            const lang = localStorage.getItem('language') || 'en';
+
             if (!jobId) {
-                document.getElementById('jobDetail').innerHTML = '<div class="text-center py-20 text-red-500">Invalid job ID</div>';
+                document.getElementById('jobDetail').innerHTML = lang === 'en' ? 
+                    '<div class="text-center py-20 text-red-500">Invalid job ID</div>' :
+                    '<div class="text-center py-20 text-red-500">ID lowongan tidak valid</div>';
                 return;
             }
-            
+
             try {
                 const response = await fetch(`/api/jobs/${jobId}`);
                 const job = await response.json();
-                
-                if (!job) {
-                    document.getElementById('jobDetail').innerHTML = '<div class="text-center py-20 text-red-500">Job not found</div>';
+
+                if (!job || job.error) {
+                    document.getElementById('jobDetail').innerHTML = lang === 'en' ?
+                        '<div class="text-center py-20 text-red-500">Job not found</div>' :
+                        '<div class="text-center py-20 text-red-500">Lowongan tidak ditemukan</div>';
                     return;
                 }
+
+                let salary = job.salary || (lang === 'en' ? 'Competitive' : 'Kompetitif');
+                if (lang === 'id' && typeof salary === 'string') {
+                    salary = salary.replace(/Million/g, 'Juta').replace(/Competitive/g, 'Kompetitif');
+                }
+
+                let exp = job.experience || (lang === 'en' ? 'Min. 2 years' : 'Min. 2 tahun');
+                if (lang === 'id' && typeof exp === 'string') {
+                    exp = exp.replace(/years/g, 'tahun').replace(/Min\./g, 'Min.');
+                }
+
+                let type = job.type || 'Full-time';
+                if (lang === 'id') {
+                    if (type === 'Full-time') type = 'Penuh Waktu';
+                    else if (type === 'Part-time') type = 'Paruh Waktu';
+                }
+
+                const aboutTitle = lang === 'en' ? 'About the Role' : 'Tentang Pekerjaan';
+                const reqTitle = lang === 'en' ? 'Requirements' : 'Persyaratan';
+                const offerTitle = lang === 'en' ? 'What We Offer' : 'Apa Yang Kami Tawarkan';
+                const applyBtnText = lang === 'en' ? 'Apply Now →' : 'Lamar Sekarang →';
+
+                const defaultReqs = lang === 'en' ? 
+                    '<li>Strong problem-solving skills</li><li>Excellent communication abilities</li><li>Team player mindset</li>' :
+                    '<li>Kemampuan pemecahan masalah yang kuat</li><li>Kemampuan komunikasi yang sangat baik</li><li>Berjiwa kerja sama tim</li>';
                 
+                const defaultOffers = lang === 'en' ?
+                    '<li>Competitive salary and benefits package</li><li>Flexible working arrangements</li><li>Professional development opportunities</li><li>Health insurance coverage</li>' :
+                    '<li>Paket gaji dan benefit yang kompetitif</li><li>Pengaturan kerja yang fleksibel</li><li>Peluang pengembangan profesional</li><li>Cakupan asuransi kesehatan</li>';
+
+                const location = job.location || 'Jakarta, Indonesia';
+
+                const emailSubject = lang === 'en' ? `Application for ${job.title}` : `Lamaran untuk ${job.title}`;
+                const emailBody = lang === 'en' ? 
+`Dear Hiring Team,
+
+I am writing to express my interest in the ${job.title} position at Sagara Technology.
+
+[Please write a brief introduction about yourself, your background, and why you are a good fit for this role here]
+
+Please find my resume/CV and portfolio attached to this email.
+
+I look forward to the opportunity to discuss my application with you.
+
+Best regards,
+[Your Name]
+[Your Phone Number]
+[Your LinkedIn Profile/Portfolio URL]` 
+: 
+`Kepada Tim HRD Sagara Technology,
+
+Saya menulis email ini untuk menyatakan ketertarikan saya pada posisi ${job.title} di Sagara Technology.
+
+[Silakan tulis perkenalan singkat tentang diri Anda, latar belakang pengalaman, dan mengapa Anda cocok untuk posisi ini di sini]
+
+Bersama email ini, saya lampirkan resume/CV dan portofolio saya sebagai bahan pertimbangan.
+
+Saya menantikan kesempatan untuk mendiskusikan lamaran saya lebih lanjut dengan Bapak/Ibu.
+
+Hormat saya,
+[Nama Anda]
+[Nomor Telepon Anda]
+[URL Profil LinkedIn/Portofolio Anda]`;
+
+                const mailtoUrl = `mailto:careers@sagara.tech?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
                 document.getElementById('jobDetail').innerHTML = `
                     <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
                         <h1 class="text-3xl md:text-4xl font-bold">${job.title}</h1>
-                        <span class="px-4 py-2 bg-primary/10 text-primary text-sm font-semibold rounded-full">${job.type || 'Full-time'}</span>
+                        <span class="px-4 py-2 bg-primary/10 text-primary text-sm font-semibold rounded-full">${type}</span>
                     </div>
                     <div class="flex flex-wrap gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6 pb-6 border-b border-slate-200 dark:border-slate-700">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> ${job.location || 'Jakarta, Indonesia'}</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">payments</span> ${job.salary || 'Competitive'}</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> ${job.experience || 'Min. 2 years'}</span>
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> ${location}</span>
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">payments</span> ${salary}</span>
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> ${exp}</span>
                     </div>
                     <div class="prose prose-lg dark:prose-invert max-w-none">
-                        <h3 class="text-xl font-bold mb-3">About the Role</h3>
+                        <h3 class="text-xl font-bold mb-3">${aboutTitle}</h3>
                         <p class="text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line mb-6">${job.description}</p>
                         
-                        <h3 class="text-xl font-bold mb-3">Requirements</h3>
+                        <h3 class="text-xl font-bold mb-3">${reqTitle}</h3>
                         <ul class="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-300">
-                            ${job.requirements?.map(req => `<li>${req}</li>`).join('') || '<li>Strong problem-solving skills</li><li>Excellent communication abilities</li><li>Team player mindset</li>'}
+                            ${job.requirements?.map(req => `<li>${req}</li>`).join('') || defaultReqs}
                         </ul>
                         
-                        <h3 class="text-xl font-bold mb-3 mt-6">What We Offer</h3>
+                        <h3 class="text-xl font-bold mb-3 mt-6">${offerTitle}</h3>
                         <ul class="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-300">
-                            <li>Competitive salary and benefits package</li>
-                            <li>Flexible working arrangements</li>
-                            <li>Professional development opportunities</li>
-                            <li>Health insurance coverage</li>
+                            ${defaultOffers}
                         </ul>
                     </div>
                     <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700 text-center">
-                        <a href="mailto:careers@sagara.tech?subject=Application for ${job.title}" class="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-bold transition-all">Apply Now →</a>
+                        <a href="${mailtoUrl}" class="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-bold transition-all">${applyBtnText}</a>
                     </div>
                 `;
             } catch (error) {
                 console.error('Error loading job detail:', error);
-                document.getElementById('jobDetail').innerHTML = '<div class="text-center py-20 text-red-500">Error loading job details</div>';
+                document.getElementById('jobDetail').innerHTML = lang === 'en' ?
+                    '<div class="text-center py-20 text-red-500">Error loading job details</div>' :
+                    '<div class="text-center py-20 text-red-500">Gagal memuat detail lowongan</div>';
             }
         }
-        
-        document.addEventListener('DOMContentLoaded', loadJobDetail);
     </script>
 </body>
 </html>

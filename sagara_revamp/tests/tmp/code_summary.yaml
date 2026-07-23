@@ -1,0 +1,94 @@
+version: "2"
+type: frontend
+tech_stack:
+  - HTML/JavaScript
+  - Express.js
+  - Tailwind CSS
+  - Material Symbols
+routes:
+  - path: /
+    file: public/index.html
+    auth_required: false
+    description: Landing page for Sagara IT Solutions
+  - path: /about.html
+    file: public/about.html
+    auth_required: false
+    description: Company overview and impact
+  - path: /services.html
+    file: public/services.html
+    auth_required: false
+    description: List of IT services offered
+  - path: /portfolio.html
+    file: public/portfolio.html
+    auth_required: false
+    description: Showcase of past projects
+  - path: /blog.html
+    file: public/blog.html
+    auth_required: false
+    description: Industry insights and news
+  - path: /careers.html
+    file: public/careers.html
+    auth_required: false
+    description: Job openings and culture
+  - path: /contact.html
+    file: public/contact.html
+    auth_required: false
+    description: Quick consultation request form
+features:
+  - name: Consultation Request
+    description: Users can request a custom IT roadmap through a contact form.
+    files:
+      - public/contact.html
+      - server.js
+    entry_route: /contact.html
+    user_interactions:
+      - Fill Full Name input field
+      - Fill Email Address input field (must be @gmail.com)
+      - Select Service Type from dropdown
+      - Fill Message / Project Details textarea
+      - Click Send Consultation button
+    api_calls:
+      - method: POST
+        endpoint: /api/consultation
+    auth_required: false
+  - name: Sagara AI Chatbot
+    description: Instant assistance via an agentic AI chatbot.
+    files:
+      - public/index.html
+      - server.js
+    entry_route: /
+    user_interactions:
+      - Click floating AI FAB button
+      - Type message in chat input
+      - Click send button
+    api_calls:
+      - method: POST
+        endpoint: /api/chat
+    auth_required: false
+  - name: Newsletter Subscription
+    description: Users can subscribe to the company newsletter.
+    files:
+      - public/index.html
+      - server.js
+    entry_route: /
+    user_interactions:
+      - Fill newsletter email input
+      - Click subscribe button
+    api_calls:
+      - method: POST
+        endpoint: /api/newsletter/subscribe
+    auth_required: false
+  - name: Language Switching
+    description: Support for English (EN) and Indonesian (ID) localization.
+    files:
+      - public/index.html
+      - public/contact.html
+    entry_route: /
+    user_interactions:
+      - Click ID button in header
+      - Click EN button in header
+    auth_required: false
+known_limitations:
+  - issue: Email validation is strictly limited to @gmail.com on client-side
+    location: public/contact.html
+    impact: Users with corporate or other domains cannot submit the form

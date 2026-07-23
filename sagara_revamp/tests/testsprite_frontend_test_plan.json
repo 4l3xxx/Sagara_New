@@ -1,0 +1,810 @@
+[
+  {
+    "id": "TC001",
+    "title": "Navigate and render core public pages end-to-end",
+    "description": "Verifies a visitor can open each core public route and the page content renders successfully without authentication.",
+    "category": "Browse Public Pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the About page"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the Services page"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the Portfolio page"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the Blog page"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the Careers page"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the Contact page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify each visited page shows its primary page content section (not a blank or broken layout)"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Language choice persists from home to contact page",
+    "description": "After switching to Indonesian on the landing page, user navigates to the contact page and still sees Indonesian content.",
+    "category": "Language Switching",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Switch language to Indonesian"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the contact page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the contact page content is displayed in Indonesian"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Submit consultation request successfully with a gmail address",
+    "description": "Verifies a lead can submit the consultation request with a valid @gmail.com address and is presented the Gmail compose follow-up path.",
+    "category": "Consultation Request",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /contact.html"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Test Lead\" into the full name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"testlead.sagara.qa@gmail.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Select a service type from the dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Need a consultation for a small web project; please advise next steps.\" into the project details field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the consultation request form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a Gmail compose interface opens with pre-filled follow-up content"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Open chatbot and complete ask-response loop",
+    "description": "Verifies a visitor can open the AI chatbot, send a question, and see a response rendered in the chat panel.",
+    "category": "Sagara AI Chatbot",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the floating AI chatbot button"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"What services do you offer for web development?\" into the chat message input"
+      },
+      {
+        "type": "action",
+        "description": "Send the chat message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a chatbot response message appears in the chat panel"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Switch landing page language to Indonesian",
+    "description": "User can switch the landing page language to Indonesian and sees the page content update accordingly.",
+    "category": "Language Switching",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Switch language to Indonesian"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the landing page content is displayed in Indonesian"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Use header/footer navigation to reach key destinations",
+    "description": "Verifies a visitor can use site navigation to move between pages and always reach the intended destination.",
+    "category": "Browse Public Pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the footer navigation area"
+      },
+      {
+        "type": "action",
+        "description": "Click the footer link to view the Services page"
+      },
+      {
+        "type": "action",
+        "description": "Click the header link to view the Portfolio page"
+      },
+      {
+        "type": "action",
+        "description": "Click the header link to view the Blog page"
+      },
+      {
+        "type": "action",
+        "description": "Click the header link to view the Home page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the landing page and the hero section is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Recover from non-gmail validation by correcting to gmail and submitting",
+    "description": "Verifies a lead can correct a non-@gmail.com email to a valid @gmail.com and then successfully submit the consultation request.",
+    "category": "Consultation Request",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /contact.html"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Test Lead\" into the full name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"testlead@company.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Select a service type from the dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Initial invalid email; then corrected.\" into the project details field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the consultation request form"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"testlead.sagara.qa@gmail.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the consultation request form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a Gmail compose interface opens with pre-filled follow-up content"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Browse portfolio highlights and reach consultation CTA",
+    "description": "Verifies a prospective client can browse portfolio items and follow a call-to-action path to start a consultation request.",
+    "category": "Browse Public Pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /portfolio.html"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the portfolio highlights"
+      },
+      {
+        "type": "action",
+        "description": "Click the call-to-action to contact the company about a project"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the consultation request form is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Subscribe to newsletter from landing page",
+    "description": "User can enter an email address on the landing page and submit the newsletter form to see a subscription confirmation.",
+    "category": "Newsletter Subscription",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the newsletter subscription section"
+      },
+      {
+        "type": "action",
+        "description": "Fill test.user+sagara.newsletter@gmail.com into the newsletter email field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the newsletter subscription"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a subscription confirmation is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Browse services overview content",
+    "description": "Verifies a reader can open the services page and see service categories with descriptions.",
+    "category": "Browse Public Pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /services.html"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the services list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify multiple service categories are displayed with short descriptions"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Block consultation submit when email is not gmail",
+    "description": "Verifies a lead using a non-@gmail.com address is prevented from submitting and sees a client-side validation error.",
+    "category": "Consultation Request",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /contact.html"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Test Lead\" into the full name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"testlead@company.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Select a service type from the dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Project details for validation test.\" into the project details field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the consultation request form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an email validation error is visible and submission is blocked"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Language persists after refresh on contact page",
+    "description": "After choosing Indonesian, refreshing the contact page preserves the chosen language and keeps content in Indonesian.",
+    "category": "Language Switching",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /contact.html"
+      },
+      {
+        "type": "action",
+        "description": "Switch language to Indonesian"
+      },
+      {
+        "type": "action",
+        "description": "Press F5"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the contact page content is displayed in Indonesian"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Chatbot supports multi-turn conversation",
+    "description": "Verifies a visitor can send a second message after receiving a response and see an additional response appended in the chat panel.",
+    "category": "Sagara AI Chatbot",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the floating AI chatbot button"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Tell me about your services.\" into the chat message input"
+      },
+      {
+        "type": "action",
+        "description": "Send the chat message"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the chatbot response to appear"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"How do I request a consultation?\" into the chat message input"
+      },
+      {
+        "type": "action",
+        "description": "Send the chat message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the chat panel shows an additional chatbot response after the second message"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Switch contact page language back to English",
+    "description": "User can switch language to English on the contact page and sees the contact page content update accordingly.",
+    "category": "Language Switching",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /contact.html"
+      },
+      {
+        "type": "action",
+        "description": "Switch language to Indonesian"
+      },
+      {
+        "type": "action",
+        "description": "Switch language to English"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the contact page content is displayed in English"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "Browse portfolio and proceed to contact from portfolio",
+    "description": "User can browse the portfolio page and follow a contact/consultation path that takes them to the contact page.",
+    "category": "View Portfolio & Case Studies",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /portfolio.html"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the featured projects section"
+      },
+      {
+        "type": "action",
+        "description": "Open a project details or summary view if available"
+      },
+      {
+        "type": "action",
+        "description": "Click a contact or consultation call-to-action from the portfolio page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the contact page"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "Browse careers page and view job listings",
+    "description": "A job seeker can open the careers page and see job listings rendered along with culture/recruitment information.",
+    "category": "Careers & Job Listings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view careers"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the careers page content"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify job listings are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify team culture or recruitment information is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC017",
+    "title": "Chatbot input clears after sending a message",
+    "description": "Verifies that after a visitor sends a chatbot message, the input field is cleared for the next message.",
+    "category": "Sagara AI Chatbot",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the floating AI chatbot button"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Hello\" into the chat message input"
+      },
+      {
+        "type": "action",
+        "description": "Send the chat message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the chat message input is empty"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC018",
+    "title": "Follow application instructions from a job listing",
+    "description": "A job seeker can open a listing and access the application instructions or next-step contact method from the careers page.",
+    "category": "Careers & Job Listings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view careers"
+      },
+      {
+        "type": "action",
+        "description": "Click into a job listing details section"
+      },
+      {
+        "type": "action",
+        "description": "Click the application instructions or next-steps link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify application instructions are visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC019",
+    "title": "Chatbot can be opened and closed without losing page context",
+    "description": "Verifies a visitor can open and close the chatbot panel and continue viewing the landing page content.",
+    "category": "Sagara AI Chatbot",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the floating AI chatbot button"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to close the chatbot panel"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the landing page primary content remains visible and usable after closing the chatbot"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC020",
+    "title": "Browse blog listing content",
+    "description": "Verifies a visitor can open the blog page and see a list of available posts or blog content blocks.",
+    "category": "Browse Public Pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog.html"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the blog content area"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a blog listing or blog content sections are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC021",
+    "title": "Portfolio page renders project listings",
+    "description": "User can open the portfolio page and see a list or grid of showcased projects to evaluate past work.",
+    "category": "View Portfolio & Case Studies",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /portfolio.html"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify showcased projects are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC022",
+    "title": "Use careers page call-to-action to start contacting the company",
+    "description": "A job seeker can use a careers call-to-action to navigate toward contacting the company for applications or inquiries.",
+    "category": "Careers & Job Listings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view careers"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the careers next-steps or call-to-action section"
+      },
+      {
+        "type": "action",
+        "description": "Click the contact call-to-action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the contact page"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC023",
+    "title": "Browse about page company overview",
+    "description": "Verifies a visitor can open the about page and view company overview and impact content.",
+    "category": "Browse Public Pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /about.html"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the company overview section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify company overview and impact content is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC024",
+    "title": "Newsletter blocks malformed email",
+    "description": "User cannot submit the newsletter form with an invalid email format and is shown an input validation error.",
+    "category": "Newsletter Subscription",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the newsletter subscription section"
+      },
+      {
+        "type": "action",
+        "description": "Fill not-an-email into the newsletter email field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the newsletter subscription"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an email validation error is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC025",
+    "title": "Careers page renders correctly in a narrow mobile viewport",
+    "description": "A job seeker can view careers content in a narrow viewport and still access job listings and instructions without content disappearing.",
+    "category": "Careers & Job Listings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /careers.html"
+      },
+      {
+        "type": "action",
+        "description": "Resize the browser to a narrow mobile width"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the careers page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify job listings are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify application instructions or next steps are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC026",
+    "title": "Careers page internal navigation enables scanning multiple roles",
+    "description": "A job seeker can move between multiple job listings on the careers page to compare roles.",
+    "category": "Careers & Job Listings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /careers.html"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the job listings section"
+      },
+      {
+        "type": "action",
+        "description": "Click to view one job listing details section"
+      },
+      {
+        "type": "action",
+        "description": "Click to view a different job listing details section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify details for the second job listing are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC027",
+    "title": "Portfolio project summaries are readable without expanding content",
+    "description": "User can read a concise project summary/outcomes on the portfolio page without requiring unsupported interactions.",
+    "category": "View Portfolio & Case Studies",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /portfolio.html"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to a project card or project summary section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify at least one project summary with outcomes is visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC028",
+    "title": "Newsletter prevents double submit",
+    "description": "User cannot accidentally submit the newsletter form multiple times rapidly and the UI prevents duplicate submission while processing.",
+    "category": "Newsletter Subscription",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the newsletter subscription section"
+      },
+      {
+        "type": "action",
+        "description": "Fill test.user+sagara.rapid@gmail.com into the newsletter email field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the newsletter subscription"
+      },
+      {
+        "type": "action",
+        "description": "Immediately submit the newsletter subscription again"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify only one subscription confirmation is visible"
+      }
+    ],
+    "priority": "Low"
+  }
+]

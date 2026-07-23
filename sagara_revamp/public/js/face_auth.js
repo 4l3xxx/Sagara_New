@@ -1,10 +1,19 @@
 // ============================================
-// FACE RECOGNITION MODULE
+// FACE RECOGNITION MODULE WITH PREMIUM SAGARATOAST
 // ============================================
 
 let faceModelsLoaded = false;
 let currentStream = null;
 let knownFaces = [];
+
+// Safe helper to trigger premium SagaraToast or fallback to alert
+function showNotification(message, type = 'info') {
+    if (window.SagaraToast) {
+        window.SagaraToast.show(message, type);
+    } else {
+        alert(message);
+    }
+}
 
 // Load model face-api.js
 async function loadFaceModels() {
@@ -64,7 +73,7 @@ async function startWebcam(videoElement) {
         });
     } catch (err) {
         console.error('Webcam error:', err);
-        alert('Tidak bisa akses webcam. Pastikan izin diberikan.');
+        showNotification('⚠️ Tidak bisa akses webcam. Pastikan izin diberikan.', 'error');
         return false;
     }
 }
@@ -83,7 +92,7 @@ function stopWebcam(videoElement) {
 // Capture dan detect wajah
 async function detectFace(videoElement) {
     if (!faceModelsLoaded) {
-        alert('Face models masih loading, tunggu sebentar...');
+        showNotification('⏳ Face models masih loading, tunggu sebentar...', 'warning');
         return null;
     }
     
@@ -98,17 +107,17 @@ async function detectFace(videoElement) {
 // Registrasi wajah baru
 async function registerFace(name, videoElement) {
     if (!name || name.trim() === '') {
-        alert('Masukkan nama terlebih dahulu!');
+        showNotification('⚠️ Masukkan nama terlebih dahulu!', 'warning');
         return false;
     }
     
     const detection = await detectFace(videoElement);
     if (!detection) {
-        alert('Wajah tidak terdeteksi! Pastikan wajah terlihat jelas.');
+        showNotification('❌ Wajah tidak terdeteksi! Pastikan wajah terlihat jelas.', 'error');
         return false;
     }
     
-    // Ambil beberapa frame untuk konfirmasi
+    // Ambil descriptor wajah
     const descriptor = Array.from(detection.descriptor);
     
     try {
@@ -120,15 +129,15 @@ async function registerFace(name, videoElement) {
         
         const data = await res.json();
         if (data.success) {
-            alert(`✅ Berhasil registrasi untuk ${name}!`);
+            showNotification(`✅ Berhasil registrasi untuk ${name}!`, 'success');
             await loadKnownFaces(); // Reload known faces
             return true;
         } else {
-            alert('Gagal registrasi: ' + (data.error || 'Unknown error'));
+            showNotification('❌ Gagal registrasi: ' + (data.error || 'Unknown error'), 'error');
             return false;
         }
     } catch (err) {
-        alert('Error koneksi ke server');
+        showNotification('❌ Error koneksi ke server', 'error');
         return false;
     }
 }
@@ -278,13 +287,10 @@ async function loginWithFace() {
             body: JSON.stringify({ name: result.name, action: 'login' })
         });
         
-        alert(`✅ Selamat datang kembali, ${result.name}!`);
+        showNotification(`✅ Selamat datang kembali, ${result.name}!`, 'success');
         hideFaceModal();
-        
-        // Optional: redirect atau refresh state user
-        // window.location.href = '/dashboard';
     } else {
-        alert('❌ Wajah tidak dikenali. Silakan registrasi terlebih dahulu.');
+        showNotification('❌ Wajah tidak dikenali. Silakan registrasi terlebih dahulu.', 'error');
     }
 }
 

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="dark" lang="en">
 
 <head>
@@ -214,30 +214,8 @@
                         </div>
                     </div>
 
-                    <!-- Redirect Options -->
-                    <div class="space-y-2.5">
-                        <label
-                            class="font-label text-[10px] tracking-[0.1em] text-on-surface-variant uppercase block">Redirect
-                            Target</label>
-                        <div class="flex gap-2.5">
-                            <label class="flex-1 cursor-pointer">
-                                <input type="radio" name="redirectTo" value="dashboard" checked class="hidden peer">
-                                <div
-                                    class="flex items-center justify-center gap-2 py-2.5 rounded-xl border border-outline-variant/20 bg-surface-container-low peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all text-xs font-medium">
-                                    <span class="material-symbols-outlined text-base">dashboard</span>
-                                    <span>Dashboard</span>
-                                </div>
-                            </label>
-                            <label class="flex-1 cursor-pointer">
-                                <input type="radio" name="redirectTo" value="homepage" class="hidden peer">
-                                <div
-                                    class="flex items-center justify-center gap-2 py-2.5 rounded-xl border border-outline-variant/20 bg-surface-container-low peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all text-xs font-medium">
-                                    <span class="material-symbols-outlined text-base">home</span>
-                                    <span>Website</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
+                    <!-- Redirect Target (Hidden, always defaults to Dashboard) -->
+                    <input type="hidden" name="redirectTo" value="dashboard" />
 
                     <!-- Submit Button -->
                     <div class="pt-2">
@@ -282,7 +260,7 @@
                                 Username</p>
                             <p
                                 class="text-[10px] font-mono text-primary bg-surface-container-highest p-1.5 rounded-lg text-center">
-                                sagara</p>
+                                samuel</p>
                         </div>
                         <div>
                             <p
@@ -290,7 +268,7 @@
                                 Password</p>
                             <p
                                 class="text-[10px] font-mono text-primary bg-surface-container-highest p-1.5 rounded-lg text-center">
-                                admin123</p>
+                                samuel123</p>
                         </div>
                     </div>
                 </div>
@@ -329,8 +307,14 @@
             <button onclick="loginWithFace()" id="faceLoginBtn"
                 class="w-full bg-primary hover:bg-secondary text-on-primary font-headline font-semibold py-3.5 rounded-lg transition-all flex items-center justify-center gap-3 text-sm">
                 <span class="material-symbols-outlined text-lg">lock_open</span>
-                Verify & Authorize
+                <span id="faceLoginBtnText">Verify & Authorize</span>
             </button>
+
+            <!-- Status Notifikasi - hidden by default -->
+            <div id="faceStatusBox" class="hidden mt-4 p-4 rounded-xl flex items-center gap-3 text-sm font-medium transition-all">
+                <span class="material-symbols-outlined text-xl" id="faceStatusIcon">info</span>
+                <span id="faceStatusText"></span>
+            </div>
 
             <p class="text-center text-[9px] text-on-surface-variant uppercase tracking-widest mt-4 opacity-60">
                 Encrypted Connection Secured
@@ -381,16 +365,21 @@
         let knownFaces = [];
 
         async function loadFaceModels() {
-            const MODEL_URL = '/models';
-            try {
-                await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
-                await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
-                await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
-                faceModelsLoaded = true;
-                await loadKnownFaces();
-            } catch (err) {
-                console.error('Face models load error:', err);
+            const paths = ['/models', '../models', '/public/models'];
+            for (const path of paths) {
+                try {
+                    await faceapi.nets.ssdMobilenetv1.loadFromUri(path);
+                    await faceapi.nets.faceLandmark68Net.loadFromUri(path);
+                    await faceapi.nets.faceRecognitionNet.loadFromUri(path);
+                    faceModelsLoaded = true;
+                    console.log(`✅ Face ID models loaded successfully from path: ${path}`);
+                    await loadKnownFaces();
+                    return;
+                } catch (err) {
+                    console.warn(`⚠️ Failed to load models from path "${path}":`, err.message);
+                }
             }
+            console.error('❌ Failed to load Face ID models from all static paths.');
         }
 
         async function loadKnownFaces() {
@@ -457,50 +446,76 @@
             stopWebcam();
         }
 
+        function showFaceStatus(type, message) {
+            const box = document.getElementById('faceStatusBox');
+            const icon = document.getElementById('faceStatusIcon');
+            const text = document.getElementById('faceStatusText');
+            box.classList.remove('hidden', 'bg-green-50', 'text-green-800', 'border', 'border-green-200',
+                                 'bg-red-50', 'text-red-800', 'border-red-200',
+                                 'bg-amber-50', 'text-amber-800', 'border-amber-200');
+            if (type === 'success') {
+                box.classList.add('bg-green-50', 'text-green-800', 'border', 'border-green-200');
+                icon.textContent = 'check_circle';
+                icon.className = 'material-symbols-outlined text-xl text-green-600';
+            } else if (type === 'error') {
+                box.classList.add('bg-red-50', 'text-red-800', 'border', 'border-red-200');
+                icon.textContent = 'cancel';
+                icon.className = 'material-symbols-outlined text-xl text-red-500';
+            } else {
+                box.classList.add('bg-amber-50', 'text-amber-800', 'border', 'border-amber-200');
+                icon.textContent = 'warning';
+                icon.className = 'material-symbols-outlined text-xl text-amber-500';
+            }
+            text.textContent = message;
+        }
+
         async function loginWithFace() {
             const video = document.getElementById('face-video');
             const btn = document.getElementById('faceLoginBtn');
-            const originalContent = btn.innerHTML;
+            const btnText = document.getElementById('faceLoginBtnText');
 
-            btn.innerHTML = '<span class="spinner"></span> Processing...';
+            btnText.textContent = 'Memindai wajah...';
             btn.disabled = true;
+
+            // Reset status
+            document.getElementById('faceStatusBox').classList.add('hidden');
 
             try {
                 const detection = await faceapi.detectSingleFace(video).withFaceLandmarks().withFaceDescriptor();
                 if (!detection) {
-                    alert('Face not detected. Please reposition yourself.');
+                    showFaceStatus('warning', 'Wajah tidak terdeteksi. Pastikan wajah Anda terlihat jelas di kamera.');
+                    btnText.textContent = 'Verify & Authorize';
+                    btn.disabled = false;
                     return;
                 }
 
-                let bestMatch = { name: 'unknown', distance: 0.6 };
-                for (const face of knownFaces) {
-                    const distance = faceapi.euclideanDistance(detection.descriptor, face.descriptor);
-                    if (distance < bestMatch.distance) {
-                        bestMatch = { name: face.name, distance };
-                    }
-                }
+                btnText.textContent = 'Memverifikasi identitas...';
 
-                if (bestMatch.name !== 'unknown') {
-                    const res = await fetch('/api/face/admin-login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username: bestMatch.name })
-                    });
-                    const data = await res.json();
+                const res = await fetch('/api/face/admin-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ descriptor: Array.from(detection.descriptor) })
+                });
+                
+                const data = await res.json();
 
-                    if (data.success) {
-                        const redirectTo = document.querySelector('input[name="redirectTo"]:checked').value;
+                if (res.ok && data.success) {
+                    showFaceStatus('success', `✅ Identitas diverifikasi! Selamat datang kembali. Mengalihkan ke dashboard...`);
+                    btnText.textContent = 'Berhasil!';
+                    setTimeout(() => {
+                        const redirectToEl = document.querySelector('input[name="redirectTo"]');
+                        const redirectTo = redirectToEl ? redirectToEl.value : 'dashboard';
                         window.location.href = redirectTo === 'homepage' ? '/' : data.redirect;
-                    } else {
-                        alert('Unauthorized biometric signature');
-                    }
+                    }, 1500);
                 } else {
-                    alert('Identity verification failed');
+                    showFaceStatus('error', data.error || 'Wajah tidak dikenali. Pastikan wajah Anda sudah terdaftar di sistem.');
+                    btnText.textContent = 'Coba Lagi';
+                    btn.disabled = false;
                 }
             } catch (err) {
-                console.error(err);
-            } finally {
-                btn.innerHTML = originalContent;
+                console.error('Biometric authentication failed:', err);
+                showFaceStatus('error', 'Koneksi ke sistem biometrik gagal. Pastikan server berjalan.');
+                btnText.textContent = 'Verify & Authorize';
                 btn.disabled = false;
             }
         }

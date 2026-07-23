@@ -1,38 +1,16 @@
 // ============================================
 // ML SERVICE - Sentiment Analysis & Classification
-// VERSION 2.0 - COMPLETE
+// VERSION 2.0 - COMPLETE WITH SPAM DETECTION
 // ============================================
 
 class MLService {
     // ============================================
-    // 1. SENTIMENT ANALYSIS
-    // ============================================
-    analyzeSentiment(text) {
-        const positiveWords = ['bagus', 'hebat', 'keren', 'puas', 'suka', 'mantap', 'terima kasih', 'thanks', 'good', 'great', 'awesome', 'love', 'excellent', 'perfect', 'best'];
-        const negativeWords = ['jelek', 'buruk', 'kecewa', 'error', 'lambat', 'gagal', 'bug', 'parah', 'kesal', 'bad', 'terrible', 'worst', 'poor', 'hate'];
-        
-        let score = 0;
-        const lowerText = text.toLowerCase();
-        
-        positiveWords.forEach(word => {
-            if (lowerText.includes(word)) score++;
-        });
-        negativeWords.forEach(word => {
-            if (lowerText.includes(word)) score--;
-        });
-        
-        if (score > 1) return { sentiment: 'positive', score, emoji: '😊', label: 'Positif' };
-        if (score < 0) return { sentiment: 'negative', score, emoji: '😞', label: 'Negatif' };
-        return { sentiment: 'neutral', score, emoji: '😐', label: 'Netral' };
-    }
-    
     // ============================================
     // 2. USER CLASSIFICATION
     // ============================================
     classifyUser(data) {
-        const { companySize, budget, industry, serviceType, message } = data;
+        const { companySize, industry, serviceType, message } = data;
         
-        // Deteksi dari service type
         if (serviceType === 'Government Solutions' || industry === 'government') {
             return { 
                 type: 'GOVERNMENT', 
@@ -43,8 +21,7 @@ class MLService {
             };
         }
         
-        // Deteksi dari budget dan company size
-        if ((companySize && companySize < 50) || (budget && budget < 50000000)) {
+        if (companySize && companySize < 50) {
             return { 
                 type: 'UMKM', 
                 priority: 'MEDIUM', 
@@ -54,7 +31,6 @@ class MLService {
             };
         }
         
-        // Deteksi dari message content
         const lowerMessage = (message || '').toLowerCase();
         if (lowerMessage.includes('enterprise') || lowerMessage.includes('korporasi') || lowerMessage.includes('perusahaan besar')) {
             return { 
@@ -66,7 +42,6 @@ class MLService {
             };
         }
         
-        // Default ke GENERAL jika tidak ada indikator spesifik
         return { 
             type: 'GENERAL', 
             priority: 'LOW', 
@@ -83,17 +58,8 @@ class MLService {
         let score = 0;
         let maxScore = 0;
         
-        // Budget match (30%)
-        if (userData.budget && serviceData.minBudget) {
-            if (userData.budget >= serviceData.minBudget) {
-                score += 30;
-            }
-            maxScore += 30;
-        } else {
-            maxScore += 30;
-        }
+        maxScore += 30;
         
-        // Industry match (25%)
         if (userData.industry && serviceData.targetIndustry) {
             if (userData.industry === serviceData.targetIndustry) {
                 score += 25;
@@ -103,7 +69,6 @@ class MLService {
             maxScore += 25;
         }
         
-        // Company size match (25%)
         if (userData.companySize && serviceData.minCompanySize) {
             if (userData.companySize >= serviceData.minCompanySize) {
                 score += 25;
@@ -113,7 +78,6 @@ class MLService {
             maxScore += 25;
         }
         
-        // Need urgency (20%)
         if (userData.urgency === 'high') {
             score += 20;
         }
@@ -127,35 +91,20 @@ class MLService {
     // 4. LEAD SCORE GENERATION
     // ============================================
     generateLeadScore(formData) {
-        let score = 0.5; // base score
+        let score = 0.5;
         
-        // Budget tinggi -> score naik
-        if (formData.budget && formData.budget > 100000000) {
-            score += 0.2;
-        } else if (formData.budget && formData.budget > 50000000) {
-            score += 0.1;
-        }
-        
-        // Company size besar -> score naik
         if (formData.companySize && formData.companySize > 100) {
             score += 0.15;
         } else if (formData.companySize && formData.companySize > 20) {
             score += 0.05;
         }
         
-        // Service type premium -> score naik
-        const premiumServices = ['IT outsourcing', 'Digital transformation / custom software', 'Mobile app development'];
+        const premiumServices = ['Custom Software Development', 'Cloud Infrastructure & Migration', 'Cybersecurity Audit'];
         if (premiumServices.includes(formData.service_type)) {
             score += 0.1;
         }
         
-        // Message length -> indikasi seriousness
         if (formData.message && formData.message.length > 200) {
-            score += 0.05;
-        }
-        
-        // Sentiment positive -> score naik dikit
-        if (formData.sentiment === 'positive') {
             score += 0.05;
         }
         
@@ -163,20 +112,17 @@ class MLService {
     }
     
     // ============================================
-    // 5. PRIORITY SCORE (Urgensi penanganan)
+    // 5. PRIORITY SCORE
     // ============================================
     calculatePriorityScore(consultation) {
         let priority = 0;
         
-        // Lead score tinggi -> priority tinggi (40%)
         priority += (consultation.lead_score || 0.5) * 40;
         
-        // Status masih New -> priority tinggi (20%)
         if (consultation.status === 'New') {
             priority += 20;
         }
         
-        // Sudah lebih dari 3 hari -> priority naik (20%)
         const createdDate = new Date(consultation.created_at);
         const daysOld = (Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24);
         if (daysOld > 3) {
@@ -185,7 +131,6 @@ class MLService {
             priority += 10;
         }
         
-        // Corporate/Government -> priority naik (20%)
         if (consultation.nlp_category === 'CORPORATE' || consultation.nlp_category === 'GOVERNMENT') {
             priority += 20;
         } else if (consultation.nlp_category === 'UMKM') {
@@ -199,7 +144,7 @@ class MLService {
     // 6. EXPORT TO CSV
     // ============================================
     exportToCSV(data, filename = 'consultations_export.csv') {
-        const headers = ['ID', 'Full Name', 'Email', 'Service Type', 'Category', 'Lead Score', 'Priority Score', 'Sentiment', 'Status', 'Created At'];
+        const headers = ['ID', 'Full Name', 'Email', 'Service Type', 'Category', 'Lead Score', 'Priority Score', 'Status', 'Created At'];
         
         const rows = data.map(item => [
             item.id,
@@ -209,14 +154,12 @@ class MLService {
             item.nlp_category || 'General',
             item.lead_score || 0.5,
             this.calculatePriorityScore(item),
-            item.sentiment || 'neutral',
             item.status || 'New',
             item.created_at
         ]);
         
         const csvContent = [headers, ...rows].map(row => row.join(',')).join('\n');
         
-        // Return sebagai blob untuk download
         return {
             success: true,
             csv: csvContent,
@@ -235,23 +178,19 @@ class MLService {
         
         texts.forEach(text => {
             const lowerText = text.toLowerCase();
-            // Hapus tanda baca dan split
             const cleanText = lowerText.replace(/[.,!?;:()"'\-]/g, '');
             const wordArray = cleanText.split(' ');
             
             wordArray.forEach(word => {
-                // Filter kata pendek, stop words, dan angka
                 if (word.length > 3 && !stopWords.includes(word) && !/^\d+$/.test(word)) {
                     words[word] = (words[word] || 0) + 1;
                 }
             });
         });
         
-        // Sort by frequency dan ambil top 30
         const sortedWords = Object.entries(words).sort((a, b) => b[1] - a[1]).slice(0, 30);
         
-        // Format untuk word cloud library
-        const wordCloudData = sortedWords.map(([text, weight]) => ({
+        const wordCloudData = sortedWords.map(([text, weight], index) => ({
             text: text,
             weight: weight,
             size: Math.min(40, 12 + (weight / sortedWords[0][1]) * 28)
@@ -266,31 +205,21 @@ class MLService {
     }
     
     // ============================================
-    // 8. TREND ANALYSIS (Bulanan)
+    // 8. TREND ANALYSIS
     // ============================================
     analyzeTrend(consultations) {
         const monthly = {};
         const monthlyByCategory = {};
-        const monthlyBySentiment = {};
         
         consultations.forEach(c => {
             const month = c.created_at ? c.created_at.substring(0, 7) : 'unknown';
-            
-            // Total per bulan
             monthly[month] = (monthly[month] || 0) + 1;
             
-            // Per kategori
             const category = c.nlp_category || 'General';
             if (!monthlyByCategory[month]) monthlyByCategory[month] = {};
             monthlyByCategory[month][category] = (monthlyByCategory[month][category] || 0) + 1;
-            
-            // Per sentimen
-            const sentiment = c.sentiment || 'neutral';
-            if (!monthlyBySentiment[month]) monthlyBySentiment[month] = {};
-            monthlyBySentiment[month][sentiment] = (monthlyBySentiment[month][sentiment] || 0) + 1;
         });
         
-        // Hitung growth rate
         const months = Object.keys(monthly).sort();
         const growthRates = [];
         for (let i = 1; i < months.length; i++) {
@@ -304,7 +233,6 @@ class MLService {
             });
         }
         
-        // Prediksi next month (simple linear regression)
         let predictedNext = null;
         if (months.length >= 2) {
             const values = months.map(m => monthly[m]);
@@ -317,7 +245,6 @@ class MLService {
             success: true,
             monthlyData: monthly,
             monthlyByCategory: monthlyByCategory,
-            monthlyBySentiment: monthlyBySentiment,
             growthRates: growthRates,
             totalMonths: months.length,
             averagePerMonth: Math.round(Object.values(monthly).reduce((a, b) => a + b, 0) / months.length),
@@ -334,8 +261,7 @@ class MLService {
         const serviceType = consultation.service_type;
         const category = consultation.nlp_category;
         
-        // Rekomendasi berdasarkan service type
-        if (serviceType === 'Digital transformation / custom software' || serviceType === 'Web development' || serviceType === 'Mobile app development') {
+        if (serviceType === 'Custom Software Development' || serviceType === 'Digital transformation / custom software') {
             recommendations.push({
                 type: 'service',
                 title: 'Dedicated Development Team',
@@ -348,33 +274,32 @@ class MLService {
             });
         }
         
-        if (serviceType === 'IT outsourcing') {
+        if (serviceType === 'Cloud Infrastructure & Migration') {
             recommendations.push({
                 type: 'service',
-                title: 'Enterprise SLA',
-                description: 'Service Level Agreement untuk dukungan 24/7'
+                title: 'Cloud Cost Optimization',
+                description: 'Analisis dan optimasi biaya cloud infrastructure'
             });
             recommendations.push({
                 type: 'service',
-                title: 'Tech Talent Pipeline',
-                description: 'Penyediaan talenta IT berkelanjutan sesuai kebutuhan'
-            });
-        }
-        
-        if (serviceType === 'UI/UX design') {
-            recommendations.push({
-                type: 'service',
-                title: 'User Research & Testing',
-                description: 'Validasi desain dengan pengguna nyata'
-            });
-            recommendations.push({
-                type: 'service',
-                title: 'Design System Creation',
-                description: 'Pembuatan standar UI komponen untuk konsistensi'
+                title: 'Disaster Recovery Plan',
+                description: 'Implementasi backup dan recovery strategy'
             });
         }
         
-        // Rekomendasi berdasarkan kategori
+        if (serviceType === 'Cybersecurity Audit') {
+            recommendations.push({
+                type: 'service',
+                title: 'Security Awareness Training',
+                description: 'Pelatihan keamanan untuk karyawan'
+            });
+            recommendations.push({
+                type: 'service',
+                title: 'Penetration Testing',
+                description: 'Pengujian keamanan sistem secara berkala'
+            });
+        }
+        
         if (category === 'GOVERNMENT') {
             recommendations.push({
                 type: 'compliance',
@@ -412,30 +337,20 @@ class MLService {
     generateSummaryReport(consultations) {
         const total = consultations.length;
         const categories = {};
-        const sentiments = {};
         const statuses = {};
         let totalLeadScore = 0;
         
         consultations.forEach(c => {
-            // Kategori
             const cat = c.nlp_category || 'General';
             categories[cat] = (categories[cat] || 0) + 1;
             
-            // Sentimen
-            const sent = c.sentiment || 'neutral';
-            sentiments[sent] = (sentiments[sent] || 0) + 1;
-            
-            // Status
             const stat = c.status || 'New';
             statuses[stat] = (statuses[stat] || 0) + 1;
             
-            // Lead score
             totalLeadScore += (c.lead_score || 0.5);
         });
         
         const averageLeadScore = total > 0 ? Math.round((totalLeadScore / total) * 100) : 0;
-        
-        // Hitung conversion rate (Closed / Total)
         const closedCount = statuses['Closed'] || 0;
         const conversionRate = total > 0 ? Math.round((closedCount / total) * 100) : 0;
         
@@ -446,13 +361,199 @@ class MLService {
                 averageLeadScore: averageLeadScore,
                 conversionRate: conversionRate,
                 categories: categories,
-                sentiments: sentiments,
                 statuses: statuses
             },
-            topCategory: Object.entries(categories).sort((a, b) => b[1] - a[1])[0] || null,
-            dominantSentiment: Object.entries(sentiments).sort((a, b) => b[1] - a[1])[0] || null
+            topCategory: Object.entries(categories).sort((a, b) => b[1] - a[1])[0] || null
         };
     }
 }
 
-module.exports = new MLService();
+// ============================================
+// AI SPAM DETECTION ENGINE
+// ============================================
+
+const spamKeywords = {
+    high: [
+        'viagra', 'casino', 'poker', 'lottery', 'winner', 'prize', 'bitcoin',
+        'crypto', 'binary options', 'forex', 'loan', 'credit card', 'mortgage',
+        'weight loss', 'xxx', 'adult', 'porn', 'gambling', 'slot machine',
+        'free money', 'no cost', 'cheap', 'discount', 'offer'
+    ],
+    medium: [
+        'click here', 'subscribe now', 'limited time', 'guaranteed', 'cash',
+        'refinance', 'investment', 'profit', 'earn money', 'work from home'
+    ],
+    low: [
+        'urgent', 'important', 'dear sir', 'hello sir', 'enquiry', 'inquiry',
+        'pls', 'kindly', 'asap', 'immediately', 'application', 'register'
+    ]
+};
+
+const spamPatterns = [
+    /http[s]?:\/\/[^\s]+/g,
+    /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
+    /(\d{10,})/g,
+    /[!@#$%^&*(){}\[\]]{5,}/g,
+    /(.)\1{5,}/g
+];
+
+class SpamDetectionService {
+    detectSpam(text) {
+        const result = {
+            isSpam: false,
+            score: 0,
+            reasons: [],
+            confidence: 'low'
+        };
+        
+        if (!text || text.length === 0) {
+            result.isSpam = true;
+            result.reasons.push('Empty message');
+            result.score = 100;
+            return result;
+        }
+        
+        const lowerText = text.toLowerCase();
+        let totalScore = 0;
+        
+        // Check spam keywords
+        for (const keyword of spamKeywords.high) {
+            if (lowerText.includes(keyword)) {
+                totalScore += 15;
+                result.reasons.push(`Contains spam keyword: "${keyword}"`);
+            }
+        }
+        
+        for (const keyword of spamKeywords.medium) {
+            if (lowerText.includes(keyword)) {
+                totalScore += 8;
+                result.reasons.push(`Contains suspicious phrase: "${keyword}"`);
+            }
+        }
+        
+        for (const keyword of spamKeywords.low) {
+            if (lowerText.includes(keyword)) {
+                totalScore += 3;
+            }
+        }
+        
+        // Check patterns
+        for (const pattern of spamPatterns) {
+            const matches = text.match(pattern);
+            if (matches) {
+                if (pattern.toString().includes('http')) {
+                    totalScore += matches.length * 10;
+                    if (matches.length > 0) result.reasons.push(`Contains ${matches.length} URL(s)`);
+                }
+                if (pattern.toString().includes('@')) {
+                    totalScore += matches.length * 8;
+                    if (matches.length > 0) result.reasons.push(`Contains ${matches.length} email address(es)`);
+                }
+                if (pattern.toString().includes('[!@#$%')) {
+                    if (matches[0]?.length > 5) {
+                        totalScore += 10;
+                        result.reasons.push('Excessive special characters');
+                    }
+                }
+                if (pattern.toString().includes('(.)\\1{5,}')) {
+                    if (matches) {
+                        totalScore += 8;
+                        result.reasons.push('Contains repeated characters');
+                    }
+                }
+            }
+        }
+        
+        // Check length
+        if (text.length < 20) {
+            totalScore += 15;
+            result.reasons.push('Message too short (possible spam)');
+        } else if (text.length > 2000) {
+            totalScore += 10;
+            result.reasons.push('Excessively long message');
+        }
+        
+        // Check uppercase
+        const uppercaseCount = (text.match(/[A-Z]/g) || []).length;
+        const uppercaseRatio = text.length > 0 ? uppercaseCount / text.length : 0;
+        if (uppercaseRatio > 0.5) {
+            totalScore += 15;
+            result.reasons.push('Excessive uppercase text');
+        } else if (uppercaseRatio > 0.3) {
+            totalScore += 8;
+            result.reasons.push('High amount of uppercase text');
+        }
+        
+        result.score = Math.min(Math.round(totalScore), 100);
+        
+        if (result.score >= 60) {
+            result.isSpam = true;
+            result.confidence = result.score >= 80 ? 'high' : 'medium';
+        } else if (result.score >= 30) {
+            result.isSpam = false;
+            result.confidence = 'medium';
+            result.reasons.push('Suspicious content, needs review');
+        }
+        
+        return result;
+    }
+    
+    quickCheck(text) {
+        const result = this.detectSpam(text);
+        return {
+            isSpam: result.isSpam,
+            score: result.score,
+            confidence: result.confidence
+        };
+    }
+    
+    getSpamStats(spamLogs) {
+        const stats = {
+            total: spamLogs.length,
+            highConfidence: 0,
+            mediumConfidence: 0,
+            lowConfidence: 0,
+            averageScore: 0
+        };
+        
+        let totalScore = 0;
+        
+        for (const log of spamLogs) {
+            totalScore += log.spam_score || 0;
+            if (log.confidence === 'high') stats.highConfidence++;
+            else if (log.confidence === 'medium') stats.mediumConfidence++;
+            else stats.lowConfidence++;
+        }
+        
+        stats.averageScore = spamLogs.length > 0 ? Math.round(totalScore / spamLogs.length) : 0;
+        
+        return stats;
+    }
+}
+
+// ============================================
+// EXPORT ALL SERVICES
+// ============================================
+
+const mlServiceInstance = new MLService();
+const spamDetectionInstance = new SpamDetectionService();
+
+module.exports = {
+    // MLService methods
+    classifyUser: mlServiceInstance.classifyUser.bind(mlServiceInstance),
+    calculateMatchScore: mlServiceInstance.calculateMatchScore.bind(mlServiceInstance),
+    generateLeadScore: mlServiceInstance.generateLeadScore.bind(mlServiceInstance),
+    calculatePriorityScore: mlServiceInstance.calculatePriorityScore.bind(mlServiceInstance),
+    exportToCSV: mlServiceInstance.exportToCSV.bind(mlServiceInstance),
+    generateWordCloud: mlServiceInstance.generateWordCloud.bind(mlServiceInstance),
+    analyzeTrend: mlServiceInstance.analyzeTrend.bind(mlServiceInstance),
+    generateRecommendations: mlServiceInstance.generateRecommendations.bind(mlServiceInstance),
+    generateSummaryReport: mlServiceInstance.generateSummaryReport.bind(mlServiceInstance),
+    
+    // SpamDetection methods
+    spamDetection: {
+        detectSpam: spamDetectionInstance.detectSpam.bind(spamDetectionInstance),
+        quickCheck: spamDetectionInstance.quickCheck.bind(spamDetectionInstance),
+        getSpamStats: spamDetectionInstance.getSpamStats.bind(spamDetectionInstance)
+    }
+};

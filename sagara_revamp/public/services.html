@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html class="light" lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Sagara - IT Services & Solutions</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sagara - IT Services &amp; Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -24,7 +25,7 @@
             },
         }
     </script>
-    <style>
+<style>
         .nav-link-active {
             color: #137fec !important;
             position: relative;
@@ -54,10 +55,44 @@
             transform: translateY(-2px);
         }
     </style>
+<!-- Theme Script -->
+<script>
+        function initTheme() {
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+            }
+        }
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateThemeIcon();
+        }
+        function updateThemeIcon() {
+            const icons = document.querySelectorAll('.theme-icon-display');
+            const isDark = document.documentElement.classList.contains('dark');
+            icons.forEach(icon => {
+                icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+            });
+        }
+        initTheme();
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display">
-
-    <script>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display pt-20">
+<script>
         function switchLanguage(lang) {
             localStorage.setItem('language', lang);
             document.querySelectorAll('[data-lang]').forEach(el => {
@@ -103,301 +138,463 @@
             switchLanguage(lang);
         });
     </script>
-
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <a class="flex items-center gap-3" href="index.html">
-                    <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-10 w-auto rounded-lg" onerror="this.style.display='none'">
-                    <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara</h2>
-                </a>
-                <div class="hidden md:flex flex-1 justify-end items-center gap-8">
-                    <div class="flex items-center gap-8">
-                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="index.html">Home</a>
-                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="index.html">Beranda</a>
-                        <a data-lang="en" class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="services.html">Services</a>
-                        <a data-lang="id" class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="services.html">Layanan</a>
-                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portfolio</a>
-                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="portfolio.html">Portofolio</a>
-                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="blog.html">Blog</a>
-                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="blog.html">Blog</a>
-                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="about.html">About Us</a>
-                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="about.html">Tentang Kami</a>
-                        <a data-lang="en" class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="contact.html">Contact</a>
-                        <a data-lang="id" class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" href="contact.html">Kontak</a>
-                    </div>
-                    <div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
-                        <button onclick="switchLanguage('id')" class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer" id="btn-id">ID</button>
-                        <span class="text-slate-300">|</span>
-                        <button onclick="switchLanguage('en')" class="font-bold text-sm text-primary cursor-pointer" id="btn-en">EN</button>
-                    </div>
-                    <a data-lang="en" class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Consult Now</a>
-                    <a data-lang="id" class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" href="contact.html">Konsultasi</a>
-                </div>
-                <div class="md:hidden flex items-center gap-4">
-                    <div class="flex items-center gap-2">
-                        <button onclick="switchLanguage('id')" class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile">ID</button>
-                        <span class="text-slate-300 text-xs">|</span>
-                        <button onclick="switchLanguage('en')" class="font-bold text-xs text-primary" id="btn-en-mobile">EN</button>
-                    </div>
-                    <button class="text-slate-700 dark:text-white">
-                        <span class="material-symbols-outlined">menu</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section with Image -->
-    <section class="relative overflow-hidden py-20 lg:py-28">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1551434678-e076c2235a1f?q=80&w=2070&auto=format" alt="IT Consulting" class="w-full h-full object-cover opacity-10 dark:opacity-20">
-        </div>
-        <div class="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-20 left-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-6">
-                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<a class="flex items-center gap-3" href="index.html">
+<img alt="Sagara Logo" class="h-10 w-auto rounded-lg" onerror="this.style.display='none'" src="/assets/images/sagara_tech_logo.jpg"/>
+<h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara</h2>
+</a>
+<div class="hidden md:flex flex-1 justify-end items-center gap-8">
+<div class="flex items-center gap-8">
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="index.html">Home</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="index.html">Beranda</a>
+<a class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="services.html">Services</a>
+<a class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="services.html">Layanan</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="portfolio.html">Portfolio</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="portfolio.html">Portofolio</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="blog.html">Blog</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="blog.html">Blog</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="careers.html">Careers</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="careers.html">Karir</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="about.html">About Us</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="about.html">Tentang Kami</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="contact.html">Contact</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="contact.html">Kontak</a>
+</div>
+<!-- Theme Toggle Button -->
+<button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
+<span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
+</button>
+<div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
+<button class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer" id="btn-id" onclick="switchLanguage('id')">ID</button>
+<span class="text-slate-300">|</span>
+<button class="font-bold text-sm text-primary cursor-pointer" id="btn-en" onclick="switchLanguage('en')">EN</button>
+</div>
+<a class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" data-lang="en" href="contact.html">Consult Now</a>
+<a class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" data-lang="id" href="contact.html">Konsultasi</a>
+</div>
+<div class="md:hidden flex items-center gap-4">
+<!-- Theme Toggle Button (Mobile) -->
+<button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
+<span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
+</button>
+<div class="flex items-center gap-2">
+<button class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile" onclick="switchLanguage('id')">ID</button>
+<span class="text-slate-300 text-xs">|</span>
+<button class="font-bold text-xs text-primary" id="btn-en-mobile" onclick="switchLanguage('en')">EN</button>
+</div>
+<button class="text-slate-700 dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Hero Section with Image -->
+<section class="relative overflow-hidden py-20 lg:py-28">
+<div class="absolute inset-0 z-0">
+<img alt="IT Consulting" class="w-full h-full object-cover opacity-10 dark:opacity-20" src="https://images.unsplash.com/photo-1551434678-e076c2235a1f?q=80&amp;w=2070&amp;auto=format"/>
+</div>
+<div class="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute bottom-20 left-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-6">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
                 What We Do
             </div>
-            <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
-                <span data-lang="en">Enterprise IT Solutions<br>That Drive <span class="text-primary">Growth</span></span>
-                <span data-lang="id" class="hidden">Solusi IT Enterprise<br>Yang Mendorong <span class="text-primary">Pertumbuhan</span></span>
-            </h1>
-            <p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
-                <span data-lang="en">End-to-end technology services designed to accelerate your digital transformation, enhance security, and optimize operations.</span>
-                <span data-lang="id" class="hidden">Layanan teknologi end-to-end yang dirancang untuk mempercepat transformasi digital, meningkatkan keamanan, dan mengoptimalkan operasi.</span>
-            </p>
-        </div>
-    </section>
-
-    <!-- Services Grid - TANPA JUDUL SERVICE (cuma icon + deskripsi) -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl lg:text-4xl font-bold mb-4">Our Core Services</h2>
-                <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Comprehensive solutions tailored to your business needs</p>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Service 1 - No Title -->
-                <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
-                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
-                        <span class="material-symbols-outlined text-primary text-3xl">consultation</span>
-                    </div>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">Strategic guidance to align technology with business goals and drive innovation.</p>
-                    <ul class="space-y-2 text-sm text-left">
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Digital Transformation Strategy</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Technology Assessment & Roadmap</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> IT Governance & Compliance</li>
-                    </ul>
-                </div>
-
-                <!-- Service 2 - No Title -->
-                <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
-                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
-                        <span class="material-symbols-outlined text-primary text-3xl">code_blocks</span>
-                    </div>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">Tailored solutions built with modern tech stacks to solve unique challenges.</p>
-                    <ul class="space-y-2 text-sm text-left">
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Web & Mobile Applications</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Enterprise Software Systems</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> API Development & Integration</li>
-                    </ul>
-                </div>
-
-                <!-- Service 3 - No Title -->
-                <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
-                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
-                        <span class="material-symbols-outlined text-primary text-3xl">cloud</span>
-                    </div>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">Seamless cloud adoption and management for optimal performance.</p>
-                    <ul class="space-y-2 text-sm text-left">
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> AWS/Azure/GCP Migration</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Cloud Architecture Design</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> DevOps & CI/CD Pipelines</li>
-                    </ul>
-                </div>
-
-                <!-- Service 4 - No Title -->
-                <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
-                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
-                        <span class="material-symbols-outlined text-primary text-3xl">security</span>
-                    </div>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">Protect your digital assets with comprehensive security strategies.</p>
-                    <ul class="space-y-2 text-sm text-left">
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Vulnerability Assessment</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Penetration Testing</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> ISO 27001 Compliance</li>
-                    </ul>
-                </div>
-
-                <!-- Service 5 - No Title -->
-                <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
-                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
-                        <span class="material-symbols-outlined text-primary text-3xl">analytics</span>
-                    </div>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">Turn data into actionable insights with advanced analytics and ML.</p>
-                    <ul class="space-y-2 text-sm text-left">
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Business Intelligence Dashboards</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Predictive Analytics</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Custom AI/ML Solutions</li>
-                    </ul>
-                </div>
-
-                <!-- Service 6 - No Title -->
-                <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
-                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
-                        <span class="material-symbols-outlined text-primary text-3xl">account_balance</span>
-                    </div>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">Secure, scalable digital solutions for government agencies.</p>
-                    <ul class="space-y-2 text-sm text-left">
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> E-Government Portals</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Smart City Initiatives</li>
-                        <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400"><span class="material-symbols-outlined text-primary text-base">check_circle</span> Citizen Service Platforms</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Industries We Serve with Image -->
-    <section class="py-16 bg-slate-50 dark:bg-slate-900/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-2xl lg:text-3xl font-bold mb-4">Industries We Serve</h2>
-                    <p class="text-slate-500 dark:text-slate-400 mb-6">Trusted by leading organizations across sectors</p>
-                    <div class="flex flex-wrap gap-3">
-                        <div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
-                            <span class="material-symbols-outlined text-primary text-base align-middle mr-1">account_balance</span> Government
-                        </div>
-                        <div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
-                            <span class="material-symbols-outlined text-primary text-base align-middle mr-1">local_hospital</span> Healthcare
-                        </div>
-                        <div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
-                            <span class="material-symbols-outlined text-primary text-base align-middle mr-1">payments</span> Financial Services
-                        </div>
-                        <div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
-                            <span class="material-symbols-outlined text-primary text-base align-middle mr-1">shopping_cart</span> Retail & E-commerce
-                        </div>
-                        <div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
-                            <span class="material-symbols-outlined text-primary text-base align-middle mr-1">electrical_services</span> Manufacturing
-                        </div>
-                        <div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
-                            <span class="material-symbols-outlined text-primary text-base align-middle mr-1">school</span> Education
-                        </div>
-                    </div>
-                </div>
-                <div class="rounded-2xl overflow-hidden shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format" alt="Industries" class="w-full h-64 object-cover">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Choose Us with Image -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div class="order-2 lg:order-1">
-                    <div class="grid grid-cols-2 gap-4">
-                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format" alt="Team" class="rounded-2xl h-48 w-full object-cover shadow-md">
-                        <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format" alt="Office" class="rounded-2xl h-48 w-full object-cover shadow-md mt-8">
-                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format" alt="Meeting" class="rounded-2xl h-48 w-full object-cover shadow-md col-span-2">
-                    </div>
-                </div>
-                <div class="order-1 lg:order-2">
-                    <h2 class="text-3xl lg:text-4xl font-bold mb-6">Why Choose Sagara?</h2>
-                    <p class="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">We combine technical excellence with a deep understanding of business needs to deliver measurable results.</p>
-                    <div class="space-y-4">
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="material-symbols-outlined text-primary">rocket_launch</span>
-                            </div>
-                            <div>
-                                <h3 class="font-bold mb-1">10+ Years of Experience</h3>
-                                <p class="text-sm text-slate-500 dark:text-slate-400">Proven track record of successful enterprise implementations</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="material-symbols-outlined text-primary">groups</span>
-                            </div>
-                            <div>
-                                <h3 class="font-bold mb-1">50+ Expert Engineers</h3>
-                                <p class="text-sm text-slate-500 dark:text-slate-400">Dedicated team of certified professionals</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="material-symbols-outlined text-primary">verified</span>
-                            </div>
-                            <div>
-                                <h3 class="font-bold mb-1">ISO 27001 Certified</h3>
-                                <p class="text-sm text-slate-500 dark:text-slate-400">Highest standards of security and compliance</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="py-16 bg-primary/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div>
-                    <div class="text-4xl font-black text-primary mb-2">500+</div>
-                    <p class="text-slate-600 dark:text-slate-300 text-sm">Projects Delivered</p>
-                </div>
-                <div>
-                    <div class="text-4xl font-black text-primary mb-2">98%</div>
-                    <p class="text-slate-600 dark:text-slate-300 text-sm">Client Satisfaction</p>
-                </div>
-                <div>
-                    <div class="text-4xl font-black text-primary mb-2">50+</div>
-                    <p class="text-slate-600 dark:text-slate-300 text-sm">Expert Engineers</p>
-                </div>
-                <div>
-                    <div class="text-4xl font-black text-primary mb-2">24/7</div>
-                    <p class="text-slate-600 dark:text-slate-300 text-sm">Support Available</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-20 bg-primary">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">Ready to Transform Your Business?</h2>
-            <p class="text-lg text-primary-100 mb-8">Let's discuss how our services can help you achieve your technology goals.</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="contact.html" class="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-lg font-bold transition-all shadow-lg hover:scale-105">Schedule a Consultation →</a>
-                <a href="portfolio.html" class="border-2 border-white text-white hover:bg-white/10 px-8 py-3 rounded-lg font-bold transition-all">View Our Work</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-8 w-auto rounded-lg" onerror="this.style.display='none'">
-                    <span class="text-lg font-bold text-slate-900 dark:text-white">Sagara</span>
-                </div>
-                <p class="text-sm text-slate-500 dark:text-slate-400">© 2024 Sagara Tech. All rights reserved.</p>
-                <div class="flex gap-6 text-sm text-slate-500 dark:text-slate-400">
-                    <a class="hover:text-primary transition-colors" href="index.html">Home</a>
-                    <a class="hover:text-primary transition-colors" href="services.html">Services</a>
-                    <a class="hover:text-primary transition-colors" href="careers.html">Careers</a>
-                    <a class="hover:text-primary transition-colors" href="blog.html">Blog</a>
-                    <a class="hover:text-primary transition-colors" href="contact.html">Contact</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+<h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
+<span data-lang="en">Enterprise IT Solutions<br/>That Drive <span class="text-primary">Growth</span></span>
+<span class="hidden" data-lang="id">Solusi IT Enterprise<br/>Yang Mendorong <span class="text-primary">Pertumbuhan</span></span>
+</h1>
+<p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
+<span data-lang="en">End-to-end technology services designed to accelerate your digital transformation, enhance security, and optimize operations.</span>
+<span class="hidden" data-lang="id">Layanan teknologi end-to-end yang dirancang untuk mempercepat transformasi digital, meningkatkan keamanan, dan mengoptimalkan operasi.</span>
+</p>
+</div>
+</section>
+<!-- Services Grid - TANPA JUDUL SERVICE (cuma icon + deskripsi) -->
+<section class="py-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-12">
+<h2 class="text-3xl lg:text-4xl font-bold mb-4">
+<span data-lang="en">Our Core Services</span>
+<span class="hidden" data-lang="id">Layanan Utama Kami</span>
+</h2>
+<p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+<span data-lang="en">Comprehensive solutions tailored to your business needs</span>
+<span class="hidden" data-lang="id">Solusi komprehensif yang disesuaikan dengan kebutuhan bisnis Anda</span>
+</p>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Service 1 - No Title -->
+<div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
+<div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
+<span class="material-symbols-outlined text-primary text-3xl">consultation</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+<span data-lang="en">Strategic guidance to align technology with business goals and drive innovation.</span>
+<span class="hidden" data-lang="id">Panduan strategis untuk menyelaraskan teknologi dengan tujuan bisnis dan mendorong inovasi.</span>
+</p>
+<ul class="space-y-2 text-sm text-left">
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Digital Transformation Strategy</span>
+<span class="hidden" data-lang="id">Strategi Transformasi Digital</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Technology Assessment &amp; Roadmap</span>
+<span class="hidden" data-lang="id">Penilaian &amp; Peta Jalan Teknologi</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">IT Governance &amp; Compliance</span>
+<span class="hidden" data-lang="id">Tata Kelola &amp; Kepatuhan IT</span>
+</li>
+</ul>
+</div>
+<!-- Service 2 - No Title -->
+<div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
+<div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
+<span class="material-symbols-outlined text-primary text-3xl">code_blocks</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+<span data-lang="en">Tailored solutions built with modern tech stacks to solve unique challenges.</span>
+<span class="hidden" data-lang="id">Solusi khusus yang dibangun dengan tumpukan teknologi modern untuk menyelesaikan tantangan unik.</span>
+</p>
+<ul class="space-y-2 text-sm text-left">
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Web &amp; Mobile Applications</span>
+<span class="hidden" data-lang="id">Aplikasi Web &amp; Seluler</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Enterprise Software Systems</span>
+<span class="hidden" data-lang="id">Sistem Perangkat Lunak Perusahaan</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">API Development &amp; Integration</span>
+<span class="hidden" data-lang="id">Pengembangan &amp; Integrasi API</span>
+</li>
+</ul>
+</div>
+<!-- Service 3 - No Title -->
+<div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
+<div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
+<span class="material-symbols-outlined text-primary text-3xl">cloud</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+<span data-lang="en">Seamless cloud adoption and management for optimal performance.</span>
+<span class="hidden" data-lang="id">Adopsi dan manajemen cloud yang mulus untuk kinerja optimal.</span>
+</p>
+<ul class="space-y-2 text-sm text-left">
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">AWS/Azure/GCP Migration</span>
+<span class="hidden" data-lang="id">Migrasi AWS/Azure/GCP</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Cloud Architecture Design</span>
+<span class="hidden" data-lang="id">Desain Arsitektur Cloud</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">DevOps &amp; CI/CD Pipelines</span>
+<span class="hidden" data-lang="id">DevOps &amp; Alur CI/CD</span>
+</li>
+</ul>
+</div>
+<!-- Service 4 - No Title -->
+<div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
+<div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
+<span class="material-symbols-outlined text-primary text-3xl">security</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+<span data-lang="en">Protect your digital assets with comprehensive security strategies.</span>
+<span class="hidden" data-lang="id">Lindungi aset digital Anda dengan strategi keamanan yang komprehensif.</span>
+</p>
+<ul class="space-y-2 text-sm text-left">
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Vulnerability Assessment</span>
+<span class="hidden" data-lang="id">Penilaian Kerentanan</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Penetration Testing</span>
+<span class="hidden" data-lang="id">Pengujian Penetrasi</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">ISO 27001 Compliance</span>
+<span class="hidden" data-lang="id">Kepatuhan ISO 27001</span>
+</li>
+</ul>
+</div>
+<!-- Service 5 - No Title -->
+<div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
+<div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
+<span class="material-symbols-outlined text-primary text-3xl">analytics</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+<span data-lang="en">Turn data into actionable insights with advanced analytics and ML.</span>
+<span class="hidden" data-lang="id">Ubah data menjadi wawasan yang dapat ditindaklanjuti dengan analitik tingkat lanjut dan ML.</span>
+</p>
+<ul class="space-y-2 text-sm text-left">
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Business Intelligence Dashboards</span>
+<span class="hidden" data-lang="id">Dasbor Intelijen Bisnis</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Predictive Analytics</span>
+<span class="hidden" data-lang="id">Analitik Prediktif</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Custom AI/ML Solutions</span>
+<span class="hidden" data-lang="id">Solusi AI/ML Kustom</span>
+</li>
+</ul>
+</div>
+<!-- Service 6 - No Title -->
+<div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
+<div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
+<span class="material-symbols-outlined text-primary text-3xl">account_balance</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+<span data-lang="en">Secure, scalable digital solutions for government agencies.</span>
+<span class="hidden" data-lang="id">Solusi digital yang aman dan dapat diskalakan untuk instansi pemerintah.</span>
+</p>
+<ul class="space-y-2 text-sm text-left">
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">E-Government Portals</span>
+<span class="hidden" data-lang="id">Portal E-Government</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Smart City Initiatives</span>
+<span class="hidden" data-lang="id">Inisiatif Kota Cerdas</span>
+</li>
+<li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-base">check_circle</span>
+<span data-lang="en">Citizen Service Platforms</span>
+<span class="hidden" data-lang="id">Platform Layanan Warga</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Industries We Serve with Image -->
+<section class="py-16 bg-slate-50 dark:bg-slate-900/30">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+<div>
+<h2 class="text-2xl lg:text-3xl font-bold mb-4">
+<span data-lang="en">Industries We Serve</span>
+<span class="hidden" data-lang="id">Industri yang Kami Layani</span>
+</h2>
+<p class="text-slate-500 dark:text-slate-400 mb-6">
+<span data-lang="en">Trusted by leading organizations across sectors</span>
+<span class="hidden" data-lang="id">Dipercaya oleh organisasi terkemuka di berbagai sektor</span>
+</p>
+<div class="flex flex-wrap gap-3">
+<div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-base align-middle mr-1">account_balance</span>
+<span data-lang="en">Government</span>
+<span class="hidden" data-lang="id">Pemerintah</span>
+</div>
+<div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-base align-middle mr-1">local_hospital</span>
+<span data-lang="en">Healthcare</span>
+<span class="hidden" data-lang="id">Kesehatan</span>
+</div>
+<div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-base align-middle mr-1">payments</span>
+<span data-lang="en">Financial Services</span>
+<span class="hidden" data-lang="id">Layanan Keuangan</span>
+</div>
+<div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-base align-middle mr-1">shopping_cart</span>
+<span data-lang="en">Retail &amp; E-commerce</span>
+<span class="hidden" data-lang="id">Ritel &amp; E-commerce</span>
+</div>
+<div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-base align-middle mr-1">electrical_services</span>
+<span data-lang="en">Manufacturing</span>
+<span class="hidden" data-lang="id">Manufaktur</span>
+</div>
+<div class="industry-tag bg-white dark:bg-slate-800 px-5 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-base align-middle mr-1">school</span>
+<span data-lang="en">Education</span>
+<span class="hidden" data-lang="id">Pendidikan</span>
+</div>
+</div>
+</div>
+<div class="rounded-2xl overflow-hidden shadow-lg">
+<img alt="Industries" class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&amp;w=2070&amp;auto=format"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Choose Us with Image -->
+<section class="py-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+<div class="order-2 lg:order-1">
+<div class="grid grid-cols-2 gap-4">
+<img alt="Team" class="rounded-2xl h-48 w-full object-cover shadow-md" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&amp;w=2070&amp;auto=format"/>
+<img alt="Office" class="rounded-2xl h-48 w-full object-cover shadow-md mt-8" src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&amp;w=2069&amp;auto=format"/>
+<img alt="Meeting" class="rounded-2xl h-48 w-full object-cover shadow-md col-span-2" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&amp;w=2070&amp;auto=format"/>
+</div>
+</div>
+<div class="order-1 lg:order-2">
+<h2 class="text-3xl lg:text-4xl font-bold mb-6">
+<span data-lang="en">Why Choose Sagara?</span>
+<span class="hidden" data-lang="id">Mengapa Memilih Sagara?</span>
+</h2>
+<p class="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
+<span data-lang="en">We combine technical excellence with a deep understanding of business needs to deliver measurable results.</span>
+<span class="hidden" data-lang="id">Kami menggabungkan keunggulan teknis dengan pemahaman mendalam tentang kebutuhan bisnis untuk memberikan hasil yang terukur.</span>
+</p>
+<div class="space-y-4">
+<div class="flex gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary">rocket_launch</span>
+</div>
+<div>
+<h3 class="font-bold mb-1">
+<span data-lang="en">10+ Years of Experience</span>
+<span class="hidden" data-lang="id">10+ Tahun Pengalaman</span>
+</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">
+<span data-lang="en">Proven track record of successful enterprise implementations</span>
+<span class="hidden" data-lang="id">Rekam jejak terbukti dari implementasi perusahaan yang sukses</span>
+</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary">groups</span>
+</div>
+<div>
+<h3 class="font-bold mb-1">
+<span data-lang="en">50+ Expert Engineers</span>
+<span class="hidden" data-lang="id">50+ Insinyur Ahli</span>
+</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">
+<span data-lang="en">Dedicated team of certified professionals</span>
+<span class="hidden" data-lang="id">Tim profesional bersertifikat yang berdedikasi</span>
+</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary">verified</span>
+</div>
+<div>
+<h3 class="font-bold mb-1">
+<span data-lang="en">ISO 27001 Certified</span>
+<span class="hidden" data-lang="id">Sertifikasi ISO 27001</span>
+</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">
+<span data-lang="en">Highest standards of security and compliance</span>
+<span class="hidden" data-lang="id">Standar tertinggi keamanan dan kepatuhan</span>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="py-16 bg-primary/5">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+<div>
+<div class="text-4xl font-black text-primary mb-2">500+</div>
+<p class="text-slate-600 dark:text-slate-300 text-sm">
+<span data-lang="en">Projects Delivered</span>
+<span class="hidden" data-lang="id">Proyek Terselesaikan</span>
+</p>
+</div>
+<div>
+<div class="text-4xl font-black text-primary mb-2">98%</div>
+<p class="text-slate-600 dark:text-slate-300 text-sm">
+<span data-lang="en">Client Satisfaction</span>
+<span class="hidden" data-lang="id">Kepuasan Klien</span>
+</p>
+</div>
+<div>
+<div class="text-4xl font-black text-primary mb-2">50+</div>
+<p class="text-slate-600 dark:text-slate-300 text-sm">
+<span data-lang="en">Expert Engineers</span>
+<span class="hidden" data-lang="id">Insinyur Ahli</span>
+</p>
+</div>
+<div>
+<div class="text-4xl font-black text-primary mb-2">24/7</div>
+<p class="text-slate-600 dark:text-slate-300 text-sm">
+<span data-lang="en">Support Available</span>
+<span class="hidden" data-lang="id">Dukungan Tersedia</span>
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-20 bg-primary">
+<div class="max-w-4xl mx-auto px-4 text-center">
+<h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">
+<span data-lang="en">Ready to Transform Your Business?</span>
+<span class="hidden" data-lang="id">Siap untuk Mentransformasi Bisnis Anda?</span>
+</h2>
+<p class="text-lg text-primary-100 mb-8">
+<span data-lang="en">Let's discuss how our services can help you achieve your technology goals.</span>
+<span class="hidden" data-lang="id">Mari diskusikan bagaimana layanan kami dapat membantu Anda mencapai tujuan teknologi Anda.</span>
+</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a class="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-lg font-bold transition-all shadow-lg hover:scale-105" href="contact.html">
+<span data-lang="en">Schedule a Consultation →</span>
+<span class="hidden" data-lang="id">Jadwalkan Konsultasi →</span>
+</a>
+<a class="border-2 border-white text-white hover:bg-white/10 px-8 py-3 rounded-lg font-bold transition-all" href="portfolio.html">
+<span data-lang="en">View Our Work</span>
+<span class="hidden" data-lang="id">Lihat Portofolio Kami</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-2">
+<img alt="Sagara Logo" class="h-8 w-auto rounded-lg" onerror="this.style.display='none'" src="/assets/images/sagara_tech_logo.jpg"/>
+<span class="text-lg font-bold text-slate-900 dark:text-white">Sagara</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400">
+<span data-lang="en">© 2024 Sagara Tech. All rights reserved.</span>
+<span class="hidden" data-lang="id">© 2024 Sagara Tech. Hak cipta dilindungi undang-undang.</span>
+</p>
+<div class="flex gap-6 text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="index.html"><span data-lang="en">Home</span><span class="hidden" data-lang="id">Beranda</span></a>
+<a class="hover:text-primary transition-colors" href="services.html"><span data-lang="en">Services</span><span class="hidden" data-lang="id">Layanan</span></a>
+<a class="hover:text-primary transition-colors" href="careers.html"><span data-lang="en">Careers</span><span class="hidden" data-lang="id">Karir</span></a>
+<a class="hover:text-primary transition-colors" href="blog.html"><span data-lang="en">Blog</span><span class="hidden" data-lang="id">Blog</span></a>
+<a class="hover:text-primary transition-colors" href="contact.html"><span data-lang="en">Contact</span><span class="hidden" data-lang="id">Kontak</span></a>
+</div>
+</div>
+</div>
+</footer>
 </body>
-</html>
+</html>ml&gt;

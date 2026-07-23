@@ -1,0 +1,8 @@
+prediction_id,timestamp,message,service,category,score,confidence,urgency_detected
+3b42e1d1-0d63-444a-b923-849a17ea6bdb,2026-07-21T11:51:09.201107,"hello sagara team, i am alexander, i need help you built the apps my coffe shop",Mobile app development,Corporate,0.4,0.4,False
+3e82da31-4bab-42a4-8649-b4ebe7976529,2026-07-21T12:04:45.119418,Mohon info penawaran harga pembuatan sistem informasi untuk dinas kesehatan kota.,IT outsourcing,Government,0.91,0.91,False
+e3b3defd-01ee-4495-ac55-f2bc2fc05fbb,2026-07-21T12:10:06.632256,Kami dari yayasan komunitas lokal ingin dibuatkan website donasi.,IT outsourcing,SME,0.99,0.99,False
+7315c343-ce7c-4136-9b20-09c4cb7430d3,2026-07-21T12:33:10.694356,"Selamat siang, PT kami sedang membutuhkan solusi ERP skala enterprise untuk mengelola ratusan karyawan",Digital transformation / custom software,Corporate,0.97,0.97,False
+8568a7b5-653c-4668-9321-7e9cb66da8e1,2026-07-22T11:39:14.445859,saya mau buat web untuk kedai ku,IT outsourcing,SME,0.49,0.49,False
+d32c0eaa-f48b-4926-850e-ecccd2f6b863,2026-07-22T13:11:18.769904,saya mau buat aplikasi untuk tata kota,Web Development,SME,0.48,0.48,False
+d81f3551-603a-4bb5-a528-86f98bf44282,2026-07-22T13:13:27.758285,saya mau buat aplikasi untuk tata kota,Web Development,SME,0.48,0.48,False

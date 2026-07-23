@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: sagara_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: sagara_revamp
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  nlp-service:
+    build:
+      context: ./nlp_service
+      dockerfile: Dockerfile
+    container_name: sagara_nlp
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+    volumes:
+      - ./nlp_service/data:/app/data
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sagara_backend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      # Konfigurasi koneksi ke container DB
+      - DATABASE_URL=postgres://postgres:password123@db:5432/sagara_revamp
+    # Mengambil environment variable lainnya dari .env lokal
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - nlp-service
+    volumes:
+      - ./data:/usr/src/app/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:
