@@ -41,7 +41,15 @@ class MLService {
       return { type: 'CORPORATE', priority: 'HIGH', color: '#137fec', description: 'Perusahaan Korporasi', icon: '🏢' };
     }
 
-    if ((companySize && companySize < 50) || (budget && budget < 50000000)) {
+    // Cegah pesan sangat pendek/tidak jelas seperti "p", "halo", "test" diklasifikasikan spesifik
+    if (lower.length < 5 || ['halo', 'hello', 'test', 'ping', 'p'].includes(lower.trim())) {
+      return { type: 'GENERAL', priority: 'LOW', color: '#94a3b8', description: 'Kategori Umum', icon: '📁' };
+    }
+
+    const parsedSize = parseInt(companySize);
+    const parsedBudget = parseInt(budget);
+    
+    if ((parsedSize > 0 && parsedSize < 50) || (parsedBudget > 0 && parsedBudget < 50000000)) {
       return { type: 'UMKM', priority: 'MEDIUM', color: '#10b981', description: 'Usaha Mikro Kecil Menengah', icon: '🏪' };
     }
 
