@@ -15,6 +15,48 @@ function showNotification(message, type = 'info') {
     }
 }
 
+// --- LIVENESS HELPERS ---
+function calculateDistance(pt1, pt2) {
+    return Math.sqrt(Math.pow(pt1.x - pt2.x, 2) + Math.pow(pt1.y - pt2.y, 2));
+}
+
+function getLivenessFeatures(landmarks) {
+    const positions = landmarks.positions;
+    
+    const calculateEAR = (indices) => {
+        const p = indices.map(i => positions[i]);
+        const v1 = calculateDistance(p[1], p[5]);
+        const v2 = calculateDistance(p[2], p[4]);
+        const h = calculateDistance(p[0], p[3]);
+        return (v1 + v2) / (2.0 * h);
+    };
+    
+    const rightEAR = calculateEAR([36, 37, 38, 39, 40, 41]); 
+    const leftEAR = calculateEAR([42, 43, 44, 45, 46, 47]);
+    const avgEAR = (leftEAR + rightEAR) / 2.0;
+    const isBlink = avgEAR < 0.25;
+
+    const noseTip = positions[30];
+    const leftEdge = positions[0];
+    const rightEdge = positions[16];
+    
+    const distLeft = calculateDistance(noseTip, leftEdge);
+    const distRight = calculateDistance(noseTip, rightEdge);
+    
+    let headPose = 'tengah';
+    if (distLeft < distRight * 0.5) headPose = 'kanan';
+    else if (distRight < distLeft * 0.5) headPose = 'kiri';
+
+    const topLip = positions[62];
+    const bottomLip = positions[66];
+    const mouthDist = calculateDistance(topLip, bottomLip);
+    const faceHeight = calculateDistance(positions[8], positions[27]); 
+    const mouthOpen = (mouthDist / faceHeight) > 0.08;
+    
+    return { isBlink, headPose, mouthOpen };
+}
+// ------------------------
+
 // Load model face-api.js
 async function loadFaceModels() {
     const MODEL_URL = '/models';
@@ -89,19 +131,25 @@ function stopWebcam(videoElement) {
     }
 }
 
-// Capture dan detect wajah
-async function detectFace(videoElement) {
+// Capture dan detect wajah (Support multi-face rejection)
+async function detectFace(videoElement, requireSingle = true) {
     if (!faceModelsLoaded) {
         showNotification('⏳ Face models masih loading, tunggu sebentar...', 'warning');
-        return null;
+        return { error: 'loading' };
     }
     
-    const detection = await faceapi
-        .detectSingleFace(videoElement)
+    const detections = await faceapi
+        .detectAllFaces(videoElement)
         .withFaceLandmarks()
-        .withFaceDescriptor();
+        .withFaceDescriptors();
     
-    return detection;
+    if (detections.length === 0) return null;
+    
+    if (requireSingle && detections.length > 1) {
+        return { error: 'multi_face' };
+    }
+    
+    return detections[0];
 }
 
 // Registrasi wajah baru
@@ -111,9 +159,15 @@ async function registerFace(name, videoElement) {
         return false;
     }
     
-    const detection = await detectFace(videoElement);
-    if (!detection) {
-        showNotification('❌ Wajah tidak terdeteksi! Pastikan wajah terlihat jelas.', 'error');
+    const detection = await detectFace(videoElement, true);
+    if (!detection || detection.error) {
+        if (detection && detection.error === 'multi_face') {
+            showNotification('❌ Terdeteksi lebih dari satu wajah! Registrasi dibatalkan.', 'error');
+        } else if (detection && detection.error === 'loading') {
+            // Already handled
+        } else {
+            showNotification('❌ Wajah tidak terdeteksi! Pastikan wajah terlihat jelas.', 'error');
+        }
         return false;
     }
     
@@ -143,14 +197,10 @@ async function registerFace(name, videoElement) {
 }
 
 // Recognisi wajah (cocokkan dengan database)
-async function recognizeFace(videoElement) {
+async function recognizeFace(detection) {
     if (!faceModelsLoaded || knownFaces.length === 0) {
-        console.log('Models not ready or no faces registered');
         return null;
     }
-    
-    const detection = await detectFace(videoElement);
-    if (!detection) return null;
     
     // Bandingkan dengan semua wajah yang dikenal
     let bestMatch = { name: 'unknown', distance: 0.6 }; // threshold 0.6
@@ -210,7 +260,11 @@ function createFaceModal() {
                 <canvas id="face-canvas" class="absolute top-0 left-0 w-full h-full pointer-events-none"></canvas>
             </div>
             
-            <div class="flex gap-3 mb-4">
+            <div id="liveness-instruction" class="text-center font-bold text-[#4fffb0] text-lg mb-4 hidden">
+                Instruksi
+            </div>
+            
+            <div class="flex gap-3 mb-4" id="face-register-container">
                 <input type="text" id="face-name" placeholder="Nama lengkap" class="flex-1 bg-[#1a1a28] border border-[rgba(255,255,255,0.1)] rounded-lg px-4 py-2 text-white outline-none focus:border-[#4fffb0]">
                 <button onclick="registerWithFace()" class="bg-[#4fffb0] text-black font-bold px-4 py-2 rounded-lg hover:scale-105 transition">Register</button>
             </div>
@@ -237,13 +291,13 @@ function createFaceModal() {
             const displaySize = { width: video.clientWidth, height: video.clientHeight };
             faceapi.matchDimensions(canvas, displaySize);
             
-            setInterval(async () => {
+            window.faceInterval = setInterval(async () => {
                 if (video.paused || video.ended) return;
-                const detection = await faceapi.detectSingleFace(video);
-                if (detection && canvas) {
-                    const resized = faceapi.resizeResults(detection, displaySize);
+                const detections = await faceapi.detectAllFaces(video);
+                if (detections && canvas) {
+                    const resized = faceapi.resizeResults(detections, displaySize);
                     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-                    faceapi.draw.drawDetections(canvas, [resized]);
+                    faceapi.draw.drawDetections(canvas, resized);
                 } else if (canvas) {
                     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
                 }
@@ -266,18 +320,117 @@ async function registerWithFace() {
     }
 }
 
+// State machine untuk Login dengan liveness
+let loginActive = false;
+
 async function loginWithFace() {
+    if (loginActive) return;
+    
     const video = document.getElementById('face-video');
+    const instructionEl = document.getElementById('liveness-instruction');
+    const btn = event?.target;
+    
     if (!video) return;
     
-    // Tampilkan loading state
-    const btn = event?.target;
+    loginActive = true;
     const originalText = btn?.innerHTML;
-    if (btn) btn.innerHTML = '⏳ Memproses...';
+    if (btn) btn.innerHTML = '⏳ Menyiapkan Liveness...';
+    instructionEl.classList.remove('hidden');
     
-    const result = await recognizeFace(video);
+    const challenges = [
+        { type: 'kiri', text: 'Tengok ke Kiri sedikit' },
+        { type: 'kanan', text: 'Tengok ke Kanan sedikit' },
+        { type: 'buka_mulut', text: 'Silakan Buka Mulut Anda' }
+    ];
+    
+    // Pilih satu random challenge + blink selalu diminta
+    const randomChallenge = challenges[Math.floor(Math.random() * challenges.length)];
+    const stages = [
+        { id: 'blink', text: 'Silakan Kedipkan Mata (Blink)', passed: false },
+        { id: randomChallenge.type, text: randomChallenge.text, passed: false }
+    ];
+    
+    let currentStage = 0;
+    
+    // Loop deteksi liveness
+    let lastBlinkState = false; // untuk deteksi transisi melek -> merem -> melek
+    let hasBlinked = false;
+    
+    while (currentStage < stages.length && loginActive) {
+        instructionEl.innerText = stages[currentStage].text;
+        
+        // Wait 100ms
+        await new Promise(r => setTimeout(r, 100));
+        
+        const detection = await detectFace(video, true);
+        if (!detection) continue;
+        
+        if (detection.error === 'multi_face') {
+            showNotification('❌ Terdeteksi lebih dari satu wajah! Login dibatalkan.', 'error');
+            loginActive = false;
+            break;
+        }
+        if (detection.error) continue; // loading
+        
+        const features = getLivenessFeatures(detection.landmarks);
+        
+        if (stages[currentStage].id === 'blink') {
+            if (features.isBlink) {
+                lastBlinkState = true;
+            } else if (lastBlinkState && !features.isBlink) {
+                hasBlinked = true;
+                stages[currentStage].passed = true;
+                currentStage++;
+                lastBlinkState = false;
+                showNotification('✅ Kedipan terdeteksi!', 'success');
+            }
+        } else if (stages[currentStage].id === 'kiri') {
+            if (features.headPose === 'kiri') {
+                stages[currentStage].passed = true;
+                currentStage++;
+                showNotification('✅ Gerakan terdeteksi!', 'success');
+            }
+        } else if (stages[currentStage].id === 'kanan') {
+            if (features.headPose === 'kanan') {
+                stages[currentStage].passed = true;
+                currentStage++;
+                showNotification('✅ Gerakan terdeteksi!', 'success');
+            }
+        } else if (stages[currentStage].id === 'buka_mulut') {
+            if (features.mouthOpen) {
+                stages[currentStage].passed = true;
+                currentStage++;
+                showNotification('✅ Gerakan terdeteksi!', 'success');
+            }
+        }
+    }
+    
+    if (!loginActive) {
+        if (btn) btn.innerHTML = originalText;
+        instructionEl.classList.add('hidden');
+        return;
+    }
+    
+    instructionEl.innerText = "Memverifikasi Wajah...";
+    
+    // Tunggu sedikit agar wajah kembali ke tengah setelah challenge
+    await new Promise(r => setTimeout(r, 500));
+    
+    const finalDetection = await detectFace(video, true);
+    let result = null;
+    
+    if (finalDetection && !finalDetection.error) {
+        result = await recognizeFace(finalDetection);
+    }
     
     if (btn) btn.innerHTML = originalText;
+    instructionEl.classList.add('hidden');
+    loginActive = false;
+    
+    if (finalDetection && finalDetection.error === 'multi_face') {
+        showNotification('❌ Terdeteksi lebih dari satu wajah! Login dibatalkan.', 'error');
+        return;
+    }
     
     if (result) {
         // Kirim ke backend buat catat login
@@ -290,7 +443,7 @@ async function loginWithFace() {
         showNotification(`✅ Selamat datang kembali, ${result.name}!`, 'success');
         hideFaceModal();
     } else {
-        showNotification('❌ Wajah tidak dikenali. Silakan registrasi terlebih dahulu.', 'error');
+        showNotification('❌ Wajah tidak dikenali atau belum terdaftar.', 'error');
     }
 }
 

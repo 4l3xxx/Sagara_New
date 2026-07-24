@@ -1432,11 +1432,12 @@
                 try {
                     // Limit history to last 10 messages to avoid context overflow
                     const contextHistory = history.slice(-10);
+                    const lang = localStorage.getItem('language') || 'en';
 
                     const res = await fetch('/api/chat/stream', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ messages: contextHistory })
+                        body: JSON.stringify({ messages: contextHistory, language: lang })
                     });
                     if (!res.ok) {
                         const errBody = await res.json().catch(() => null);

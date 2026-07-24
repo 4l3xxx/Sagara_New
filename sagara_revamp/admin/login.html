@@ -337,6 +337,47 @@
         let faceModelsLoaded = false;
         let currentStream = null;
         let knownFaces = [];
+        let loginActive = false;
+
+        // --- LIVENESS HELPERS ---
+        function calculateDistance(pt1, pt2) {
+            return Math.sqrt(Math.pow(pt1.x - pt2.x, 2) + Math.pow(pt1.y - pt2.y, 2));
+        }
+
+        function getLivenessFeatures(landmarks) {
+            const positions = landmarks.positions;
+            const calculateEAR = (indices) => {
+                const p = indices.map(i => positions[i]);
+                const v1 = calculateDistance(p[1], p[5]);
+                const v2 = calculateDistance(p[2], p[4]);
+                const h = calculateDistance(p[0], p[3]);
+                return (v1 + v2) / (2.0 * h);
+            };
+            
+            const rightEAR = calculateEAR([36, 37, 38, 39, 40, 41]); 
+            const leftEAR = calculateEAR([42, 43, 44, 45, 46, 47]);
+            const avgEAR = (leftEAR + rightEAR) / 2.0;
+            const isBlink = avgEAR < 0.25;
+
+            const noseTip = positions[30];
+            const leftEdge = positions[0];
+            const rightEdge = positions[16];
+            const distLeft = calculateDistance(noseTip, leftEdge);
+            const distRight = calculateDistance(noseTip, rightEdge);
+            
+            let headPose = 'tengah';
+            if (distLeft < distRight * 0.5) headPose = 'kanan';
+            else if (distRight < distLeft * 0.5) headPose = 'kiri';
+
+            const topLip = positions[62];
+            const bottomLip = positions[66];
+            const mouthDist = calculateDistance(topLip, bottomLip);
+            const faceHeight = calculateDistance(positions[8], positions[27]); 
+            const mouthOpen = (mouthDist / faceHeight) > 0.08;
+            
+            return { isBlink, headPose, mouthOpen };
+        }
+        // ------------------------
 
         async function loadFaceModels() {
             const paths = ['/models', '../models', '/public/models'];
@@ -418,6 +459,7 @@
             modal.style.display = 'none';
             if (modal._drawInterval) clearInterval(modal._drawInterval);
             stopWebcam();
+            loginActive = false;
         }
 
         function showFaceStatus(type, message) {
@@ -444,27 +486,112 @@
         }
 
         async function loginWithFace() {
+            if (loginActive) return;
             const video = document.getElementById('face-video');
             const btn = document.getElementById('faceLoginBtn');
             const btnText = document.getElementById('faceLoginBtnText');
 
-            btnText.textContent = 'Memindai wajah...';
+            if (!faceModelsLoaded) {
+                showFaceStatus('warning', 'Model pengenalan wajah sedang dimuat. Harap tunggu sebentar.');
+                return;
+            }
+
+            loginActive = true;
+            btnText.textContent = 'Menyiapkan Liveness Test...';
             btn.disabled = true;
 
-            // Reset status
-            document.getElementById('faceStatusBox').classList.add('hidden');
+            // Tampilkan status box
+            document.getElementById('faceStatusBox').classList.remove('hidden');
+
+            const challenges = [
+                { type: 'kiri', text: 'Silakan Tengok ke Kiri sedikit' },
+                { type: 'kanan', text: 'Silakan Tengok ke Kanan sedikit' },
+                { type: 'buka_mulut', text: 'Silakan Buka Mulut Anda' }
+            ];
+            
+            const randomChallenge = challenges[Math.floor(Math.random() * challenges.length)];
+            const stages = [
+                { id: 'blink', text: 'Silakan Kedipkan Mata Anda (Blink)', passed: false },
+                { id: randomChallenge.type, text: randomChallenge.text, passed: false }
+            ];
+            
+            let currentStage = 0;
+            let lastBlinkState = false;
 
             try {
-                const detection = await faceapi.detectSingleFace(video).withFaceLandmarks().withFaceDescriptor();
-                if (!detection) {
+                // Loop liveness
+                while (currentStage < stages.length && loginActive) {
+                    showFaceStatus('warning', stages[currentStage].text);
+                    await new Promise(r => setTimeout(r, 100));
+                    
+                    const detections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors();
+                    if (!detections || detections.length === 0) continue;
+                    
+                    if (detections.length > 1) {
+                        showFaceStatus('error', 'Terdeteksi lebih dari satu wajah! Login dibatalkan demi keamanan.');
+                        loginActive = false;
+                        btnText.textContent = 'Verify & Authorize';
+                        btn.disabled = false;
+                        return;
+                    }
+                    
+                    const detection = detections[0];
+                    const features = getLivenessFeatures(detection.landmarks);
+                    
+                    if (stages[currentStage].id === 'blink') {
+                        if (features.isBlink) {
+                            lastBlinkState = true;
+                        } else if (lastBlinkState && !features.isBlink) {
+                            stages[currentStage].passed = true;
+                            currentStage++;
+                            lastBlinkState = false;
+                            showFaceStatus('success', 'Kedipan berhasil terdeteksi!');
+                            await new Promise(r => setTimeout(r, 700));
+                        }
+                    } else if (stages[currentStage].id === 'kiri' && features.headPose === 'kiri') {
+                        stages[currentStage].passed = true;
+                        currentStage++;
+                        showFaceStatus('success', 'Gerakan ke kiri berhasil terdeteksi!');
+                        await new Promise(r => setTimeout(r, 700));
+                    } else if (stages[currentStage].id === 'kanan' && features.headPose === 'kanan') {
+                        stages[currentStage].passed = true;
+                        currentStage++;
+                        showFaceStatus('success', 'Gerakan ke kanan berhasil terdeteksi!');
+                        await new Promise(r => setTimeout(r, 700));
+                    } else if (stages[currentStage].id === 'buka_mulut' && features.mouthOpen) {
+                        stages[currentStage].passed = true;
+                        currentStage++;
+                        showFaceStatus('success', 'Gerakan buka mulut berhasil terdeteksi!');
+                        await new Promise(r => setTimeout(r, 700));
+                    }
+                }
+
+                if (!loginActive) return;
+
+                showFaceStatus('warning', 'Memverifikasi identitas...');
+                btnText.textContent = 'Memverifikasi...';
+                
+                // Beri waktu sejenak agar pengguna menengok kembali ke tengah
+                await new Promise(r => setTimeout(r, 500));
+
+                const finalDetections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors();
+                if (!finalDetections || finalDetections.length === 0) {
                     showFaceStatus('warning', 'Wajah tidak terdeteksi. Pastikan wajah Anda terlihat jelas di kamera.');
                     btnText.textContent = 'Verify & Authorize';
                     btn.disabled = false;
+                    loginActive = false;
+                    return;
+                }
+                
+                if (finalDetections.length > 1) {
+                    showFaceStatus('error', 'Terdeteksi lebih dari satu wajah! Login dibatalkan.');
+                    btnText.textContent = 'Verify & Authorize';
+                    btn.disabled = false;
+                    loginActive = false;
                     return;
                 }
 
-                btnText.textContent = 'Memverifikasi identitas...';
-
+                const detection = finalDetections[0];
                 const res = await fetch('/api/face/admin-login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -492,6 +619,7 @@
                 btnText.textContent = 'Verify & Authorize';
                 btn.disabled = false;
             }
+            loginActive = false;
         }
 
         document.addEventListener('DOMContentLoaded', loadFaceModels);

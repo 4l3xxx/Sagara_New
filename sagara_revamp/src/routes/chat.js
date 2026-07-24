@@ -56,7 +56,7 @@ function toxicGuard(req, res, next) {
 
 // ─── POST /api/chat ───────────────────────────────────────────────────────────
 router.post('/api/chat', toxicGuard, chatLimiter, async (req, res) => {
-  const { messages } = req.body;
+  const { messages, language } = req.body;
   if (!messages || !Array.isArray(messages) || messages.length === 0)
     return res.status(400).json({ error: 'Field "messages" harus berupa array.' });
   if (!process.env.GROQ_API_KEY)
@@ -69,7 +69,7 @@ router.post('/api/chat', toxicGuard, chatLimiter, async (req, res) => {
       body: JSON.stringify({
         model:      'llama-3.3-70b-versatile',
         max_tokens: 1024,
-        messages:   [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
+        messages:   [{ role: 'system', content: SYSTEM_PROMPT + `\n\nIMPORTANT: You must reply in ${language === 'id' ? 'Indonesian' : 'English'} regardless of the language used by the user.` }, ...messages],
       }),
     });
 
@@ -90,7 +90,7 @@ router.post('/api/chat', toxicGuard, chatLimiter, async (req, res) => {
 
 // ─── POST /api/chat/stream ────────────────────────────────────────────────────
 router.post('/api/chat/stream', toxicGuard, chatLimiter, async (req, res) => {
-  const { messages } = req.body;
+  const { messages, language } = req.body;
   if (!messages || !Array.isArray(messages) || messages.length === 0)
     return res.status(400).json({ error: 'Field "messages" harus berupa array.' });
   if (!process.env.GROQ_API_KEY)
@@ -111,7 +111,7 @@ router.post('/api/chat/stream', toxicGuard, chatLimiter, async (req, res) => {
         model:      'llama-3.3-70b-versatile',
         max_tokens: 1024,
         stream:     true,
-        messages:   [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
+        messages:   [{ role: 'system', content: SYSTEM_PROMPT + `\n\nIMPORTANT: You must reply in ${language === 'id' ? 'Indonesian' : 'English'} regardless of the language used by the user.` }, ...messages],
       }),
     });
 
