@@ -1270,13 +1270,30 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Job Title</label>
-                        <input type="text" id="job-title" required
+                        <select id="job-title" required onchange="handleJobTitleChange()"
                             class="w-full border border-slate-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="">-- Select Job Title --</option>
+                            <option value="Frontend Developer">Frontend Developer</option>
+                            <option value="Backend Developer">Backend Developer</option>
+                            <option value="Fullstack Developer">Fullstack Developer</option>
+                            <option value="UI/UX Designer">UI/UX Designer</option>
+                            <option value="Project Manager">Project Manager</option>
+                            <option value="Data Scientist">Data Scientist</option>
+                            <option value="Other">Other (Custom)</option>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Location</label>
-                        <input type="text" id="job-location" required placeholder="e.g. Jakarta, Indonesia or Remote"
+                        <select id="job-location" required
                             class="w-full border border-slate-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="">-- Select Location --</option>
+                            <option value="Jakarta, Indonesia (On-site)">Jakarta, Indonesia (On-site)</option>
+                            <option value="Bandung, Indonesia (On-site)">Bandung, Indonesia (On-site)</option>
+                            <option value="Jakarta, Indonesia (Hybrid)">Jakarta, Indonesia (Hybrid)</option>
+                            <option value="Bandung, Indonesia (Hybrid)">Bandung, Indonesia (Hybrid)</option>
+                            <option value="Remote (Anywhere)">Remote (Anywhere)</option>
+                            <option value="Other">Other (Custom)</option>
+                        </select>
                     </div>
                 </div>
 
@@ -1307,8 +1324,16 @@
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Min. Experience</label>
-                        <input type="text" id="job-experience" required placeholder="e.g. Min. 2 years"
+                        <select id="job-experience" required
                             class="w-full border border-slate-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="">-- Select Experience --</option>
+                            <option value="No Experience Required">No Experience Required</option>
+                            <option value="Min. 1 year">Min. 1 year</option>
+                            <option value="Min. 2 years">Min. 2 years</option>
+                            <option value="Min. 3 years">Min. 3 years</option>
+                            <option value="Min. 5 years">Min. 5 years</option>
+                            <option value="5+ years">5+ years</option>
+                        </select>
                     </div>
                 </div>
 
@@ -2390,6 +2415,9 @@
         }
 
         function handleLeadAction(id, email, currentStatus) {
+            const lead = window.allConsultations.find(c => c.id === id);
+            const clientName = lead ? lead.full_name : 'Client';
+
             if (currentStatus === 'New') {
                 const modal = document.getElementById('emailConfirmModal');
                 const step1 = document.getElementById('emailStep1');
@@ -2405,7 +2433,10 @@
                 step2.classList.add('hidden');
                 targetEl.textContent = email;
                 targetEl2.textContent = email;
-                openLink.href = `mailto:${email}?subject=Re: Sagara AI Consultation`;
+                
+                const draftBody = `Dear ${clientName},\n\nThank you for reaching out to Sagara AI. We have received your consultation request and would love to discuss how our AI solutions can help your business.\n\nPlease let us know your availability for a brief call next week.\n\nBest regards,\nThe Sagara AI Team`;
+                openLink.href = `mailto:${email}?subject=Re: Sagara AI Consultation&body=${encodeURIComponent(draftBody)}`;
+                
                 modal.style.display = 'flex';
 
                 const newOpen = openLink.cloneNode(true);
@@ -2442,21 +2473,156 @@
                     showToast(currentLang === 'en' ? 'Status remains "New" — email not sent' : 'Status tetap "New" — email belum dikirim', 'error');
                 });
             } else if (currentStatus === 'Contacted') {
-                const promptMsg = currentLang === 'en' 
-                    ? "Complete this prospect negotiation:\n\nType 'WON' if Deal is Closed\nType 'LOST' if Deal Failed" 
-                    : "Selesaikan negosiasi prospek ini:\n\nKetik 'WON' jika Deal Berhasil (Closed)\nKetik 'LOST' jika Deal Gagal (Failed)";
-                const action = prompt(promptMsg, "WON");
-                if (action === 'WON') {
-                    updateLeadStatus(id, 'Closed', false);
-                } else if (action === 'LOST') {
-                    updateLeadStatus(id, 'Failed', false);
-                }
+                showUpdateStatusModal(id);
             }
         }
 
-        async function updateLeadStatus(id, newStatus, skipPrompt = false) {
+        let selectedStatusId = null;
+        let selectedStatusType = null;
+        let selectedReasonText = null;
+
+        function showUpdateStatusModal(id) {
+            selectedStatusId = id;
+            selectedStatusType = null;
+            selectedReasonText = null;
+            
+            const modal = document.getElementById('updateStatusModal');
+            const step1 = document.getElementById('statusSelectionStep');
+            const step2 = document.getElementById('reasonSelectionStep');
+            const wonReasons = document.getElementById('wonReasons');
+            const lostReasons = document.getElementById('lostReasons');
+            const customContainer = document.getElementById('customReasonContainer');
+            const customInput = document.getElementById('customReasonInput');
+            const btnSubmit = document.getElementById('btnConfirmStatusUpdate');
+
+            // Apply translations based on currentLang
+            const isId = currentLang === 'id';
+            document.getElementById('modalTitleUpdateStatus').textContent = isId ? 'Selesaikan negosiasi prospek' : 'Complete prospect negotiation';
+            document.getElementById('modalDesc1UpdateStatus').textContent = isId ? 'Silakan pilih hasil dari negosiasi ini:' : 'Please select the outcome of this deal:';
+            document.getElementById('modalDesc2UpdateStatus').textContent = isId ? 'Silakan pilih alasannya:' : 'Please select a reason:';
+            
+            document.getElementById('btnStatusWon').innerHTML = isId ? 'WON (Berhasil)' : 'WON (Closed)';
+            document.getElementById('btnStatusLost').innerHTML = isId ? 'LOST (Gagal)' : 'LOST (Failed)';
+            document.getElementById('btnCancelStatusUpdate').textContent = isId ? 'Batal' : 'Cancel';
+            btnSubmit.textContent = isId ? 'Simpan' : 'Submit';
+            customInput.placeholder = isId ? 'Ketik alasan Anda di sini...' : 'Type your custom reason here...';
+
+            wonReasons.innerHTML = `
+                <button class="reason-btn text-left px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 rounded-lg text-sm transition-colors font-medium" onclick="selectReason(this, '${isId ? 'Klien setuju dengan syarat & harga' : 'Client agreed to terms & pricing'}')">${isId ? 'Klien setuju dengan syarat & harga' : 'Client agreed to terms & pricing'}</button>
+                <button class="reason-btn text-left px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 rounded-lg text-sm transition-colors font-medium" onclick="selectReason(this, '${isId ? 'Anggaran sesuai dengan proposal' : 'Budget matched our proposal'}')">${isId ? 'Anggaran sesuai dengan proposal' : 'Budget matched our proposal'}</button>
+                <button class="reason-btn text-left px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 rounded-lg text-sm transition-colors font-medium" onclick="selectReason(this, '${isId ? 'Klien puas dengan solusi AI' : 'Client is satisfied with AI solution'}')">${isId ? 'Klien puas dengan solusi AI' : 'Client is satisfied with AI solution'}</button>
+                <button class="reason-btn text-left px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 rounded-lg text-sm transition-colors font-medium" onclick="selectReason(this, 'custom')">${isId ? 'Lainnya (Tulis alasan sendiri)' : 'Other (Custom reason)'}</button>
+            `;
+
+            lostReasons.innerHTML = `
+                <button class="reason-btn text-left px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 rounded-lg text-sm transition-colors font-medium" onclick="selectReason(this, '${isId ? 'Anggaran klien terlalu rendah' : 'Client budget too low'}')">${isId ? 'Anggaran klien terlalu rendah' : 'Client budget too low'}</button>
+                <button class="reason-btn text-left px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 rounded-lg text-sm transition-colors font-medium" onclick="selectReason(this, '${isId ? 'Klien tidak responsif' : 'Client unresponsive'}')">${isId ? 'Klien tidak responsif' : 'Client unresponsive'}</button>
+                <button class="reason-btn text-left px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 rounded-lg text-sm transition-colors font-medium" onclick="selectReason(this, '${isId ? 'Kebutuhan di luar lingkup' : 'Requirements out of scope'}')">${isId ? 'Kebutuhan di luar lingkup (out of scope)' : 'Requirements out of scope'}</button>
+                <button class="reason-btn text-left px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 rounded-lg text-sm transition-colors font-medium" onclick="selectReason(this, 'custom')">${isId ? 'Lainnya (Tulis alasan sendiri)' : 'Other (Custom reason)'}</button>
+            `;
+            
+            step1.classList.remove('hidden');
+            step2.classList.add('hidden');
+            wonReasons.classList.add('hidden');
+            lostReasons.classList.add('hidden');
+            customContainer.classList.add('hidden');
+            customInput.value = '';
+            btnSubmit.disabled = true;
+            
+            document.querySelectorAll('.reason-btn').forEach(b => {
+                b.classList.remove('bg-blue-100', 'border-blue-400');
+                b.classList.add('bg-slate-50', 'border-slate-200');
+            });
+            document.getElementById('btnStatusWon').classList.remove('ring-2', 'ring-emerald-500');
+            document.getElementById('btnStatusLost').classList.remove('ring-2', 'ring-slate-500');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function selectStatusOutcome(type) {
+            selectedStatusType = type;
+            const step2 = document.getElementById('reasonSelectionStep');
+            const wonReasons = document.getElementById('wonReasons');
+            const lostReasons = document.getElementById('lostReasons');
+            const btnWon = document.getElementById('btnStatusWon');
+            const btnLost = document.getElementById('btnStatusLost');
+            
+            step2.classList.remove('hidden');
+            selectedReasonText = null;
+            document.getElementById('btnConfirmStatusUpdate').disabled = true;
+            document.getElementById('customReasonContainer').classList.add('hidden');
+            
+            document.querySelectorAll('.reason-btn').forEach(b => {
+                b.classList.remove('bg-blue-100', 'border-blue-400');
+                b.classList.add('bg-slate-50', 'border-slate-200');
+            });
+            
+            if (type === 'WON') {
+                btnWon.classList.add('ring-2', 'ring-emerald-500');
+                btnLost.classList.remove('ring-2', 'ring-slate-500');
+                wonReasons.classList.remove('hidden');
+                wonReasons.classList.add('flex');
+                lostReasons.classList.add('hidden');
+                lostReasons.classList.remove('flex');
+            } else {
+                btnLost.classList.add('ring-2', 'ring-slate-500');
+                btnWon.classList.remove('ring-2', 'ring-emerald-500');
+                lostReasons.classList.remove('hidden');
+                lostReasons.classList.add('flex');
+                wonReasons.classList.add('hidden');
+                wonReasons.classList.remove('flex');
+            }
+        }
+        
+        function selectReason(btn, reason) {
+            document.querySelectorAll('.reason-btn').forEach(b => {
+                b.classList.remove('bg-blue-100', 'border-blue-400');
+                b.classList.add('bg-slate-50', 'border-slate-200');
+            });
+            btn.classList.remove('bg-slate-50', 'border-slate-200');
+            btn.classList.add('bg-blue-100', 'border-blue-400');
+            
+            const customContainer = document.getElementById('customReasonContainer');
+            const btnSubmit = document.getElementById('btnConfirmStatusUpdate');
+            
+            if (reason === 'custom') {
+                customContainer.classList.remove('hidden');
+                selectedReasonText = document.getElementById('customReasonInput').value;
+                btnSubmit.disabled = selectedReasonText.trim() === '';
+            } else {
+                customContainer.classList.add('hidden');
+                selectedReasonText = reason;
+                btnSubmit.disabled = false;
+            }
+        }
+        
+        function handleCustomReasonInput(e) {
+            selectedReasonText = e.target.value;
+            const btnSubmit = document.getElementById('btnConfirmStatusUpdate');
+            btnSubmit.disabled = selectedReasonText.trim() === '';
+        }
+        
+        function closeUpdateStatusModal() {
+            const modal = document.getElementById('updateStatusModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        function submitUpdateStatus() {
+            if (!selectedStatusId || !selectedStatusType || !selectedReasonText) return;
+            if (selectedReasonText.trim() === '') return;
+            
+            closeUpdateStatusModal();
+            const newStatus = selectedStatusType === 'WON' ? 'Closed' : 'Failed';
+            updateLeadStatus(selectedStatusId, newStatus, true, selectedReasonText);
+        }
+
+        async function updateLeadStatus(id, newStatus, skipPrompt = false, explicitReason = null) {
             let reason = "";
-            if (!skipPrompt && (newStatus === 'Closed' || newStatus === 'Failed')) {
+            if (explicitReason !== null) {
+                reason = explicitReason;
+            } else if (!skipPrompt && (newStatus === 'Closed' || newStatus === 'Failed')) {
                 const reasonMsg = currentLang === 'en' 
                     ? "Please enter a reason/note (Optional):" 
                     : "Harap masukkan alasan/catatan (Opsional):";
@@ -4030,6 +4196,45 @@
             }
         }
     </script>
+
+    <!-- Custom Update Status Modal -->
+    <div id="updateStatusModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] hidden flex-col items-center justify-center">
+        <div class="bg-white p-6 rounded-2xl max-w-md w-full shadow-2xl relative mx-4">
+            <h3 class="text-xl font-bold text-slate-900 mb-2" id="modalTitleUpdateStatus">Complete prospect negotiation</h3>
+            
+            <!-- Step 1: Status Selection -->
+            <div id="statusSelectionStep">
+                <p class="text-slate-600 text-sm mb-4" id="modalDesc1UpdateStatus">Please select the outcome of this deal:</p>
+                <div class="flex gap-4">
+                    <button id="btnStatusWon" onclick="selectStatusOutcome('WON')" class="flex-1 bg-emerald-50 hover:bg-emerald-500 text-emerald-600 hover:text-white border border-emerald-200 px-4 py-3 rounded-xl font-bold transition-all">WON (Closed)</button>
+                    <button id="btnStatusLost" onclick="selectStatusOutcome('LOST')" class="flex-1 bg-slate-50 hover:bg-slate-800 text-slate-600 hover:text-white border border-slate-200 px-4 py-3 rounded-xl font-bold transition-all">LOST (Failed)</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Reason Selection -->
+            <div id="reasonSelectionStep" class="hidden mt-4 pt-4 border-t border-slate-100">
+                <p class="text-slate-600 text-sm mb-3" id="modalDesc2UpdateStatus">Please select a reason:</p>
+                
+                <div id="wonReasons" class="hidden flex-col gap-2">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div id="lostReasons" class="hidden flex-col gap-2">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div id="customReasonContainer" class="hidden mt-3">
+                    <input type="text" id="customReasonInput" oninput="handleCustomReasonInput(event)" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="Type your custom reason here...">
+                </div>
+
+                <div class="mt-6 flex justify-end gap-2">
+                    <button id="btnCancelStatusUpdate" onclick="closeUpdateStatusModal()" class="px-4 py-2 text-slate-500 hover:text-slate-800 text-sm font-semibold transition-colors">Cancel</button>
+                    <button id="btnConfirmStatusUpdate" onclick="submitUpdateStatus()" class="px-4 py-2 bg-primary text-white hover:bg-blue-600 rounded-lg text-sm font-bold shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Global Fullscreen Loading Overlay -->
     <div id="globalLoadingOverlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] flex flex-col items-center justify-center hidden">
         <div class="bg-white p-8 rounded-2xl shadow-2xl flex flex-col items-center gap-4 border border-slate-100 max-w-sm w-full mx-4">
@@ -4037,6 +4242,45 @@
             <p class="text-slate-800 font-bold text-sm text-center" id="globalLoadingText">Processing...</p>
         </div>
     </div>
+    <script>
+        const jobTemplates = {
+            "Frontend Developer": {
+                desc: "We are looking for an experienced Frontend Developer to build dynamic and responsive web applications. You will be working with React.js and Tailwind CSS to implement user interfaces that are fast and intuitive.",
+                reqs: "- Proficiency in React.js and modern JavaScript\n- Strong understanding of responsive design and CSS frameworks (Tailwind)\n- Experience with RESTful APIs\n- Minimum 2 years of experience"
+            },
+            "Backend Developer": {
+                desc: "We are seeking a Backend Developer to manage data storage, server logic, and APIs. You will work closely with frontend developers to integrate components and ensure optimal performance of the application.",
+                reqs: "- Strong experience in Node.js and Express\n- Solid understanding of PostgreSQL and database design\n- Familiarity with Docker and server deployments\n- Minimum 2 years of experience"
+            },
+            "Fullstack Developer": {
+                desc: "We are looking for a versatile Fullstack Developer capable of handling both frontend and backend tasks. You will be responsible for building full features from the database layer to the UI.",
+                reqs: "- Proficiency in React.js and Node.js\n- Experience with databases like PostgreSQL or MongoDB\n- Understanding of cloud deployment and CI/CD pipelines\n- Minimum 3 years of experience"
+            },
+            "UI/UX Designer": {
+                desc: "Join our team as a UI/UX Designer to design elegant and intuitive user interfaces. You will translate requirements into wireframes, mockups, and interactive prototypes.",
+                reqs: "- Expertise in Figma or Adobe XD\n- Strong portfolio showcasing web and mobile app designs\n- Understanding of user-centered design principles\n- Excellent communication skills"
+            },
+            "Project Manager": {
+                desc: "We need an organized Project Manager to oversee the software development lifecycle, coordinate team members, and ensure timely delivery of high-quality software projects.",
+                reqs: "- Experience in Agile/Scrum methodologies\n- Excellent leadership and team coordination skills\n- Familiarity with Jira or Trello\n- Strong analytical and problem-solving skills"
+            },
+            "Data Scientist": {
+                desc: "Looking for a Data Scientist to analyze large datasets, build predictive models, and implement machine learning solutions to drive business value and insights.",
+                reqs: "- Proficiency in Python, Pandas, and scikit-learn\n- Experience with SQL and relational databases\n- Understanding of statistics and machine learning algorithms\n- Minimum 2 years of experience in data analysis"
+            }
+        };
+
+        function handleJobTitleChange() {
+            const title = document.getElementById('job-title').value;
+            if (jobTemplates[title]) {
+                document.getElementById('job-description').value = jobTemplates[title].desc;
+                document.getElementById('job-requirements').value = jobTemplates[title].reqs;
+            } else {
+                document.getElementById('job-description').value = '';
+                document.getElementById('job-requirements').value = '';
+            }
+        }
+    </script>
 </body>
 
 </html>

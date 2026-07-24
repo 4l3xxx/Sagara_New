@@ -964,8 +964,10 @@
     "sentiment_score": 0,
     "nlp_category": "UMKM",
     "lead_score": 0.5,
-    "status": "New",
-    "created_at": "2026-07-23T14:14:05.169Z"
+    "status": "Closed",
+    "created_at": "2026-07-23T14:14:05.169Z",
+    "notes": "Klien puas dengan solusi AI",
+    "updated_at": "2026-07-24T12:29:53.659Z"
   },
   {
     "id": 1784816058121,
@@ -980,8 +982,10 @@
     "sentiment_score": 0,
     "nlp_category": "UMKM",
     "lead_score": 0.5,
-    "status": "New",
-    "created_at": "2026-07-23T14:14:18.121Z"
+    "status": "Closed",
+    "created_at": "2026-07-23T14:14:18.121Z",
+    "notes": "Klien puas dengan solusi AI",
+    "updated_at": "2026-07-24T11:53:03.489Z"
   },
   {
     "id": 1784816205103,
@@ -996,8 +1000,10 @@
     "sentiment_score": 0,
     "nlp_category": "UMKM",
     "lead_score": 0.5,
-    "status": "New",
-    "created_at": "2026-07-23T14:16:45.103Z"
+    "status": "Closed",
+    "created_at": "2026-07-23T14:16:45.103Z",
+    "notes": "Client agreed to terms & pricing",
+    "updated_at": "2026-07-24T11:43:21.469Z"
   },
   {
     "id": 1784816269637,
@@ -1012,8 +1018,10 @@
     "sentiment_score": 0,
     "nlp_category": "GOVERNMENT",
     "lead_score": 0.65,
-    "status": "New",
-    "created_at": "2026-07-23T14:17:49.637Z"
+    "status": "Closed",
+    "created_at": "2026-07-23T14:17:49.637Z",
+    "notes": "gg",
+    "updated_at": "2026-07-24T11:09:10.438Z"
   },
   {
     "id": 1784816501350,
@@ -1028,7 +1036,9 @@
     "sentiment_score": 0,
     "nlp_category": "GENERAL",
     "lead_score": 0.6,
-    "status": "New",
-    "created_at": "2026-07-23T14:21:41.350Z"
+    "status": "Closed",
+    "created_at": "2026-07-23T14:21:41.350Z",
+    "notes": "they agree",
+    "updated_at": "2026-07-24T02:26:13.581Z"
   }
 ]

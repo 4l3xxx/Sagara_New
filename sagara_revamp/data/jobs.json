@@ -137,5 +137,22 @@
     ],
     "created_at": "2026-07-22T03:11:43.171Z",
     "is_active": true
+  },
+  {
+    "id": 1784896022073,
+    "title": "Data Scientist",
+    "location": "Jakarta, Indonesia (On-site)",
+    "type": "Part-time",
+    "salary": "IDR 5-10 Million",
+    "experience": "min 2 years",
+    "description": "Looking for a Data Scientist to analyze large datasets, build predictive models, and implement machine learning solutions to drive business value and insights. ",
+    "requirements": [
+      "- Proficiency in Python, Pandas, and scikit-learn",
+      "- Experience with SQL and relational databases",
+      "- Understanding of statistics and machine learning algorithms",
+      "- Minimum 2 years of experience in data analysis"
+    ],
+    "created_at": "2026-07-24T12:27:02.074Z",
+    "is_active": true
   }
 ]
