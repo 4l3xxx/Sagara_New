@@ -240,9 +240,12 @@
 </head>
 
 <body>
-    <div class="flex h-screen">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Mobile Overlay -->
+        <div id="mobileOverlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden transition-opacity duration-300"></div>
         <!-- Sidebar -->
-        <aside class="w-64 bg-sidebar text-slate-300 shadow-2xl fixed h-full overflow-y-auto z-50 flex flex-col">
+        <aside id="sidebar" class="w-64 bg-sidebar text-slate-300 shadow-2xl fixed inset-y-0 left-0 h-full overflow-y-auto z-50 flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+            <button id="closeMenuBtn" class="md:hidden absolute top-4 right-4 material-symbols-outlined text-slate-400 hover:text-white bg-slate-800/50 rounded-full p-1 z-50">close</button>
             <div class="p-6 border-b border-slate-800">
                 <div class="flex items-center gap-3">
                     <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo"
@@ -298,6 +301,10 @@
                     <span class="material-symbols-outlined text-[20px]">report</span>
                     <span class="font-medium text-sm" id="menuSpamLogs">Spam Logs</span>
                 </div>
+                <div class="sidebar-item p-3" data-section="security">
+                    <span class="material-symbols-outlined text-[20px]">shield</span>
+                    <span class="font-medium text-sm" id="menuSecurity">Security Overview</span>
+                </div>
                 <div class="sidebar-item p-3 hidden" id="navAuditLogs" data-section="auditlogs">
                     <span class="material-symbols-outlined text-[20px]">history</span>
                     <span class="font-medium text-sm" id="menuAuditLogs">Audit Logs</span>
@@ -324,8 +331,19 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 ml-64 overflow-y-auto">
-            <div class="p-8">
+        <main class="flex-1 ml-0 md:ml-64 overflow-y-auto w-full">
+            <!-- Mobile Header -->
+            <div class="md:hidden flex items-center justify-between bg-sidebar p-4 text-white sticky top-0 z-30 shadow-md">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-primary to-blue-600 rounded-xl flex items-center justify-center shadow-lg border border-slate-700">
+                        <span class="text-white font-bold">S</span>
+                    </div>
+                    <h1 class="text-lg font-bold tracking-wide">Sagara Admin</h1>
+                </div>
+                <button id="mobileMenuBtn" class="material-symbols-outlined hover:bg-white/10 p-1 rounded transition-colors">menu</button>
+            </div>
+
+            <div class="p-4 md:p-8">
                 <!-- Dashboard Section -->
                 <div id="dashboardSection">
                     <div class="mb-8 flex justify-between items-end">
@@ -910,6 +928,69 @@
                 </div>
 
                 <!-- Audit Logs Section -->
+                <div id="securitySection" class="hidden">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-6">
+                        <div>
+                            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Security Overview</h2>
+                            <p class="text-slate-500 mt-1 font-medium">Login attempts, blocked toxic content, and blocked spam</p>
+                        </div>
+                        <div class="flex p-1 bg-slate-100/80 rounded-xl border border-slate-200 shadow-sm backdrop-blur">
+                            <button onclick="setSecurityRange('today')" id="secRangeBtn-today"
+                                class="sec-range-btn px-5 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 hover:bg-white/60">Today</button>
+                            <button onclick="setSecurityRange('7d')" id="secRangeBtn-7d"
+                                class="sec-range-btn px-5 py-2 text-xs font-bold rounded-lg transition-all bg-white text-primary shadow-md shadow-blue-100/50 border border-slate-100">7D</button>
+                            <button onclick="setSecurityRange('30d')" id="secRangeBtn-30d"
+                                class="sec-range-btn px-5 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 hover:bg-white/60">30D</button>
+                            <button onclick="setSecurityRange('all')" id="secRangeBtn-all"
+                                class="sec-range-btn px-5 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 hover:bg-white/60">All Time</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white rounded-xl p-4 shadow-sm border">
+                            <p class="text-sm text-gray-500">Login Attempts</p>
+                            <h3 class="text-2xl font-bold text-gray-800" id="secLoginAttempts">-</h3>
+                            <p class="text-xs text-red-500 mt-1" id="secLoginFailed"></p>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 shadow-sm border">
+                            <p class="text-sm text-gray-500">Toxic Messages Blocked</p>
+                            <h3 class="text-2xl font-bold text-gray-800" id="secToxicBlocked">-</h3>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 shadow-sm border">
+                            <p class="text-sm text-gray-500">Spam Submissions Blocked</p>
+                            <h3 class="text-2xl font-bold text-gray-800" id="secSpamBlocked">-</h3>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border p-6 mb-8">
+                        <p class="text-sm font-semibold text-gray-700 mb-4">Security events</p>
+                        <div class="relative" style="height: 220px;">
+                            <canvas id="securityChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left">Time</th>
+                                        <th class="px-4 py-3 text-left">Type</th>
+                                        <th class="px-4 py-3 text-left">Detail</th>
+                                        <th class="px-4 py-3 text-left">IP</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="securityEventsTableBody">
+                                    <tr>
+                                        <td colspan="4" class="text-center py-8 text-gray-500">Loading...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audit Logs Section -->
                 <div id="auditlogsSection" class="hidden animate-slideUp">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
                         <div class="max-w-2xl">
@@ -1199,42 +1280,49 @@
         </div>
     </div>
 
-    <!-- Email Confirmation Modal (2-Step) -->
+    <!-- WhatsApp Confirmation Modal (2-Step) -->
     <div id="emailConfirmModal"
         class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/50 backdrop-blur-sm">
         <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
             <div id="emailStep1">
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="material-symbols-outlined text-primary text-3xl">forward_to_inbox</span>
+                    <div class="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="material-symbols-outlined text-green-500 text-3xl">chat</span>
                     </div>
-                    <h3 id="lblReplyClient" class="text-xl font-bold text-slate-900 mb-2">Reply ke Client</h3>
-                    <p id="lblReplyClientDesc" class="text-slate-500 text-sm">Anda akan menghubungi client via email:</p>
+                    <h3 id="lblReplyClient" class="text-xl font-bold text-slate-900 mb-2">Reply via WhatsApp</h3>
+                    <p id="lblReplyClientDesc" class="text-slate-500 text-sm">Anda akan menghubungi client via WhatsApp:</p>
                     <p id="emailConfirmTarget"
-                        class="text-primary font-mono text-sm mt-2 bg-blue-50 py-1 px-3 rounded-lg inline-block"></p>
+                        class="text-green-600 font-mono text-sm mt-2 bg-green-50 py-1 px-3 rounded-lg inline-block"></p>
                 </div>
-                <div class="flex gap-3">
+                <div class="flex flex-col gap-3">
+                    <div class="flex gap-2">
+                        <a id="emailOpenLinkWeb" href="#" target="_blank"
+                            class="flex-1 py-3 px-3 rounded-xl bg-green-500 hover:bg-green-600 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-green-200 no-underline">
+                            <span class="material-symbols-outlined text-lg">public</span>
+                            <span>WA Web</span>
+                        </a>
+                        <a id="emailOpenLinkApp" href="#"
+                            class="flex-1 py-3 px-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-200 no-underline">
+                            <span class="material-symbols-outlined text-lg">desktop_windows</span>
+                            <span>WA Desktop</span>
+                        </a>
+                    </div>
                     <button id="emailStepCancel"
-                        class="flex-1 py-3 px-4 rounded-xl border-2 border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-all flex items-center justify-center gap-2">
+                        class="w-full py-3 px-4 rounded-xl border-2 border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-all flex items-center justify-center gap-2">
                         <span class="material-symbols-outlined text-lg">close</span>
                         <span id="lblReplyClientCancel">Batal</span>
                     </button>
-                    <a id="emailOpenLink" href="#"
-                        class="flex-1 py-3 px-4 rounded-xl bg-primary hover:bg-blue-600 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-200 no-underline">
-                        <span class="material-symbols-outlined text-lg">email</span>
-                        <span id="lblReplyClientOpen">Buka Email Client</span>
-                    </a>
                 </div>
             </div>
             <div id="emailStep2" class="hidden">
                 <div class="text-center mb-6">
                     <div class="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="material-symbols-outlined text-amber-500 text-3xl">mark_email_read</span>
+                        <span class="material-symbols-outlined text-amber-500 text-3xl">check_circle</span>
                     </div>
                     <h3 id="lblConfirmSent" class="text-xl font-bold text-slate-900 mb-2">Konfirmasi Pengiriman</h3>
-                    <p id="lblConfirmSentDesc" class="text-slate-500 text-sm">Apakah email sudah <strong>BENAR-BENAR</strong> terkirim ke client?</p>
+                    <p id="lblConfirmSentDesc" class="text-slate-500 text-sm">Apakah pesan WhatsApp sudah <strong>BENAR-BENAR</strong> terkirim ke client?</p>
                     <p id="emailConfirmTarget2"
-                        class="text-primary font-mono text-sm mt-2 bg-blue-50 py-1 px-3 rounded-lg inline-block"></p>
+                        class="text-green-600 font-mono text-sm mt-2 bg-green-50 py-1 px-3 rounded-lg inline-block"></p>
                 </div>
                 <div class="flex gap-3">
                     <button id="emailConfirmNo"
@@ -1593,6 +1681,7 @@
                             Details</label>
                         <p class="text-lg font-bold text-slate-800" id="det-name"></p>
                         <p class="text-primary font-semibold text-sm flex items-center gap-1" id="det-email"></p>
+                        <p class="text-green-600 font-semibold text-sm flex items-center gap-1 mt-1" id="det-whatsapp"></p>
                     </div>
                     <div class="text-right">
                         <label
@@ -2285,6 +2374,7 @@
 
             document.getElementById('det-name').textContent = item.full_name || '-';
             document.getElementById('det-email').innerHTML = `<span class="material-symbols-outlined text-sm">mail</span> ${item.business_email}`;
+            document.getElementById('det-whatsapp').innerHTML = `<span class="material-symbols-outlined text-sm">call</span> ${item.whatsapp_number || 'Tidak ada WA'}`;
             document.getElementById('det-service').textContent = item.service_type || 'N/A';
             document.getElementById('det-date').textContent = `Diajukan pada: ${formatDate(item.created_at)}`;
 
@@ -2415,65 +2505,86 @@
         }
 
         function handleLeadAction(id, email, currentStatus) {
-            const lead = window.allConsultations.find(c => c.id === id);
-            const clientName = lead ? lead.full_name : 'Client';
+            try {
+                const lead = window.allConsultations.find(c => String(c.id) === String(id));
+                const clientName = lead ? lead.full_name : 'Client';
+                const whatsapp = lead ? (lead.whatsapp_number || 'No Number') : 'Unknown';
 
-            if (currentStatus === 'New') {
-                const modal = document.getElementById('emailConfirmModal');
-                const step1 = document.getElementById('emailStep1');
-                const step2 = document.getElementById('emailStep2');
-                const targetEl = document.getElementById('emailConfirmTarget');
-                const targetEl2 = document.getElementById('emailConfirmTarget2');
-                const openLink = document.getElementById('emailOpenLink');
-                const cancelBtn = document.getElementById('emailStepCancel');
-                const yesBtn = document.getElementById('emailConfirmYes');
-                const noBtn = document.getElementById('emailConfirmNo');
+                if (currentStatus === 'New') {
+                    const modal = document.getElementById('emailConfirmModal');
+                    const step1 = document.getElementById('emailStep1');
+                    const step2 = document.getElementById('emailStep2');
+                    const targetEl = document.getElementById('emailConfirmTarget');
+                    const targetEl2 = document.getElementById('emailConfirmTarget2');
+                    const openLinkWeb = document.getElementById('emailOpenLinkWeb');
+                    const openLinkApp = document.getElementById('emailOpenLinkApp');
+                    const cancelBtn = document.getElementById('emailStepCancel');
+                    const yesBtn = document.getElementById('emailConfirmYes');
+                    const noBtn = document.getElementById('emailConfirmNo');
 
-                step1.classList.remove('hidden');
-                step2.classList.add('hidden');
-                targetEl.textContent = email;
-                targetEl2.textContent = email;
-                
-                const draftBody = `Dear ${clientName},\n\nThank you for reaching out to Sagara AI. We have received your consultation request and would love to discuss how our AI solutions can help your business.\n\nPlease let us know your availability for a brief call next week.\n\nBest regards,\nThe Sagara AI Team`;
-                openLink.href = `mailto:${email}?subject=Re: Sagara AI Consultation&body=${encodeURIComponent(draftBody)}`;
-                
-                modal.style.display = 'flex';
+                    step1.classList.remove('hidden');
+                    step2.classList.add('hidden');
+                    targetEl.textContent = whatsapp;
+                    targetEl2.textContent = whatsapp;
+                    
+                    const draftBody = `Halo ${clientName},\n\nTerima kasih telah menghubungi Sagara Technology. Kami telah menerima permintaan konsultasi Anda. Kapan Anda memiliki waktu luang untuk berdiskusi lebih lanjut via telepon atau meeting online?\n\nSalam,\nTim Sagara Technology`;
+                    
+                    // Format whatsapp number: remove leading + or 0, ensure 62
+                    let cleanWA = String(whatsapp).replace(/[^0-9]/g, '');
+                    if (cleanWA.startsWith('0')) cleanWA = '62' + cleanWA.substring(1);
+                    
+                    if (!cleanWA) {
+                        showToast('Nomor WhatsApp tidak tersedia (data lama).', 'error');
+                        return;
+                    }
+                    
+                    openLinkWeb.href = `https://web.whatsapp.com/send?phone=${cleanWA}&text=${encodeURIComponent(draftBody)}`;
+                    openLinkApp.href = `whatsapp://send?phone=${cleanWA}&text=${encodeURIComponent(draftBody)}`;
+                    
+                    modal.style.display = 'flex';
 
-                const newOpen = openLink.cloneNode(true);
-                const newCancel = cancelBtn.cloneNode(true);
-                const newYes = yesBtn.cloneNode(true);
-                const newNo = noBtn.cloneNode(true);
-                openLink.parentNode.replaceChild(newOpen, openLink);
-                cancelBtn.parentNode.replaceChild(newCancel, cancelBtn);
-                yesBtn.parentNode.replaceChild(newYes, yesBtn);
-                noBtn.parentNode.replaceChild(newNo, noBtn);
+                    cancelBtn.onclick = () => {
+                        modal.style.display = 'none';
+                    };
+                    noBtn.onclick = () => {
+                        modal.style.display = 'none';
+                    };
 
-                newCancel.addEventListener('click', () => {
-                    modal.style.display = 'none';
-                });
+                    const handleOpenLinkClick = (e, linkElement) => {
+                        e.preventDefault();
+                        showLoading(currentLang === 'en' ? 'Connecting to WhatsApp...' : 'Menghubungkan ke WhatsApp...');
+                        setTimeout(() => {
+                            hideLoading();
+                            window.location.href = linkElement.href;
+                            step1.classList.add('hidden');
+                            step2.classList.add('hidden');
+                            step2.classList.remove('hidden');
+                        }, 800);
+                    };
 
-                newOpen.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showLoading(currentLang === 'en' ? 'Connecting to email client...' : 'Menghubungkan ke email client...');
-                    setTimeout(() => {
-                        hideLoading();
-                        window.location.href = newOpen.href;
-                        step1.classList.add('hidden');
-                        step2.classList.remove('hidden');
-                    }, 1200);
-                });
+                    // Remove old listeners if any by cloning
+                    const newOpenWeb = openLinkWeb.cloneNode(true);
+                    openLinkWeb.parentNode.replaceChild(newOpenWeb, openLinkWeb);
+                    
+                    const newOpenApp = openLinkApp.cloneNode(true);
+                    openLinkApp.parentNode.replaceChild(newOpenApp, openLinkApp);
+                    
+                    const newYes = yesBtn.cloneNode(true);
+                    yesBtn.parentNode.replaceChild(newYes, yesBtn);
 
-                newYes.addEventListener('click', () => {
-                    modal.style.display = 'none';
-                    updateLeadStatus(id, 'Contacted', true);
-                });
+                    newOpenWeb.addEventListener('click', (e) => handleOpenLinkClick(e, newOpenWeb));
+                    newOpenApp.addEventListener('click', (e) => handleOpenLinkClick(e, newOpenApp));
 
-                newNo.addEventListener('click', () => {
-                    modal.style.display = 'none';
-                    showToast(currentLang === 'en' ? 'Status remains "New" — email not sent' : 'Status tetap "New" — email belum dikirim', 'error');
-                });
-            } else if (currentStatus === 'Contacted') {
-                showUpdateStatusModal(id);
+                    newYes.addEventListener('click', () => {
+                        modal.style.display = 'none';
+                        updateLeadStatus(id, 'Contacted', true);
+                    });
+                } else if (currentStatus === 'Contacted') {
+                    showUpdateStatusModal(id);
+                }
+            } catch (err) {
+                console.error(err);
+                showToast(`JS Error: ${err.message}`, 'error');
             }
         }
 
@@ -3711,6 +3822,80 @@
         }
 
         // ============================================
+        // SECURITY OVERVIEW FUNCTIONS
+        // ============================================
+        let securityChartInstance = null;
+        let currentSecurityRange = '7d';
+
+        function setSecurityRange(range) {
+            currentSecurityRange = range;
+            document.querySelectorAll('.sec-range-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-primary', 'shadow-md', 'shadow-blue-100/50', 'border', 'border-slate-100');
+                btn.classList.add('text-slate-600', 'hover:bg-white/60');
+            });
+            const activeBtn = document.getElementById('secRangeBtn-' + range);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'hover:bg-white/60');
+                activeBtn.classList.add('bg-white', 'text-primary', 'shadow-md', 'shadow-blue-100/50', 'border', 'border-slate-100');
+            }
+            loadSecurityOverview();
+        }
+
+        const securityTypeBadge = {
+            login_fail: '<span class="px-2 py-1 rounded text-xs font-semibold bg-red-100 text-red-700">Login fail</span>',
+            login_ok: '<span class="px-2 py-1 rounded text-xs font-semibold bg-green-100 text-green-700">Login ok</span>',
+            toxic_block: '<span class="px-2 py-1 rounded text-xs font-semibold bg-amber-100 text-amber-700">Toxic block</span>',
+            spam_block: '<span class="px-2 py-1 rounded text-xs font-semibold bg-amber-100 text-amber-700">Spam block</span>',
+        };
+
+        async function loadSecurityOverview() {
+            try {
+                const response = await fetchWithAuth('/api/admin/security-overview?range=' + currentSecurityRange);
+                const data = await response.json();
+
+                document.getElementById('secLoginAttempts').textContent = data.cards.loginAttempts;
+                document.getElementById('secLoginFailed').textContent = data.cards.loginFailed + ' failed';
+                document.getElementById('secToxicBlocked').textContent = data.cards.toxicBlocked;
+                document.getElementById('secSpamBlocked').textContent = data.cards.spamBlocked;
+
+                const ctx = document.getElementById('securityChart').getContext('2d');
+                if (securityChartInstance) securityChartInstance.destroy();
+                securityChartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.chart.labels,
+                        datasets: [
+                            { label: 'Login fails', data: data.chart.loginFails, borderColor: '#dc2626', tension: 0.3 },
+                            { label: 'Toxic blocks', data: data.chart.toxicBlocks, borderColor: '#d97706', tension: 0.3 },
+                            { label: 'Spam blocks', data: data.chart.spamBlocks, borderColor: '#2563eb', tension: 0.3 },
+                        ],
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } } },
+                        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+                    },
+                });
+
+                const tbody = document.getElementById('securityEventsTableBody');
+                if (!data.events.length) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center py-8 text-gray-500">No events found</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = data.events.map(e => `
+                    <tr class="border-t">
+                        <td class="px-4 py-3">${new Date(e.timestamp).toLocaleString()}</td>
+                        <td class="px-4 py-3">${securityTypeBadge[e.type] || e.type}</td>
+                        <td class="px-4 py-3">${e.detail || ''}</td>
+                        <td class="px-4 py-3 text-gray-500">${e.ip || ''}</td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error('Error loading security overview:', err);
+            }
+        }
+
+        // ============================================
         // SYSTEM AUDIT LOGS FUNCTIONS
         // ============================================
         async function loadAuditLogs() {
@@ -3847,6 +4032,43 @@
         }
 
         // ============================================
+        // MOBILE MENU FUNCTIONS
+        // ============================================
+        const sidebar = document.getElementById('sidebar');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        function toggleMobileMenu() {
+            if (!sidebar) return;
+            const isClosed = sidebar.classList.contains('-translate-x-full');
+            if (isClosed) {
+                sidebar.classList.remove('-translate-x-full');
+                if(mobileOverlay) mobileOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                if(mobileOverlay) mobileOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        if(mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        if(closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMobileMenu);
+        if(mobileOverlay) mobileOverlay.addEventListener('click', toggleMobileMenu);
+
+        // Auto close on mobile when clicking a sidebar item
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                if(window.innerWidth < 768 && sidebar) {
+                    sidebar.classList.add('-translate-x-full');
+                    if(mobileOverlay) mobileOverlay.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // ============================================
         // NAVIGATION FUNCTIONS
         // ============================================
         let currentSection = 'dashboard';
@@ -3863,6 +4085,7 @@
                 'consultationsSection',
                 'analyticsSection',
                 'spamlogsSection',
+                'securitySection',
                 'auditlogsSection'
             ];
 
@@ -3884,6 +4107,7 @@
             if (section === 'consultations') loadConsultations();
             if (section === 'analytics') loadAnalytics();
             if (section === 'spamlogs') loadSpamLogs();
+            if (section === 'security') loadSecurityOverview();
             if (section === 'auditlogs') loadAuditLogs();
             if (section === 'settings') loadSettings();
             if (section === 'logout') window.location.href = '/admin/logout';

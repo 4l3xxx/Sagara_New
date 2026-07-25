@@ -8,6 +8,7 @@ const mlService         = require('../services/mlService');
 const toxicFilter       = require('../services/toxicFilter');
 const { logToxicAttempt } = require('../helpers/toxicLog');
 const { createAuditLog, getUserRole } = require('../helpers/audit');
+const emailService      = require('../services/emailService');
 const { CONSULTATIONS_FILE, SPAM_LOG_FILE } = require('../config/constants');
 const pool              = require('../config/database');
 
@@ -115,9 +116,9 @@ function runSpamChecks({ full_name, business_email, message, req }) {
 
 // ─── POST /api/consultation ───────────────────────────────────────────────────
 router.post('/api/consultation', async (req, res) => {
-  const { full_name, business_email, service_type, message, company_size, budget, industry } = req.body;
+  const { full_name, business_email, whatsapp_number, service_type, message, company_size, budget, industry } = req.body;
 
-  if (!full_name || !business_email || !service_type || !message)
+  if (!full_name || !business_email || !whatsapp_number || !service_type || !message)
     return res.status(400).json({ error: 'All fields required' });
   if (!GMAIL_RE.test(business_email))
     return res.status(400).json({ error: 'Email must be @gmail.com' });
@@ -146,6 +147,7 @@ router.post('/api/consultation', async (req, res) => {
       id:              Date.now(),
       full_name,
       business_email,
+      whatsapp_number,
       service_type,
       message,
       company_size:    company_size  || null,
@@ -271,8 +273,11 @@ router.post('/api/admin/consultations/status', adminAuth, async (req, res) => {
 
     const lead = list[index];
     const emailStr = lead.business_email;
-    if (status === 'Contacted')
-      await createAuditLog(req.sessionUser, 'CONTACT_CLIENT', `Mengirimkan email respon ke prospek: ${emailStr}`, req);
+    if (status === 'Contacted') {
+      const auditNote = `Mengupdate status prospek ke CONTACTED: ${emailStr}`;
+        
+      await createAuditLog(req.sessionUser, 'CONTACT_CLIENT', auditNote, req);
+    }
     else if (status === 'Closed')
       await createAuditLog(req.sessionUser, 'DEAL_WON', `DEAL WON: ${emailStr}${notes ? `. ${notes}` : ''}`, req);
     else if (status === 'Failed')
