@@ -269,41 +269,7 @@
                     '<li>Competitive salary and benefits package</li><li>Flexible working arrangements</li><li>Professional development opportunities</li><li>Health insurance coverage</li>' :
                     '<li>Paket gaji dan benefit yang kompetitif</li><li>Pengaturan kerja yang fleksibel</li><li>Peluang pengembangan profesional</li><li>Cakupan asuransi kesehatan</li>';
 
-                const location = job.location || 'Jakarta, Indonesia';
-
-                const emailSubject = lang === 'en' ? `Application for ${job.title}` : `Lamaran untuk ${job.title}`;
-                const emailBody = lang === 'en' ? 
-`Dear Hiring Team,
-
-I am writing to express my interest in the ${job.title} position at Sagara Technology.
-
-[Please write a brief introduction about yourself, your background, and why you are a good fit for this role here]
-
-Please find my resume/CV and portfolio attached to this email.
-
-I look forward to the opportunity to discuss my application with you.
-
-Best regards,
-[Your Name]
-[Your Phone Number]
-[Your LinkedIn Profile/Portfolio URL]` 
-: 
-`Kepada Tim HRD Sagara Technology,
-
-Saya menulis email ini untuk menyatakan ketertarikan saya pada posisi ${job.title} di Sagara Technology.
-
-[Silakan tulis perkenalan singkat tentang diri Anda, latar belakang pengalaman, dan mengapa Anda cocok untuk posisi ini di sini]
-
-Bersama email ini, saya lampirkan resume/CV dan portofolio saya sebagai bahan pertimbangan.
-
-Saya menantikan kesempatan untuk mendiskusikan lamaran saya lebih lanjut dengan Bapak/Ibu.
-
-Hormat saya,
-[Nama Anda]
-[Nomor Telepon Anda]
-[URL Profil LinkedIn/Portofolio Anda]`;
-
-                const mailtoUrl = `mailto:careers@sagara.tech?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+                // Remove mailto link logic
 
                 document.getElementById('jobDetail').innerHTML = `
                     <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
@@ -311,7 +277,7 @@ Hormat saya,
                         <span class="px-4 py-2 bg-primary/10 text-primary text-sm font-semibold rounded-full">${type}</span>
                     </div>
                     <div class="flex flex-wrap gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6 pb-6 border-b border-slate-200 dark:border-slate-700">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> ${location}</span>
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> ${job.location || 'Remote'}</span>
                         <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">payments</span> ${salary}</span>
                         <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> ${exp}</span>
                     </div>
@@ -329,10 +295,108 @@ Hormat saya,
                             ${defaultOffers}
                         </ul>
                     </div>
-                    <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700 text-center">
-                        <a href="${mailtoUrl}" class="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-bold transition-all">${applyBtnText}</a>
+                    <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+                        <h3 class="text-2xl font-bold mb-6">${lang === 'en' ? 'Apply for this Position' : 'Lamar Posisi Ini'}</h3>
+                        <form id="applyForm" class="space-y-4 max-w-2xl">
+                            <input type="hidden" id="applyJobId" value="${job.id}">
+                            <input type="hidden" id="applyJobTitle" value="${job.title}">
+                            
+                            <div>
+                                <label class="block text-sm font-semibold mb-1">${lang === 'en' ? 'Name' : 'Nama'}</label>
+                                <input type="text" id="applyName" required class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold mb-1">Email</label>
+                                    <input type="email" id="applyEmail" required class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold mb-1">${lang === 'en' ? 'Phone' : 'Nomor HP'}</label>
+                                    <input type="tel" id="applyPhone" required class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-semibold mb-1">${lang === 'en' ? 'Portfolio / CV Link (Google Drive, LinkedIn, etc)' : 'Link Portofolio / CV (Google Drive, LinkedIn, dll)'}</label>
+                                <input type="url" id="applyPortfolio" class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+
+                            <div class="text-sm font-semibold text-center text-slate-400 my-2">-- ${lang === 'en' ? 'OR' : 'ATAU'} --</div>
+
+                            <div>
+                                <label class="block text-sm font-semibold mb-1">${lang === 'en' ? 'Upload Portfolio / CV File (PDF, DOCX)' : 'Unggah File Portofolio / CV (PDF, DOCX)'}</label>
+                                <input type="file" id="applyPortfolioFile" accept=".pdf,.doc,.docx" class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            
+                            
+                            <div id="applyFeedback" class="hidden text-sm font-semibold py-2"></div>
+                            
+                            <button type="submit" id="applySubmitBtn" class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-bold transition-all disabled:opacity-50">
+                                ${applyBtnText}
+                            </button>
+                        </form>
                     </div>
                 `;
+
+                setTimeout(() => {
+                    const form = document.getElementById('applyForm');
+                    if (form) {
+                        form.addEventListener('submit', async (e) => {
+                            e.preventDefault();
+                            const btn = document.getElementById('applySubmitBtn');
+                            const feedback = document.getElementById('applyFeedback');
+                            const linkInput = document.getElementById('applyPortfolio').value;
+                            const fileInput = document.getElementById('applyPortfolioFile').files[0];
+                            
+                            if (!linkInput && !fileInput) {
+                                feedback.classList.remove('hidden');
+                                feedback.className = 'text-red-600 dark:text-red-400 font-semibold py-2';
+                                feedback.textContent = lang === 'en' ? 'Please provide a link or upload a file.' : 'Harap berikan link portofolio atau unggah file CV.';
+                                return;
+                            }
+                            
+                            btn.disabled = true;
+                            btn.textContent = lang === 'en' ? 'Sending...' : 'Mengirim...';
+                            feedback.classList.add('hidden');
+                            
+                            try {
+                                const formData = new FormData();
+                                formData.append('jobId', document.getElementById('applyJobId').value);
+                                formData.append('jobTitle', document.getElementById('applyJobTitle').value);
+                                formData.append('name', document.getElementById('applyName').value);
+                                formData.append('email', document.getElementById('applyEmail').value);
+                                formData.append('phone', document.getElementById('applyPhone').value);
+                                formData.append('portfolio', linkInput);
+                                if (fileInput) {
+                                    formData.append('portfolio_file', fileInput);
+                                }
+
+                                const res = await fetch('/api/jobs/apply', {
+                                    method: 'POST',
+                                    body: formData
+                                });
+                                const data = await res.json();
+                                feedback.classList.remove('hidden');
+                                if (res.ok && data.success) {
+                                    feedback.className = 'text-green-600 dark:text-green-400 font-semibold py-2';
+                                    feedback.textContent = lang === 'en' ? 'Application sent successfully!' : 'Lamaran berhasil dikirim!';
+                                    form.reset();
+                                } else {
+                                    feedback.className = 'text-red-600 dark:text-red-400 font-semibold py-2';
+                                    feedback.textContent = data.error || (lang === 'en' ? 'Error submitting application.' : 'Gagal mengirim lamaran.');
+                                }
+                            } catch (err) {
+                                feedback.classList.remove('hidden');
+                                feedback.className = 'text-red-600 dark:text-red-400 font-semibold py-2';
+                                feedback.textContent = lang === 'en' ? 'Error connecting to server.' : 'Gagal terhubung ke server.';
+                            } finally {
+                                btn.disabled = false;
+                                btn.textContent = applyBtnText;
+                            }
+                        });
+                    }
+                }, 100);
             } catch (error) {
                 console.error('Error loading job detail:', error);
                 document.getElementById('jobDetail').innerHTML = lang === 'en' ?

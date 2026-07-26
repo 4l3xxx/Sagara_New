@@ -3,8 +3,15 @@ const express       = require('express');
 const router        = express.Router();
 const fs            = require('fs');
 const adminAuth     = require('../middleware/adminAuth');
+const emailService  = require('../services/emailService');
+const multer        = require('multer');
 const { JOBS_FILE } = require('../config/constants');
 const pool          = require('../config/database');
+
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 20 * 1024 * 1024 } // 20MB limit
+});
 
 const pgTableExists = async () => {
   const r = await pool.query(`SELECT to_regclass('public.jobs')`);
@@ -13,7 +20,7 @@ const pgTableExists = async () => {
 
 // ─── GET /api/jobs ────────────────────────────────────────────────────────────
 router.get('/api/jobs', (req, res) => {
-  try { res.json(JSON.parse(fs.readFileSync(JOBS_FILE, 'utf8'))); } catch { res.json([]); }
+  try { res.json(JSON.parse(fs.readFileSync(JOBS_FILE, 'utf8')).reverse()); } catch { res.json([]); }
 });
 
 // ─── GET /api/jobs/:id ────────────────────────────────────────────────────────
@@ -22,6 +29,66 @@ router.get('/api/jobs/:id', (req, res) => {
     const jobs = JSON.parse(fs.readFileSync(JOBS_FILE, 'utf8'));
     res.json(jobs.find(j => j.id == req.params.id) || null);
   } catch (err) { res.status(500).json({ error: 'Failed to load job' }); }
+});
+
+const uploadMiddleware = upload.single('portfolio_file');
+
+// ─── POST /api/jobs/apply ────────────────────────────────────────────────────────────
+router.post('/api/jobs/apply', (req, res, next) => {
+  uploadMiddleware(req, res, function(err) {
+    if (err instanceof multer.MulterError) {
+      if (err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({ error: 'File size exceeds the 20MB limit.' });
+      }
+      return res.status(400).json({ error: err.message });
+    } else if (err) {
+      return res.status(500).json({ error: 'An unknown error occurred during file upload.' });
+    }
+    next();
+  });
+}, async (req, res) => {
+  try {
+    const { jobId, jobTitle, name, email, phone, portfolio } = req.body;
+    const file = req.file;
+
+    if (!jobTitle || !name || !email) {
+      return res.status(400).json({ error: 'Name, email, and job title are required' });
+    }
+    
+    if (!portfolio && !file) {
+      return res.status(400).json({ error: 'Please provide either a portfolio link or upload a file' });
+    }
+
+    const emailHtml = `
+      <h2>New Job Application: ${jobTitle}</h2>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Phone:</strong> ${phone || '-'}</p>
+      <p><strong>Portfolio/CV Link:</strong> ${portfolio ? `<a href="${portfolio}">${portfolio}</a>` : 'Attached as file'}</p>
+    `;
+
+    const attachments = [];
+    if (file) {
+      attachments.push({
+        filename: file.originalname,
+        content: file.buffer
+      });
+    }
+
+    // Send email asynchronously without waiting
+    emailService.sendEmail({
+      to: 'consulsagara@gmail.com',
+      subject: `New Application for ${jobTitle} - ${name}`,
+      text: `New Job Application: ${jobTitle}\\nName: ${name}\\nEmail: ${email}\\nPhone: ${phone}\\nPortfolio: ${portfolio || 'Attached'}`,
+      html: emailHtml,
+      attachments
+    });
+
+    res.json({ success: true, message: 'Application sent successfully' });
+  } catch (err) {
+    console.error('[Jobs] Apply error:', err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 // ─── Admin Jobs CRUD ──────────────────────────────────────────────────────────

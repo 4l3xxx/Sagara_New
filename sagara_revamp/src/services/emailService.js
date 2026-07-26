@@ -25,7 +25,7 @@ class EmailService {
         }
     }
 
-    async sendEmail({ to, subject, text, html }) {
+    async sendEmail({ to, subject, text, html, attachments }) {
         if (!this.transporter) {
             console.warn(`[EmailService] MOCK SEND to: ${to} | Subject: ${subject}`);
             console.warn(`[EmailService] MOCK CONTENT: ${text}`);
@@ -39,7 +39,8 @@ class EmailService {
                 to,
                 subject,
                 text,
-                html
+                html,
+                attachments
             });
             console.log(`[EmailService] Email sent to ${to}: ${info.messageId}`);
             return { success: true, messageId: info.messageId };

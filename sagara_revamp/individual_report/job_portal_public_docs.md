@@ -59,14 +59,14 @@ Di dalam file ini, skrip bekerja dengan cara:
 
 ## 3. Flow Aplikasi / Lamar Kerja (Apply Flow)
 
-Saat ini, mekanisme melamar tidak menyimpan data ke database server dan tidak menggunakan form di dalam aplikasi. Alur (flow) nya diarahkan via protokol *mailto*.
+Saat ini, mekanisme melamar tidak menyimpan data ke database server, melainkan dikirimkan melalui formulir (form) di website langsung ke alamat email HR menggunakan `emailService`.
 
 1. **User membuka halaman Careers** (`/careers.html`).
 2. **User menelusuri daftar lowongan** yang saat ini sedang aktif (is_active: true).
 3. **User melihat detail lowongan** dengan mengklik salah satu card lowongan, lalu diarahkan ke `/job-detail.html?id=xxx`.
-4. **User mengklik tombol "Apply Now"**.
-5. **Redireksi ke Aplikasi Email Klien** (Outlook/Gmail/Mail App bawaan), karena tombol Apply di hardcode menggunakan link: 
-   `<a href="mailto:careers@sagara.tech?subject=Application for ${job.title}">`
+4. **User mengisi Formulir Lamaran** (Nama, Email, No. HP, Link Portofolio, Pesan).
+5. **User mengklik tombol "Submit"**.
+6. **Data dikirim via API** ke backend `POST /api/jobs/apply` dan diteruskan langsung ke `consulsagara@gmail.com` menggunakan layanan email.
 
 ---
 
@@ -90,9 +90,9 @@ Karena F300 hanya membuat DFD untuk Consultation, berikut adalah DFD Level 2 unt
 
 **Proses 3.0: Melamar Lowongan (Apply)**
 - Entitas Eksternal: **Pelamar (User)**
-- Data Flow Masuk: Klik tombol Apply
-- Proses: 3.1 Trigger Mailto Action (Membuka aplikasi email User dengan subjek otomatis)
-- Entitas Eksternal (Penerima): **HR Sagara Tech (Email: careers@sagara.tech)**
+- Data Flow Masuk: Submit Form (JobId, Title, Name, Email, Phone, Portfolio, Message)
+- Proses: 3.1 Send Apply Request (/api/jobs/apply), 3.2 Construct HTML Email, 3.3 Send Email via SMTP
+- Entitas Eksternal (Penerima): **HR Sagara Tech (Email: consulsagara@gmail.com)**
 
 ---
 
@@ -121,9 +121,13 @@ sequenceDiagram
     Backend-->>Frontend: 200 OK (Job Object)
     Frontend-->>User: Render Job Detail
     
-    User->>Frontend: Klik tombol "Apply Now"
-    Frontend-->>User: Trigger mailto:careers@sagara.tech?subject=Application for {Title}
-    User->>User: Aplikasi Email Terbuka (Manual Send)
+    User->>Frontend: Isi formulir & Klik tombol Submit ("Apply for this Position")
+    Frontend->>Backend: POST /api/jobs/apply (JSON Data)
+    Backend->>Backend: Construct Email Template
+    Backend->>Email Service: sendEmail(to: consulsagara@gmail.com)
+    Email Service-->>Backend: Status Success / Failed
+    Backend-->>Frontend: 200 OK (Success Response JSON)
+    Frontend-->>User: Render Feedback Success (Pesan sukses muncul di form)
 ```
 
 ---
