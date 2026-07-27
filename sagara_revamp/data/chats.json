@@ -154,5 +154,191 @@
     "userMessage": "What services do you offer for web development?",
     "botResponse": "Kami di Sagara memiliki layanan untuk pengembangan aplikasi custom, atau yang kita sebut \"Custom Software Development\". Ini berarti kita bisa membantu buat aplikasi yang sesuai dengan kebutuhan kamu, entah itu untuk web, mobile, atau bahkan sistem internal. Jadi, kalau kamu butuh bantuan untuk pengembangan aplikasi, kita bisa jadi mitra yang tepat!",
     "timestamp": "2026-04-25T05:57:11.883Z"
+  },
+  {
+    "id": 1779683409837,
+    "userMessage": "hi",
+    "botResponse": "Halo! Selamat datang! Ada yang bisa saya bantu tentang Sagara?",
+    "timestamp": "2026-05-25T04:30:09.837Z"
+  },
+  {
+    "id": 1779683423436,
+    "userMessage": "tes",
+    "botResponse": "Semuanya berfungsi dengan baik! Ada pertanyaan tentang Sagara yang ingin kamu tanyakan?",
+    "timestamp": "2026-05-25T04:30:23.436Z"
+  },
+  {
+    "id": 1779683429421,
+    "userMessage": "ini apasihh",
+    "botResponse": "Kamu sedang menjelajahi informasi tentang Sagara, sebuah perusahaan konsultan IT yang berdiri sejak 2019 dengan visi menjadi perusahaan terkemuka di Asia Tenggara. Ada yang ingin kamu ketahui lebih lanjut tentang Sagara?",
+    "timestamp": "2026-05-25T04:30:29.421Z"
+  },
+  {
+    "id": 1779683435575,
+    "userMessage": "aku siapa",
+    "botResponse": "Kamu sedang berinteraksi dengan saya, Sagara AI Assistant! Saya di sini untuk membantu menjawab pertanyaan-pertanyaanmu tentang Sagara.",
+    "timestamp": "2026-05-25T04:30:35.575Z"
+  },
+  {
+    "id": 1779683448655,
+    "userMessage": "im deffa",
+    "botResponse": "Halo Deffa! Senang sekali kamu berkenan mengunjungi dan berinteraksi di sini. Ada pertanyaan tentang Sagara yang ingin kamu tanyakan? Atau ingin tahu lebih lanjut tentang layanan dan visi misi Sagara?",
+    "timestamp": "2026-05-25T04:30:48.655Z"
+  },
+  {
+    "id": 1779684405562,
+    "userMessage": "hi",
+    "botResponse": "Hai! Selamat datang! Apa yang bisa saya bantu tentang Sagara hari ini?",
+    "timestamp": "2026-05-25T04:46:45.562Z"
+  },
+  {
+    "id": 1779684427814,
+    "userMessage": "What services do you offer?",
+    "botResponse": "Sagara menawarkan beberapa layanan, yaitu:\n\n1. IT Consulting - konsultasi strategi digital untuk perusahaan\n2. Custom Software Development - pengembangan aplikasi custom sesuai kebutuhan\n3. Cloud Infrastructure & Migration - implementasi dan migrasi infrastruktur cloud\n4. Cybersecurity Audit - audit keamanan sistem dan data\n5. Government Solutions - solusi IT khusus untuk sektor pemerintahan\n\nItu beberapa layanan yang kami tawarkan!",
+    "timestamp": "2026-05-25T04:47:07.815Z"
+  },
+  {
+    "id": 1779684447273,
+    "userMessage": "hi",
+    "botResponse": "Hai! Senang kamu berkunjung. Ada yang bisa saya bantu tentang Sagara?",
+    "timestamp": "2026-05-25T04:47:27.273Z"
+  },
+  {
+    "id": 1779684457201,
+    "userMessage": "Tell me about your portfolio",
+    "botResponse": "Klien kami termasuk beberapa perusahaan dan lembaga terkemuka di Indonesia, seperti Bank Mandiri, Telkom Indonesia, Gojek, Tokopedia, dan Pemerintah DKI Jakarta. Kami telah bekerja sama dengan mereka untuk menyediakan layanan IT yang inovatif dan efektif. Ini menunjukkan bahwa kami memiliki pengalaman dan kemampuan untuk menangani proyek-proyek besar dan kompleks.",
+    "timestamp": "2026-05-25T04:47:37.201Z"
+  },
+  {
+    "id": 1780974862717,
+    "userMessage": "hi",
+    "botResponse": "Halo! Selamat datang! Bagaimana saya bisa membantu kamu hari ini?",
+    "timestamp": "2026-06-09T03:14:22.717Z"
+  },
+  {
+    "id": 1780974871948,
+    "userMessage": "can you speak english?",
+    "botResponse": "Ya, saya bisa berbicara bahasa Inggris. Namun, karena saya adalah Sagara AI Assistant, saya lebih nyaman berkomunikasi dalam bahasa Indonesia karena data yang saya miliki tentang perusahaan Sagara adalah dalam bahasa Indonesia. Tetapi jika kamu lebih nyaman berbicara dalam bahasa Inggris, saya akan mencoba membantu. How can I help you today?",
+    "timestamp": "2026-06-09T03:14:31.949Z"
+  },
+  {
+    "id": 1780974878473,
+    "userMessage": "Overall, what do you know about Sagara and its main services?",
+    "botResponse": "Sagara adalah perusahaan konsultan IT yang didirikan pada tahun 2019. Visi mereka adalah menjadi perusahaan konsultan IT terkemuka di Asia Tenggara, dan misi mereka adalah memberikan solusi IT inovatif untuk transformasi digital.\n\nMereka menawarkan beberapa layanan utama, termasuk:\n\n* IT Consulting untuk strategi digital perusahaan\n* Custom Software Development untuk pengembangan aplikasi custom\n* Cloud Infrastructure & Migration untuk implementasi dan migrasi infrastruktur cloud\n* Cybersecurity Audit untuk audit keamanan sistem dan data\n* Government Solutions untuk solusi IT khusus sektor pemerintahan\n\nSagara telah bekerja sama dengan beberapa klien terkemuka, seperti Bank Mandiri, Telkom Indonesia, Gojek, Tokopedia, dan Pemerintah DKI Jakarta. Mereka juga telah mencapai beberapa penghargaan, seperti Top IT Consultant 2023 dan Microsoft Gold Partner.",
+    "timestamp": "2026-06-09T03:14:38.473Z"
+  },
+  {
+    "id": 1780974899640,
+    "userMessage": "How does Sagara differentiate its solution approach for UMKM, Corporate, and Government personas?",
+    "botResponse": "Maaf, saya tidak memiliki informasi spesifik tentang bagaimana Sagara membedakan pendekatan solusi mereka untuk UMKM, Corporate, dan Government. Data yang saya miliki hanya menyebutkan layanan yang ditawarkan oleh Sagara, seperti IT Consulting, Custom Software Development, Cloud Infrastructure & Migration, Cybersecurity Audit, dan Government Solutions, tetapi tidak menjelaskan secara spesifik bagaimana mereka membedakan pendekatan solusi untuk berbagai jenis klien.\n\nNamun, saya dapat memberikan beberapa informasi umum bahwa Sagara memiliki layanan Government Solutions yang khusus untuk sektor pemerintahan, yang menunjukkan bahwa mereka memiliki kemampuan untuk menyesuaikan solusi mereka dengan kebutuhan klien yang berbeda-beda. Jika kamu ingin tahu lebih lanjut, mungkin kamu dapat menghubungi Sagara secara langsung untuk mendapatkan informasi yang lebih spesifik.",
+    "timestamp": "2026-06-09T03:14:59.640Z"
+  },
+  {
+    "id": 1780974915932,
+    "userMessage": "If I'm a UMKM owner with a tight budget looking for digitalization, what solution would you recommend, and what is the logical reasoning behind it?",
+    "botResponse": "Maaf, saya tidak memiliki informasi spesifik tentang solusi yang ditawarkan oleh Sagara untuk UMKM dengan anggaran yang terbatas. Namun, berdasarkan layanan yang ditawarkan oleh Sagara, saya dapat memberikan beberapa rekomendasi umum.\n\nJika kamu adalah pemilik UMKM dengan anggaran yang terbatas, saya akan merekomendasikan untuk memulai dengan IT Consulting. Layanan ini dapat membantu kamu untuk memahami kebutuhan digitalisasi bisnis kamu dan membuat strategi yang efektif untuk mencapai tujuan tersebut.\n\nDengan IT Consulting, kamu dapat mendapatkan bantuan untuk:\n\n* Menganalisis kebutuhan bisnis kamu\n* Mengidentifikasi area yang perlu diperbarui atau ditingkatkan\n* Membuat rencana digitalisasi yang sesuai dengan anggaran dan sumber daya kamu\n\nSetelah itu, kamu dapat mempertimbangkan untuk menggunakan layanan Custom Software Development atau Cloud Infrastructure & Migration untuk mengimplementasikan solusi yang telah direncanakan.\n\nNamun, perlu diingat bahwa rekomendasi ini hanya berdasarkan layanan yang ditawarkan oleh Sagara dan tidak terikat dengan kebutuhan spesifik bisnis kamu. Untuk mendapatkan rekomendasi yang lebih akurat, saya sarankan untuk menghubungi Sagara secara langsung dan membahas kebutuhan bisnis kamu dengan lebih lanjut.",
+    "timestamp": "2026-06-09T03:15:15.932Z"
+  },
+  {
+    "id": 1780975847850,
+    "userMessage": "Could you explain the software development workflow at Sagara, from the initial consultation to the final deployment?",
+    "botResponse": "Maaf, saya tidak memiliki informasi spesifik tentang alur pengembangan perangkat lunak di Sagara, mulai dari konsultasi awal hingga peluncuran akhir. Data yang saya miliki hanya menyebutkan bahwa Sagara menawarkan layanan Custom Software Development, tetapi tidak menjelaskan secara detail tentang proses pengembangan perangkat lunak mereka.\n\nNamun, secara umum, alur pengembangan perangkat lunak di perusahaan konsultan IT seperti Sagara mungkin melibatkan tahapan-tahapan seperti:\n\n1. Konsultasi awal: Pembahasan kebutuhan dan tujuan bisnis dengan klien.\n2. Analisis kebutuhan: Pengumpulan dan analisis kebutuhan bisnis untuk membuat spesifikasi perangkat lunak.\n3. Desain: Pembuatan desain perangkat lunak yang sesuai dengan kebutuhan bisnis.\n4. Pengembangan: Pengembangan perangkat lunak sesuai dengan desain yang telah dibuat.\n5. Pengujian: Pengujian perangkat lunak untuk memastikan bahwa perangkat lunak berfungsi dengan baik.\n6. Peluncuran: Peluncuran perangkat lunak ke lingkungan produksi.\n7. Pemeliharaan: Pemeliharaan perangkat lunak untuk memastikan bahwa perangkat lunak tetap berfungsi dengan baik dan dapat dikembangkan lebih lanjut.\n\nJika kamu ingin tahu lebih lanjut tentang alur pengembangan perangkat lunak di Sagara, saya sarankan untuk menghubungi Sagara secara langsung dan membahas kebutuhan bisnis kamu dengan lebih lanjut.",
+    "timestamp": "2026-06-09T03:30:47.850Z"
+  },
+  {
+    "id": 1780975865616,
+    "userMessage": "benar itu yang kamu bilang",
+    "botResponse": "Terima kasih! Saya senang bisa membantu menjelaskan tentang Sagara dan layanan mereka. Jika kamu memiliki pertanyaan lain atau ingin tahu lebih lanjut tentang Sagara, jangan ragu untuk bertanya!",
+    "timestamp": "2026-06-09T03:31:05.616Z"
+  },
+  {
+    "id": 1780975889747,
+    "userMessage": "yaudah ngk ush bilang maaf saya tidak memiliki informasi spesifik",
+    "botResponse": "Saya akan berusaha untuk menjawab pertanyaanmu dengan lebih langsung dan tidak terlalu formal. Jadi, jika kamu memiliki pertanyaan lain, silakan tanya saja!",
+    "timestamp": "2026-06-09T03:31:29.747Z"
+  },
+  {
+    "id": 1780975912844,
+    "userMessage": "halo can you speak english?",
+    "botResponse": "Yeah, I can speak English. However, since I'm Sagara AI Assistant, I'll be happy to chat with you about Sagara in either English or Indonesian. What would you like to know about Sagara?",
+    "timestamp": "2026-06-09T03:31:52.844Z"
+  },
+  {
+    "id": 1780975922601,
+    "userMessage": "apa yang kamu tau tentang sagara",
+    "botResponse": "Saya tahu beberapa informasi tentang Sagara. Sagara adalah perusahaan konsultan IT yang didirikan pada tahun 2019. Mereka memiliki visi untuk menjadi perusahaan konsultan IT terkemuka di Asia Tenggara dan misi untuk memberikan solusi IT inovatif untuk transformasi digital.\n\nSagara menawarkan beberapa layanan, seperti IT Consulting, Custom Software Development, Cloud Infrastructure & Migration, Cybersecurity Audit, dan Government Solutions. Mereka telah bekerja sama dengan beberapa klien terkenal, seperti Bank Mandiri, Telkom Indonesia, Gojek, Tokopedia, dan Pemerintah DKI Jakarta.\n\nSagara juga telah mencapai beberapa prestasi, seperti menjadi Top IT Consultant 2023, Best Digital Transformation Partner, ISO 27001 Certified, dan Microsoft Gold Partner. Itu beberapa informasi yang saya tahu tentang Sagara!",
+    "timestamp": "2026-06-09T03:32:02.601Z"
+  },
+  {
+    "id": 1780975926630,
+    "userMessage": "Layanan apa saja yang Anda tawarkan?",
+    "botResponse": "Sagara menawarkan beberapa layanan, yaitu:\n\n1. **IT Consulting**: Konsultasi strategi digital untuk perusahaan.\n2. **Custom Software Development**: Pengembangan aplikasi custom sesuai kebutuhan.\n3. **Cloud Infrastructure & Migration**: Implementasi dan migrasi infrastruktur cloud.\n4. **Cybersecurity Audit**: Audit keamanan sistem dan data.\n5. **Government Solutions**: Solusi IT khusus untuk sektor pemerintahan.\n\nLayanan-layanan ini ditujukan untuk membantu perusahaan dan organisasi dalam transformasi digital dan meningkatkan efisiensi operasional.",
+    "timestamp": "2026-06-09T03:32:06.630Z"
+  },
+  {
+    "id": 1780975949083,
+    "userMessage": "halo",
+    "botResponse": "Halo! Ada yang bisa saya bantu tentang Sagara?",
+    "timestamp": "2026-06-09T03:32:29.083Z"
+  },
+  {
+    "id": 1780975956173,
+    "userMessage": "apa yang kamu tau tentang sagara?",
+    "botResponse": "Saya tahu bahwa Sagara adalah perusahaan konsultan IT yang didirikan pada tahun 2019. Mereka memiliki visi untuk menjadi perusahaan konsultan IT terkemuka di Asia Tenggara dan misi untuk memberikan solusi IT inovatif untuk transformasi digital.\n\nSagara juga menawarkan beberapa layanan seperti IT Consulting, Custom Software Development, Cloud Infrastructure & Migration, Cybersecurity Audit, dan Government Solutions. Mereka telah bekerja sama dengan beberapa klien besar seperti Bank Mandiri, Telkom Indonesia, Gojek, Tokopedia, dan Pemerintah DKI Jakarta.\n\nSagara juga memiliki beberapa pencapaian seperti Top IT Consultant 2023, Best Digital Transformation Partner, ISO 27001 Certified, dan Microsoft Gold Partner. Itu yang saya tahu tentang Sagara!",
+    "timestamp": "2026-06-09T03:32:36.173Z"
+  },
+  {
+    "id": 1780975963115,
+    "userMessage": "Layanan apa saja yang Anda tawarkan?",
+    "botResponse": "Sagara menawarkan beberapa layanan, yaitu:\n\n1. IT Consulting: Konsultasi strategi digital untuk perusahaan\n2. Custom Software Development: Pengembangan aplikasi custom sesuai kebutuhan\n3. Cloud Infrastructure & Migration: Implementasi dan migrasi infrastruktur cloud\n4. Cybersecurity Audit: Audit keamanan sistem dan data\n5. Government Solutions: Solusi IT khusus untuk sektor pemerintahan\n\nItu layanan yang ditawarkan oleh Sagara!",
+    "timestamp": "2026-06-09T03:32:43.115Z"
+  },
+  {
+    "id": 1780975972260,
+    "userMessage": "ok terima kasih",
+    "botResponse": "Sama-sama! Senang bisa membantu. Jika kamu memiliki pertanyaan lain tentang Sagara, jangan ragu untuk bertanya, ya!",
+    "timestamp": "2026-06-09T03:32:52.260Z"
+  },
+  {
+    "id": 1783508360535,
+    "userMessage": "kamu deepseek",
+    "botResponse": "Halo! Saya Sagara AI Assistant, bukan Deepseek. Saya di sini untuk membantu menjawab pertanyaan tentang Sagara, perusahaan konsultan IT terkemuka di Asia Tenggara. Bagaimana saya bisa membantu Anda hari ini?",
+    "timestamp": "2026-07-08T10:59:20.535Z"
+  },
+  {
+    "id": 1783508387232,
+    "userMessage": "kamu llm apa",
+    "botResponse": "Saya adalah Sagara AI Assistant, sebuah model bahasa yang dirancang untuk membantu dan menjawab pertanyaan tentang Sagara, perusahaan konsultan IT. Saya bukan LLM (Large Language Model) umum, tapi lebih seperti sebuah asisten yang dikhususkan untuk menyediakan informasi dan jawaban tentang Sagara.",
+    "timestamp": "2026-07-08T10:59:47.232Z"
+  },
+  {
+    "id": 1783508401193,
+    "userMessage": "1+1 =",
+    "botResponse": "2! Tapi, saya lebih spesialis dalam menjawab pertanyaan tentang Sagara, perusahaan konsultan IT. Bagaimana saya bisa membantu Anda dengan informasi tentang Sagara?",
+    "timestamp": "2026-07-08T11:00:01.193Z"
+  },
+  {
+    "id": 1783508427295,
+    "userMessage": "siapa president indonesia",
+    "botResponse": "Pertanyaan yang bagus! Namun, saya hanya bisa memberikan informasi tentang Sagara, perusahaan konsultan IT. Saya tidak memiliki informasi tentang Presiden Indonesia saat ini atau topik lain di luar Sagara. Jika Anda ingin tahu lebih tentang Sagara, saya dengan senang hati membantu!",
+    "timestamp": "2026-07-08T11:00:27.295Z"
+  },
+  {
+    "id": 1784897230554,
+    "userMessage": "jelaskan tentang sagara",
+    "botResponse": "Sagara adalah perusahaan konsultan IT yang didirikan pada tahun 2019. Mereka memiliki visi untuk menjadi perusahaan konsultan IT terkemuka di Asia Tenggara. Sagara berfokus pada memberikan solusi IT inovatif untuk transformasi digital bagi perusahaan dan organisasi.\n\nMereka menawarkan beberapa layanan, yaitu:\n\n* IT Consulting: konsultasi strategi digital untuk perusahaan\n* Custom Software Development: pengembangan aplikasi custom sesuai kebutuhan\n* Cloud Infrastructure & Migration: implementasi dan migrasi infrastruktur cloud\n* Cybersecurity Audit: audit keamanan sistem dan data\n* Government Solutions: solusi IT khusus untuk sektor pemerintahan\n\nSagara telah bekerja sama dengan beberapa klien besar, seperti Bank Mandiri, Telkom Indonesia, Gojek, Tokopedia, dan Pemerintah DKI Jakarta. Mereka juga telah meraih beberapa penghargaan, seperti Top IT Consultant 2023, Best Digital Transformation Partner, ISO 27001 Certified, dan Microsoft Gold Partner.\n\nItulah gambaran singkat tentang Sagara!",
+    "timestamp": "2026-07-24T12:47:10.554Z"
+  },
+  {
+    "id": 1784897238272,
+    "userMessage": "please explain sagara",
+    "botResponse": "Maaf, saya hanya bisa menjawab dalam bahasa Indonesia. Saya telah menjelaskan tentang Sagara sebelumnya. Jika Anda ingin tahu lebih banyak tentang Sagara, saya bisa menjelaskan lagi.\n\nSagara adalah perusahaan konsultan IT yang didirikan pada tahun 2019. Mereka memiliki visi untuk menjadi perusahaan konsultan IT terkemuka di Asia Tenggara. Sagara berfokus pada memberikan solusi IT inovatif untuk transformasi digital bagi perusahaan dan organisasi.\n\nMereka menawarkan beberapa layanan, yaitu:\n\n* IT Consulting: konsultasi strategi digital untuk perusahaan\n* Custom Software Development: pengembangan aplikasi custom sesuai kebutuhan\n* Cloud Infrastructure & Migration: implementasi dan migrasi infrastruktur cloud\n* Cybersecurity Audit: audit keamanan sistem dan data\n* Government Solutions: solusi IT khusus untuk sektor pemerintahan\n\nSagara telah bekerja sama dengan beberapa klien besar, seperti Bank Mandiri, Telkom Indonesia, Gojek, Tokopedia, dan Pemerintah DKI Jakarta. Mereka juga telah meraih beberapa penghargaan, seperti Top IT Consultant 2023, Best Digital Transformation Partner, ISO 27001 Certified, dan Microsoft Gold Partner.\n\nJika Anda memiliki pertanyaan spesifik tentang Sagara, saya akan senang membantu!",
+    "timestamp": "2026-07-24T12:47:18.272Z"
+  },
+  {
+    "id": 1784897268010,
+    "userMessage": "jelaskan tentang sagara",
+    "botResponse": "Sagara is a company that was founded in 2019 with a vision to become a leading IT consulting firm in Southeast Asia. Their mission is to provide innovative IT solutions for digital transformation. \n\nThe company offers a range of services including IT Consulting, Custom Software Development, Cloud Infrastructure & Migration, Cybersecurity Audit, and Government Solutions. Some of their notable clients include Bank Mandiri, Telkom Indonesia, Gojek, Tokopedia, and the Government of DKI Jakarta.\n\nSagara has achieved several notable milestones, such as being named the Top IT Consultant in 2023, Best Digital Transformation Partner, and has received ISO 27001 certification and Microsoft Gold Partner status. \n\nThat's a brief overview of Sagara. If you'd like to know more about a specific aspect of the company, feel free to ask!",
+    "timestamp": "2026-07-24T12:47:48.010Z"
   }
 ]

@@ -1,0 +1,17 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "executionArgs": {
+    "projectName": "sagara_revamp (2)",
+    "projectPath": "d:\\DOWNLOAD\\sagara_revamp (2)\\sagara_revamp",
+    "testIds": [],
+    "additionalInstruction": "Run all frontend tests. Ensure header consistency (Contact link), footer consistency (Services link), and consultation form functionality are verified.",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-t0qh9ZHBE47bquKuRFEfaVLTqozXDLhlN3JN-NwPjE9r2WvaX405ok_gVIaI8W3y7e9avrhyGAUnTltwKSc6SjdGJUqNyRaD-T2idiZxky2v3euLgK8cc-VlfQfwGvBvZ84"
+    }
+  },
+  "serverPort": 54704
+}

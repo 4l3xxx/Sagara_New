@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
 
+<html class="light" lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Sagara - Careers</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sagara - Careers</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -21,7 +19,7 @@
             }
         }
     </script>
-    <style>
+<style>
         .nav-link-active {
             color: #137fec !important;
             position: relative;
@@ -48,12 +46,56 @@
             box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
         }
     </style>
+<!-- Theme Script -->
+<script>
+        function initTheme() {
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+            }
+        }
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateThemeIcon();
+        }
+        function updateThemeIcon() {
+            const icons = document.querySelectorAll('.theme-icon-display');
+            const isDark = document.documentElement.classList.contains('dark');
+            icons.forEach(icon => {
+                icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+            });
+        }
+        initTheme();
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
 </head>
-
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display">
-
-    <script>
-        function switchLanguage(lang) {
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display pt-20">
+<script>
+        // Mobile Menu Toggle
+            document.addEventListener('DOMContentLoaded', () => {
+                const mobileNavBtn = document.getElementById('mobileNavBtn');
+                const mobileNavMenu = document.getElementById('mobileNavMenu');
+                if(mobileNavBtn && mobileNavMenu) {
+                    mobileNavBtn.addEventListener('click', () => {
+                        mobileNavMenu.classList.toggle('hidden');
+                    });
+                }
+            });
+            
+            function switchLanguage(lang) {
             localStorage.setItem('language', lang);
             document.querySelectorAll('[data-lang]').forEach(el => {
                 if (el.getAttribute('data-lang') === lang) el.classList.remove('hidden');
@@ -69,130 +111,133 @@
                 if (lang === 'en') { btnEnMobile.classList.add('text-primary'); btnEnMobile.classList.remove('text-slate-500'); btnIdMobile.classList.remove('text-primary'); btnIdMobile.classList.add('text-slate-500'); }
                 else { btnIdMobile.classList.add('text-primary'); btnIdMobile.classList.remove('text-slate-500'); btnEnMobile.classList.remove('text-primary'); btnEnMobile.classList.add('text-slate-500'); }
             }
+            if (typeof loadJobs === 'function') {
+                loadJobs();
+            }
         }
         document.addEventListener('DOMContentLoaded', () => { const lang = localStorage.getItem('language') || 'en'; switchLanguage(lang); });
     </script>
-
-    <!-- Navigation -->
-    <nav
-        class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <a class="flex items-center gap-3" href="index.html">
-                    <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-10 w-auto rounded-lg"
-                        onerror="this.style.display='none'">
-                    <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<a class="flex items-center gap-3" href="index.html">
+<img alt="Sagara Logo" class="h-10 w-auto rounded-lg" onerror="this.style.display='none'" src="/assets/images/sagara_tech_logo.jpg"/>
+<h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara
                     </h2>
-                </a>
-                <div class="hidden md:flex flex-1 justify-end items-center gap-8">
-                    <div class="flex items-center gap-8">
-                        <a data-lang="en"
-                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="index.html">Home</a>
-                        <a data-lang="id"
-                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="index.html">Beranda</a>
-                        <a data-lang="en"
-                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="services.html">Services</a>
-                        <a data-lang="id"
-                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="services.html">Layanan</a>
-                        <a data-lang="en"
-                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="portfolio.html">Portfolio</a>
-                        <a data-lang="id"
-                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="portfolio.html">Portofolio</a>
-                        <a data-lang="en"
-                            class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="careers.html">Careers</a>
-                        <a data-lang="id"
-                            class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="careers.html">Karir</a>
-                        <a data-lang="en"
-                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="about.html">About Us</a>
-                        <a data-lang="id"
-                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="about.html">Tentang Kami</a>
-                        <a data-lang="en"
-                            class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="contact.html">Contact</a>
-                        <a data-lang="id"
-                            class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold"
-                            href="contact.html">Kontak</a>
-                    </div>
-                    <div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
-                        <button onclick="switchLanguage('id')"
-                            class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer"
-                            id="btn-id">ID</button>
-                        <span class="text-slate-300">|</span>
-                        <button onclick="switchLanguage('en')" class="font-bold text-sm text-primary cursor-pointer"
-                            id="btn-en">EN</button>
-                    </div>
-                    <a data-lang="en"
-                        class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105"
-                        href="contact.html">Consult Now</a>
-                    <a data-lang="id"
-                        class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105"
-                        href="contact.html">Konsultasi</a>
-                </div>
-                <div class="md:hidden flex items-center gap-4">
-                    <div class="flex items-center gap-2">
-                        <button onclick="switchLanguage('id')"
-                            class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile">ID</button>
-                        <span class="text-slate-300 text-xs">|</span>
-                        <button onclick="switchLanguage('en')" class="font-bold text-xs text-primary"
-                            id="btn-en-mobile">EN</button>
-                    </div>
-                    <button class="text-slate-700 dark:text-white"><span
-                            class="material-symbols-outlined">menu</span></button>
-                </div>
-            </div>
-        </div>
-    </nav>
+</a>
+<div class="hidden md:flex flex-1 justify-end items-center gap-8">
+<div class="flex items-center gap-8">
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="index.html">Home</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="index.html">Beranda</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="services.html">Services</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="services.html">Layanan</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="portfolio.html">Portfolio</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="portfolio.html">Portofolio</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="blog.html">Blog</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="blog.html">Blog</a>
+<a class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="careers.html">Careers</a>
+<a class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="careers.html">Karir</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="about.html">About Us</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="about.html">Tentang Kami</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="contact.html">Contact</a>
+<a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="contact.html">Kontak</a>
+</div>
+<!-- Theme Toggle Button -->
+<button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
+<span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
+</button>
+<div class="flex items-center gap-2 border-r border-slate-200 dark:border-slate-700 pr-5 mr-1">
+<button class="font-bold text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer" id="btn-id" onclick="switchLanguage('id')">ID</button>
+<span class="text-slate-300">|</span>
+<button class="font-bold text-sm text-primary cursor-pointer" id="btn-en" onclick="switchLanguage('en')">EN</button>
+</div>
+<a class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" data-lang="en" href="contact.html">Consult Now</a>
+<a class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" data-lang="id" href="contact.html">Konsultasi</a>
+</div>
+<div class="md:hidden flex items-center gap-4">
+<!-- Theme Toggle Button (Mobile) -->
+<button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
+<span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
+</button>
+<div class="flex items-center gap-2">
+<button class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile" onclick="switchLanguage('id')">ID</button>
+<span class="text-slate-300 text-xs">|</span>
+<button class="font-bold text-xs text-primary" id="btn-en-mobile" onclick="switchLanguage('en')">EN</button>
+</div>
+<button id="mobileNavBtn" class="text-slate-700 dark:text-white p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</div>
 
-    <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-primary/10 to-transparent py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white mb-6">Join Our Team</h1>
-            <p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">Build the future with us. We're
-                looking for passionate individuals to join our growing team.</p>
-        </div>
-    </section>
+<!-- Mobile Menu Dropdown -->
+<div id="mobileNavMenu" class="hidden md:hidden absolute top-full left-0 w-full bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 shadow-lg py-4 px-6 flex flex-col gap-4">
+    <a class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="en" href="index.html">Home</a>
+    <a class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="id" href="index.html">Beranda</a>
+    <a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="en" href="services.html">Services</a>
+    <a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="id" href="services.html">Layanan</a>
+    <a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="en" href="portfolio.html">Portfolio</a>
+    <a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="id" href="portfolio.html">Portofolio</a>
+    <a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="en" href="blog.html">Blog</a>
+    <a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="id" href="blog.html">Blog</a>
+    <a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="en" href="careers.html">Careers</a>
+    <a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="id" href="careers.html">Karir</a>
+    <a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="en" href="about.html">About Us</a>
+    <a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="id" href="about.html">Tentang Kami</a>
+    <a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="en" href="contact.html">Contact</a>
+    <a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="id" href="contact.html">Kontak</a>
+    <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+        <a class="block text-center bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all" data-lang="en" href="contact.html">Consult Now</a>
+        <a class="hidden block text-center bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all" data-lang="id" href="contact.html">Konsultasi</a>
+    </div>
+</div>
 
-    <!-- Jobs Grid -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div id="jobsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="text-center py-20 col-span-3">Loading jobs...</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <img src="/assets/images/sagara_tech_logo.jpg" alt="Sagara Logo" class="h-8 w-auto rounded-lg"
-                        onerror="this.style.display='none'">
-                    <span class="text-lg font-bold text-slate-900 dark:text-white">Sagara</span>
-                </div>
-                <p class="text-sm text-slate-500 dark:text-slate-400">© 2024 Sagara Tech. All rights reserved.</p>
-                <div class="flex gap-6 text-sm text-gray-500 dark:text-gray-400">
-                    <a class="hover:text-primary transition-colors" href="index.html">Home</a>
-                    <a class="hover:text-primary transition-colors" href="services.html">Services</a>
-                    <a class="hover:text-primary transition-colors" href="careers.html">Careers</a>
-                    <a class="hover:text-primary transition-colors" href="blog.html">Blog</a>
-                    <a class="hover:text-primary transition-colors" href="contact.html">Contact</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="/js/careers.js"></script>
+</nav>
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-primary/10 to-transparent py-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white mb-6">
+<span data-lang="en">Join Our Team</span>
+<span class="hidden" data-lang="id">Bergabung dengan Tim Kami</span>
+</h1>
+<p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+<span data-lang="en">Build the future with us. We're looking for passionate individuals to join our growing team.</span>
+<span class="hidden" data-lang="id">Bangun masa depan bersama kami. Kami mencari individu yang penuh semangat untuk bergabung dengan tim kami yang terus berkembang.</span>
+</p>
+</div>
+</section>
+<!-- Jobs Grid -->
+<section class="py-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="jobsGrid">
+<div class="text-center py-20 col-span-3">Loading jobs...</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-2">
+<img alt="Sagara Logo" class="h-8 w-auto rounded-lg" onerror="this.style.display='none'" src="/assets/images/sagara_tech_logo.jpg"/>
+<span class="text-lg font-bold text-slate-900 dark:text-white">Sagara</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400">
+<span data-lang="en">© 2024 Sagara Tech. All rights reserved.</span>
+<span class="hidden" data-lang="id">© 2024 Sagara Tech. Hak cipta dilindungi undang-undang.</span>
+</p>
+<div class="flex gap-6 text-sm text-gray-500 dark:text-gray-400">
+<a class="hover:text-primary transition-colors" href="index.html"><span data-lang="en">Home</span><span class="hidden" data-lang="id">Beranda</span></a>
+<a class="hover:text-primary transition-colors" href="services.html"><span data-lang="en">Services</span><span class="hidden" data-lang="id">Layanan</span></a>
+<a class="hover:text-primary transition-colors" href="careers.html"><span data-lang="en">Careers</span><span class="hidden" data-lang="id">Karir</span></a>
+<a class="hover:text-primary transition-colors" href="blog.html"><span data-lang="en">Blog</span><span class="hidden" data-lang="id">Blog</span></a>
+<a class="hover:text-primary transition-colors" href="contact.html"><span data-lang="en">Contact</span><span class="hidden" data-lang="id">Kontak</span></a>
+</div>
+</div>
+</div>
+</footer>
+<script src="/js/careers.js"></script>
 </body>
-
 </html>
