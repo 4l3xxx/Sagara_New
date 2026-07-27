@@ -1500,8 +1500,13 @@
                     </div>
                     <div>
                         <label id="lblPortTimeline" class="block text-sm font-semibold text-slate-700 mb-2">Waktu Pengerjaan</label>
-                        <input type="text" id="port-timeline" required placeholder="e.g. 6 months"
+                        <select id="port-timeline" required
                             class="w-full border border-slate-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="< 3 Bulan">&lt; 3 Bulan</option>
+                            <option value="3 - 6 Bulan">3 - 6 Bulan</option>
+                            <option value="6 - 12 Bulan">6 - 12 Bulan</option>
+                            <option value="> 1 Tahun">&gt; 1 Tahun</option>
+                        </select>
                     </div>
                     <div>
                         <label id="lblPortCaseStudy" class="block text-sm font-semibold text-slate-700 mb-2">Case Study URL</label>
@@ -1535,9 +1540,31 @@
                             class="w-full border border-slate-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-primary focus:border-primary">
                     </div>
                     <div>
-                        <label id="lblPortTech" class="block text-sm font-semibold text-slate-700 mb-2">Teknologi (Pemisah Koma)</label>
-                        <input type="text" id="port-technologies" required placeholder="e.g. React, Node.js, PostgreSQL"
-                            class="w-full border border-slate-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                        <label id="lblPortTech" class="block text-sm font-semibold text-slate-700 mb-2">Teknologi <span class="text-xs font-normal text-slate-500">(Tahan CTRL/CMD untuk pilih banyak)</span></label>
+                        <select id="port-technologies" required multiple
+                            class="w-full border border-slate-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-primary focus:border-primary h-32 custom-scrollbar">
+                            <option value="React">React</option>
+                            <option value="Node.js">Node.js</option>
+                            <option value="PostgreSQL">PostgreSQL</option>
+                            <option value="Python">Python</option>
+                            <option value="MySQL">MySQL</option>
+                            <option value="Docker">Docker</option>
+                            <option value="AWS">AWS</option>
+                            <option value="PHP">PHP</option>
+                            <option value="Laravel">Laravel</option>
+                            <option value="Vue.js">Vue.js</option>
+                            <option value="Flutter">Flutter</option>
+                            <option value="Kotlin">Kotlin</option>
+                            <option value="Swift">Swift</option>
+                            <option value="Java">Java</option>
+                            <option value="C#">C#</option>
+                            <option value="Next.js">Next.js</option>
+                            <option value="Express">Express</option>
+                            <option value="Go">Go</option>
+                            <option value="MongoDB">MongoDB</option>
+                            <option value="Redis">Redis</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                        </select>
                     </div>
                 </div>
 
@@ -1950,7 +1977,7 @@
                 lblPortDesc: "Description",
                 lblPortTestimonial: "Testimonial",
                 lblPortAuthor: "Testimonial Author",
-                lblPortTech: "Technologies (Comma separated)"
+                lblPortTech: "Technologies (Hold CTRL to select multiple)"
             },
             id: {
                 menuDashboard: "Beranda",
@@ -2043,7 +2070,7 @@
                 lblPortDesc: "Deskripsi",
                 lblPortTestimonial: "Testimoni",
                 lblPortAuthor: "Penulis Testimoni",
-                lblPortTech: "Teknologi (Pemisah Koma)"
+                lblPortTech: "Teknologi (Tahan CTRL untuk pilih banyak)"
             }
         };
 
@@ -3516,13 +3543,13 @@
             document.getElementById('port-title').value = '';
             document.getElementById('port-subtitle').value = '';
             document.getElementById('port-industry').value = 'Healthcare';
-            document.getElementById('port-timeline').value = '';
+            document.getElementById('port-timeline').value = '< 3 Bulan';
             document.getElementById('port-case-study-url').value = '';
             document.getElementById('port-impact').value = '';
             document.getElementById('port-desc').value = '';
             document.getElementById('port-testimonial').value = '';
             document.getElementById('port-author').value = '';
-            document.getElementById('port-technologies').value = '';
+            Array.from(document.getElementById('port-technologies').options).forEach(opt => opt.selected = false);
             document.getElementById('port-is-featured').checked = false;
             document.getElementById('port-img-preview').src = 'https://placehold.co/100x100';
             document.getElementById('port-image-url').value = '';
@@ -3549,7 +3576,8 @@
             document.getElementById('port-testimonial').value = isEn ? (port.testimonial || port.testimonialId) : (port.testimonialId || port.testimonial);
             
             document.getElementById('port-author').value = port.author || '';
-            document.getElementById('port-technologies').value = Array.isArray(port.technologies) ? port.technologies.join(', ') : port.technologies || '';
+            const techs = Array.isArray(port.technologies) ? port.technologies : (port.technologies ? port.technologies.split(',').map(t=>t.trim()) : []);
+            Array.from(document.getElementById('port-technologies').options).forEach(opt => opt.selected = techs.includes(opt.value));
             document.getElementById('port-is-featured').checked = port.is_featured || false;
             document.getElementById('port-img-preview').src = port.image || 'https://placehold.co/100x100';
             document.getElementById('port-image-url').value = port.image || '';
@@ -3594,19 +3622,57 @@
             const selectedIndustry = document.getElementById('port-industry').value;
             const industryKey = selectedIndustry.toLowerCase().replace(/\s+/g, '-');
 
-            // 2. Prepare payload sending only single fields (without *Id parameters) to trigger automatic backend translation
+            const titleInput = document.getElementById('port-title').value;
+            const subtitleInput = document.getElementById('port-subtitle').value;
+            const impactInput = document.getElementById('port-impact').value;
+            const descInput = document.getElementById('port-desc').value;
+            const testimonialInput = document.getElementById('port-testimonial').value;
+
+            // Auto-translate fields
+            async function translateField(text, source, target) {
+                if (!text) return '';
+                try {
+                    const res = await fetchWithAuth('/api/admin/translate', {
+                        method: 'POST',
+                        body: JSON.stringify({ text, sourceLang: source, targetLang: target })
+                    });
+                    const data = await res.json();
+                    return data.translatedText || text;
+                } catch { return text; }
+            }
+
+            showLoading(currentLang === 'en' ? 'Translating content...' : 'Menerjemahkan konten...');
+            const isEn = currentLang === 'en';
+            const sourceLang = isEn ? 'en' : 'id';
+            const targetLang = isEn ? 'id' : 'en';
+
+            const [
+                titleTrans, subtitleTrans, impactTrans, descTrans, testimonialTrans
+            ] = await Promise.all([
+                translateField(titleInput, sourceLang, targetLang),
+                translateField(subtitleInput, sourceLang, targetLang),
+                translateField(impactInput, sourceLang, targetLang),
+                translateField(descInput, sourceLang, targetLang),
+                translateField(testimonialInput, sourceLang, targetLang)
+            ]);
+
             const payload = {
-                title: document.getElementById('port-title').value,
-                description: document.getElementById('port-subtitle').value,
+                title: isEn ? titleInput : titleTrans,
+                titleId: isEn ? titleTrans : titleInput,
+                description: isEn ? subtitleInput : subtitleTrans,
+                descriptionId: isEn ? subtitleTrans : subtitleInput,
                 industry: selectedIndustry,
                 industryKey: industryKey,
                 timeline: document.getElementById('port-timeline').value,
                 case_study_url: document.getElementById('port-case-study-url').value,
-                impact: document.getElementById('port-impact').value,
-                fullDescription: document.getElementById('port-desc').value,
-                testimonial: document.getElementById('port-testimonial').value,
+                impact: isEn ? impactInput : impactTrans,
+                impactId: isEn ? impactTrans : impactInput,
+                fullDescription: isEn ? descInput : descTrans,
+                fullDescriptionId: isEn ? descTrans : descInput,
+                testimonial: isEn ? testimonialInput : testimonialTrans,
+                testimonialId: isEn ? testimonialTrans : testimonialInput,
                 author: document.getElementById('port-author').value,
-                technologies: document.getElementById('port-technologies').value.split(',').map(t => t.trim()).filter(t => t),
+                technologies: Array.from(document.getElementById('port-technologies').selectedOptions).map(opt => opt.value),
                 is_featured: document.getElementById('port-is-featured').checked,
                 image: imageUrl
             };
