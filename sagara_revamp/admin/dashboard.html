@@ -3149,7 +3149,8 @@
                             timestamp: log.timestamp,
                             message_preview: log.message_preview,
                             submission_count: 1,
-                            confidence: log.confidence
+                            confidence: log.confidence,
+                            best_content_score: log.spam_score || 0
                         });
                     } else {
                         const existing = emailMap.get(email);
@@ -3157,14 +3158,20 @@
                         // Update ke timestamp terbaru dan pesan terbaru
                         existing.timestamp = log.timestamp;
                         existing.message_preview = log.message_preview;
+                        // Simpan skor konten tertinggi dari backend (keyword/context/etc),
+                        // bukan cuma dihitung ulang dari jumlah submission
+                        existing.best_content_score = Math.max(existing.best_content_score, log.spam_score || 0);
                     }
                 });
 
-                // Hitung spam score berdasarkan jumlah submission
-                // Rumus: (submission_count - 1) * 5, max 100
+                // Hitung spam score: gabungan dari frequency (jumlah submission) DAN
+                // skor konten asli dari backend (keyword spam, context mismatch, dll).
+                // Sebelumnya kolom ini cuma pakai frequency, jadi context-mismatch detection
+                // dari backend nggak pernah kelihatan di sini.
                 const groupedLogs = Array.from(emailMap.values()).map(item => {
-                    let calculated_score = (item.submission_count - 1) * 5;
-                    calculated_score = Math.min(calculated_score, 100); // maksimal 100%
+                    let frequency_score = (item.submission_count - 1) * 5;
+                    frequency_score = Math.min(frequency_score, 100);
+                    const calculated_score = Math.min(Math.max(frequency_score, item.best_content_score), 100);
 
                     // Tentukan confidence berdasarkan score
                     let confidence = 'low';
@@ -3178,8 +3185,8 @@
                     };
                 });
 
-                // Urutkan berdasarkan submission_count terbanyak atau score tertinggi
-                groupedLogs.sort((a, b) => b.spam_score - a.spam_score);
+                // Urutkan berdasarkan waktu terbaru (paling baru di atas), biar rapi & kronologis
+                groupedLogs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
                 // Hitung statistik
                 const totalUnique = groupedLogs.length;

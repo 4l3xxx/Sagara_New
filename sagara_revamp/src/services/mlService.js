@@ -269,8 +269,37 @@ const spamPatterns = [
   /(.)\1{5,}/g,
 ];
 
+// ─── Context-relevance keywords (per service_type, matches consultation form) ──
+const serviceContextKeywords = {
+  'Web development':                          ['website','web','landing page','frontend','backend','cms','toko online','e-commerce'],
+  'Mobile app development':                    ['aplikasi','apps','android','ios','mobile','app'],
+  'Digital transformation / custom software':  ['sistem','software','digital','transformasi','otomasi','custom','erp','platform'],
+  'IT outsourcing':                            ['tim developer','outsourcing','tenaga kerja','sdm it','staff augmentation','talent','tenaga it'],
+  'UI/UX design':                              ['desain','design','ui','ux','prototype','wireframe','tampilan','user experience'],
+  'Cloud Infrastructure & Migration':          ['cloud','server','migrasi','infrastruktur','aws','azure','gcp','hosting'],
+  'Cybersecurity Audit':                       ['keamanan','security','audit','penetration','vulnerability','hack','peretasan'],
+  'Government Solutions':                      ['pemerintah','pemda','dinas','instansi','layanan publik','e-government','kementerian'],
+};
+
+// Generic business/consultation words — if present, message is plausibly on-topic
+// even if it doesn't hit a service-specific keyword (e.g. "butuh bantuan untuk project kami").
+// Bilingual: the form and clients use both Indonesian and English ("I need consultation asap").
+const genericBusinessKeywords = [
+  'proyek','project','kerjasama','konsultasi','butuh','ingin','request','layanan','service','tim','budget','anggaran','develop','bangun','buat','solusi','bisnis','perusahaan',
+  'consultation','consult','need','help','discuss','interested','solution','company','business','urgent','asap','immediately','inquiry','plan','partnership','quote','proposal','team',
+];
+
+// Phrases that signal the message is about something entirely unrelated to IT consulting.
+// Kept to specific multi-word/spam-vertical phrases — plain words like "jual"/"beli" were dropped
+// because they're common in legitimate e-commerce/system requests ("sistem jual beli online").
+const offTopicKeywords = ['jual pulsa','jual followers','jual akun','beli followers','beli like','pinjaman online','obat kuat','cari jodoh','like dan subscribe','giveaway','arisan','investasi bodong','mlm','reseller','dropship','lowongan kerja part time','top up game'];
+
+// Informal chat markers — a real business inquiry can still be casually worded, so this only
+// adds weight when combined with an already-detected context mismatch, not on its own.
+const casualToneMarkers = ['gua ','gue ','elu ','njir','wkwk','anjay','lol','wkwkwk','cuy'];
+
 class SpamDetectionService {
-  detectSpam(text) {
+  detectSpam(text, options = {}) {
     const result = { isSpam: false, score: 0, reasons: [], confidence: 'low' };
     if (!text || text.length === 0) { result.isSpam = true; result.reasons.push('Empty message'); result.score = 100; return result; }
 
@@ -291,8 +320,12 @@ class SpamDetectionService {
       }
     });
 
-    if (text.length < 20)   { total += 15; result.reasons.push('Message too short'); }
-    else if (text.length > 2000) { total += 10; result.reasons.push('Message excessively long'); }
+    // "Too short" only makes sense for message bodies — real names are always short,
+    // so skip this check when checking a name field (options.isName).
+    if (!options.isName) {
+      if (text.length < 20)   { total += 15; result.reasons.push('Message too short'); }
+      else if (text.length > 2000) { total += 10; result.reasons.push('Message excessively long'); }
+    }
 
     const upRatio = (text.match(/[A-Z]/g) || []).length / (text.length || 1);
     if (upRatio > 0.5) { total += 15; result.reasons.push('Excessive uppercase'); }
@@ -307,6 +340,55 @@ class SpamDetectionService {
   quickCheck(text) {
     const { isSpam, score, confidence } = this.detectSpam(text);
     return { isSpam, score, confidence };
+  }
+
+  /**
+   * Flags messages whose content doesn't relate to the service_type the client selected
+   * (e.g. picking "Mobile app development" but writing about something unrelated).
+   * Rule-based, same style as detectSpam — no external NLP call needed.
+   */
+  checkContextRelevance(message, serviceType) {
+    const result = { score: 0, reasons: [] };
+    if (!message) return result;
+    const lower = message.toLowerCase();
+
+    // Clearly off-topic content (spam/promo phrases unrelated to IT consulting).
+    const hitOffTopic = offTopicKeywords.filter(kw => lower.includes(kw));
+    if (hitOffTopic.length) {
+      result.score += 35;
+      result.reasons.push(`Message content unrelated to consulting: "${hitOffTopic[0]}"`);
+    }
+
+    // Core signal: message has zero vocabulary connecting it to any business/service topic
+    // at all, while the client explicitly picked a service_type — e.g. asking to buy siomay
+    // under a "Digital transformation / custom software" request.
+    let mismatch = false;
+    const expectedKeywords = serviceContextKeywords[serviceType];
+    if (expectedKeywords) {
+      const matchesService = expectedKeywords.some(kw => lower.includes(kw));
+      const matchesGeneric = genericBusinessKeywords.some(kw => lower.includes(kw));
+      if (!matchesService && !matchesGeneric) {
+        mismatch = true;
+        result.score += 45;
+        result.reasons.push(`Message context doesn't match selected service "${serviceType}"`);
+      }
+    }
+
+    // Secondary boosters — only count when a mismatch was already found, so a casually-worded
+    // but genuine inquiry ("bro butuh sistem nih buat toko kita") isn't penalized just for tone.
+    if (mismatch) {
+      if (casualToneMarkers.some(kw => lower.includes(kw))) {
+        result.score += 15;
+        result.reasons.push('Casual/personal chat tone, not a business inquiry');
+      }
+      if (/[?!]{3,}/.test(message)) {
+        result.score += 10;
+        result.reasons.push('Excessive punctuation suggests casual chat, not a formal request');
+      }
+    }
+
+    result.score = Math.min(Math.round(result.score), 100);
+    return result;
   }
 
   getSpamStats(logs) {
@@ -331,8 +413,9 @@ module.exports = {
   generateRecommendations: ml.generateRecommendations.bind(ml),
   generateSummaryReport:  ml.generateSummaryReport.bind(ml),
   spamDetection: {
-    detectSpam:   spam.detectSpam.bind(spam),
-    quickCheck:   spam.quickCheck.bind(spam),
-    getSpamStats: spam.getSpamStats.bind(spam),
+    detectSpam:           spam.detectSpam.bind(spam),
+    quickCheck:            spam.quickCheck.bind(spam),
+    getSpamStats:          spam.getSpamStats.bind(spam),
+    checkContextRelevance: spam.checkContextRelevance.bind(spam),
   },
 };

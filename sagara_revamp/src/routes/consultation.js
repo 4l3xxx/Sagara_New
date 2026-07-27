@@ -58,17 +58,19 @@ function checkToxicConsultation({ message, full_name }, req) {
  * Runs spam detection and frequency limiting, logs every attempt.
  * Returns { finalScore, confidence, reasons }.
  */
-function runSpamChecks({ full_name, business_email, message, req }) {
-  let spamResult = { score: 0, reasons: [] };
-  let nameResult = { score: 0, reasons: [] };
+function runSpamChecks({ full_name, business_email, service_type, message, req }) {
+  let spamResult    = { score: 0, reasons: [] };
+  let nameResult    = { score: 0, reasons: [] };
+  let contextResult = { score: 0, reasons: [] };
 
   if (mlService.spamDetection) {
-    spamResult = mlService.spamDetection.detectSpam(message);
-    nameResult = mlService.spamDetection.detectSpam(full_name);
+    spamResult    = mlService.spamDetection.detectSpam(message);
+    nameResult    = mlService.spamDetection.detectSpam(full_name, { isName: true });
+    contextResult = mlService.spamDetection.checkContextRelevance(message, service_type) || { score: 0, reasons: [] };
   }
 
-  let reasons   = [...(spamResult.reasons || []), ...(nameResult.reasons || [])];
-  let baseScore = Math.max(spamResult.score || 0, nameResult.score || 0);
+  let reasons   = [...(spamResult.reasons || []), ...(nameResult.reasons || []), ...(contextResult.reasons || [])];
+  let baseScore = Math.max(spamResult.score || 0, nameResult.score || 0, contextResult.score || 0);
 
   // Frequency block: > 3 submissions from same email within 5 minutes
   let freqScore = 0;
@@ -90,25 +92,28 @@ function runSpamChecks({ full_name, business_email, message, req }) {
   const finalScore = Math.max(baseScore, freqScore);
   const confidence = finalScore >= 80 ? 'high' : finalScore >= 50 ? 'medium' : 'low';
 
-  // Always log the attempt
-  try {
-    const log = {
-      id:              Date.now(),
-      timestamp:       new Date().toISOString(),
-      name:            full_name,
-      email:           business_email,
-      message_preview: message.substring(0, 200),
-      spam_score:      finalScore,
-      reasons,
-      confidence,
-      ip_address:      req?.headers?.['x-forwarded-for'] || req?.ip || req?.connection?.remoteAddress || '',
-    };
-    let logs = JSON.parse(fs.readFileSync(SPAM_LOG_FILE, 'utf8'));
-    logs.unshift(log);
-    if (logs.length > 1000) logs = logs.slice(0, 1000);
-    fs.writeFileSync(SPAM_LOG_FILE, JSON.stringify(logs, null, 2));
-  } catch (err) {
-    console.error('[Consultation] Spam log write error:', err.message);
+  // Only log when something was actually flagged — a clean, fully on-context message
+  // (score 0) has nothing worth reviewing and shouldn't clutter the Spam Logs page.
+  if (finalScore > 0) {
+    try {
+      const log = {
+        id:              Date.now(),
+        timestamp:       new Date().toISOString(),
+        name:            full_name,
+        email:           business_email,
+        message_preview: message.substring(0, 200),
+        spam_score:      finalScore,
+        reasons,
+        confidence,
+        ip_address:      req?.headers?.['x-forwarded-for'] || req?.ip || req?.connection?.remoteAddress || '',
+      };
+      let logs = JSON.parse(fs.readFileSync(SPAM_LOG_FILE, 'utf8'));
+      logs.unshift(log);
+      if (logs.length > 1000) logs = logs.slice(0, 1000);
+      fs.writeFileSync(SPAM_LOG_FILE, JSON.stringify(logs, null, 2));
+    } catch (err) {
+      console.error('[Consultation] Spam log write error:', err.message);
+    }
   }
 
   return { finalScore, confidence, reasons };
@@ -133,9 +138,11 @@ router.post('/api/consultation', async (req, res) => {
       field:    toxicResult.field,
     });
 
-  const { finalScore, reasons } = runSpamChecks({ full_name, business_email, message, req });
+  const { finalScore, reasons } = runSpamChecks({ full_name, business_email, service_type, message, req });
   if (finalScore >= 80)
     return res.status(400).json({ error: 'Your message has been flagged as potential spam. Please revise your message and try again.', spam_score: finalScore, reasons });
+
+  const isSuspicious = finalScore >= 50;
 
   try {
     const consultations  = JSON.parse(fs.readFileSync(CONSULTATIONS_FILE, 'utf8'));
@@ -156,8 +163,10 @@ router.post('/api/consultation', async (req, res) => {
       sentiment:       sentiment.sentiment,
       sentiment_score: sentiment.score,
       nlp_category:    classification.type,
-      lead_score:      leadScore,
-      status:          'New',
+      lead_score:      isSuspicious ? leadScore * 0.5 : leadScore,
+      is_suspicious:   isSuspicious,
+      spam_score:      finalScore,
+      status:          isSuspicious ? 'Review' : 'New',
       created_at:      new Date().toISOString(),
     };
 
@@ -176,7 +185,10 @@ router.post('/api/consultation', async (req, res) => {
     ).catch(err => console.error('[Consultation] Postgres sync error:', err.message));
 
     res.json({
-      success: true, message: 'Consultation saved', data: entry,
+      success: true,
+      message: isSuspicious ? 'Consultation saved but marked for review due to suspicious content.' : 'Consultation saved',
+      warning: isSuspicious,
+      data: entry,
       ml_analysis: { sentiment, classification, lead_score: Math.round(leadScore * 100) },
     });
   } catch (err) {
@@ -204,7 +216,7 @@ router.post('/api/consultation/spam-protected', async (req, res) => {
       field:    toxicResult.field,
     });
 
-  const { finalScore } = runSpamChecks({ full_name, business_email, message, req });
+  const { finalScore } = runSpamChecks({ full_name, business_email, service_type, message, req });
   if (finalScore >= 80)
     return res.status(400).json({ error: 'Your message has been flagged as potential spam. Please revise your message and try again.', spam_score: finalScore });
 

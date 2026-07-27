@@ -10,9 +10,9 @@ const helmet  = require('helmet');
 const cors    = require('cors');
 const path    = require('path');
 
-const { initDatabase }  = require('./src/helpers/dbInit');
-const { initDataFiles } = require('./src/helpers/dataInit');
-const { PORT }          = require('./src/config/constants');
+const { initDatabase }  = require('./helpers/dbInit');
+const { initDataFiles } = require('./helpers/dataInit');
+const { PORT }          = require('./config/constants');
 
 const app = express();
 
@@ -21,23 +21,23 @@ app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // ── Route modules ─────────────────────────────────────────────────────────────
-app.use(require('./src/routes/health'));
-app.use(require('./src/routes/chat'));          // /api/chat  (toxic filter included)
-app.use(require('./src/routes/consultation'));  // /api/consultation
-app.use(require('./src/routes/blogs'));         // /api/blogs
-app.use(require('./src/routes/jobs'));          // /api/jobs
-app.use(require('./src/routes/portfolio'));     // /api/portfolio
-app.use(require('./src/routes/face'));          // /api/face
-app.use(require('./src/routes/spam'));          // /api/spam
-app.use(require('./src/routes/security'));      // /api/admin/security-overview
-app.use(require('./src/routes/admin'));         // /admin  +  /api/admin
+app.use(require('./routes/health'));
+app.use(require('./routes/chat'));          // /api/chat  (toxic filter included)
+app.use(require('./routes/consultation'));  // /api/consultation
+app.use(require('./routes/blogs'));         // /api/blogs
+app.use(require('./routes/jobs'));          // /api/jobs
+app.use(require('./routes/portfolio'));     // /api/portfolio
+app.use(require('./routes/face'));          // /api/face
+app.use(require('./routes/spam'));          // /api/spam
+app.use(require('./routes/security'));      // /api/admin/security-overview
+app.use(require('./routes/admin'));         // /admin  +  /api/admin
 
 // ── SPA fallback ──────────────────────────────────────────────────────────────
 app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public', 'index.html'))
+  res.sendFile(path.join(__dirname, '../public', 'index.html'))
 );
 
 // ── Boot sequence ─────────────────────────────────────────────────────────────

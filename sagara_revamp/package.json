@@ -2,10 +2,10 @@
   "name": "sagara-revamp",
   "version": "2.0.0",
   "description": "Sagara — Full-stack AI chatbot + IT consulting website powered by Groq",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon --ignore data/ --ignore public/uploads/ server.js",
+    "start": "node src/server.js",
+    "dev": "nodemon --ignore data/ --ignore public/uploads/ src/server.js",
     "db:check": "node scripts/check_db.js",
     "db:tables": "node scripts/list_all_tables.js",
     "db:sync": "node scripts/sync_db.js",

@@ -1,8 +1,8 @@
 # 🚀 Panduan Deployment Sagara Revamp (VPS Production)
 
-Dokumen ini berisi panduan lengkap untuk melakukan deploy sistem Sagara Revamp ke Virtual Private Server (VPS) produksi (seperti DigitalOcean, AWS, Linode, atau VPS Linux lainnya).
+Dokumen ini berisi panduan lengkap untuk menjalankan sistem Sagara Revamp, baik untuk tahap pengembangan di **Local/Komputer Sendiri** maupun *deploy* ke **Virtual Private Server (VPS)** produksi (seperti DigitalOcean, AWS, dll).
 
-Sistem ini dirancang 100% menggunakan **Docker** sehingga *environment* akan seragam dan terisolasi dari sistem utama VPS.
+Sistem ini dirancang 100% menggunakan **Docker** sehingga *environment* akan seragam dan terisolasi.
 
 ## 📋 Prasyarat Server (VPS)
 Pastikan VPS Anda (disarankan berbasis **Ubuntu 20.04 / 22.04**) sudah terinstal perangkat lunak berikut:
@@ -19,7 +19,7 @@ sudo sh get-docker.sh
 ---
 
 ## ⚙️ Langkah 1: Persiapan Repository & .env
-Masuk ke terminal VPS (via SSH), dan *clone* repository ini:
+Jika di VPS, masuk via SSH lalu *clone* repositori. Jika di lokal, buka terminal Anda:
 
 ```bash
 git clone <URL_REPOSITORY_ANDA>
@@ -42,18 +42,25 @@ ADMIN_1_PASS='$2b$10$g8C53ttQKIXE/O85x5l9MusmBPpkenTipvSPzjBIWsKdhinZV/LDq'
 
 ---
 
-## 🚀 Langkah 2: Menjalankan Aplikasi (Deployment)
+## 🚀 Langkah 2: Menjalankan Aplikasi
 
-Untuk lingkungan Production, kita akan menggunakan file konfigurasi khusus (`docker-compose.prod.yml`). 
-File ini telah dimodifikasi agar **Node.js berjalan di Port 80** (Port standar internet), sehingga web Anda bisa langsung diakses tanpa mengetik `:3000`. Selain itu, kebijakan `restart: always` sudah diterapkan agar server otomatis hidup ulang ketika VPS di-restart.
+Anda memiliki dua opsi untuk menjalankan aplikasi, tergantung lingkungannya:
 
-Jalankan perintah ini untuk melakukan Build dan Run secara *background* (Detached Mode):
+### Opsi A: Menjalankan di Lokal (Local Terminal)
+Gunakan perintah ini jika Anda sedang mengembangkan atau mengetes aplikasi di komputer sendiri (PC/Laptop). File ini akan menggunakan port `3000`.
 
 ```bash
-docker compose -f docker-compose.prod.yml up -d --build
+docker-compose up -d --build
 ```
 
-Docker akan mengunduh dan membangun (*build*) *image* PostgreSQL, Python NLP, dan Node.js. Tunggu beberapa menit hingga proses selesai.
+### Opsi B: Menjalankan di VPS (Production)
+Untuk Production, gunakan file konfigurasi khusus (`docker-compose.prod.yml`). File ini mem-binding **Node.js ke Port 80** (Port standar internet), sehingga web Anda bisa langsung diakses tanpa mengetik `:3000`.
+
+```bash
+docker-compose -f docker-compose.prod.yml up -d --build
+```
+
+Docker akan mengunduh dan membangun (*build*) *image* PostgreSQL, Python NLP, dan Node.js. Tunggu beberapa menit hingga selesai.
 
 ---
 
@@ -61,6 +68,11 @@ Docker akan mengunduh dan membangun (*build*) *image* PostgreSQL, Python NLP, da
 
 Setelah semua kontainer menyala, Anda bisa langsung mengakses aplikasi Anda:
 
+**Bila di Lokal (PC/Laptop):**
+- **Halaman Utama Publik:** `http://localhost:3000/`
+- **Dashboard Admin:** `http://localhost:3000/admin/login`
+
+**Bila di VPS Production:**
 - **Halaman Utama Publik:** `http://<ALAMAT_IP_VPS_ANDA>/`
 - **Dashboard Admin:** `http://<ALAMAT_IP_VPS_ANDA>/admin/login`
 
