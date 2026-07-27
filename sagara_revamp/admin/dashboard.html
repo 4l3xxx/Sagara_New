@@ -2562,11 +2562,38 @@
                     targetEl.textContent = whatsapp;
                     targetEl2.textContent = whatsapp;
                     
-                    const draftBody = `Halo ${clientName},\n\nTerima kasih telah menghubungi Sagara Technology. Kami telah menerima permintaan konsultasi Anda. Kapan Anda memiliki waktu luang untuk berdiskusi lebih lanjut via telepon atau meeting online?\n\nSalam,\nTim Sagara Technology`;
+                    let isEnglish = false;
+                    
+                    if (lead && lead.message) {
+                        const text = lead.message.toLowerCase();
+                        const engKeywords = ['i', 'my', 'want', 'need', 'looking for', 'project', 'development', 'app', 'website'];
+                        const indKeywords = ['saya', 'aku', 'mau', 'butuh', 'mencari', 'proyek', 'buat', 'bikin', 'ingin', 'kami', 'kita'];
+                        
+                        let engCount = 0;
+                        let indCount = 0;
+                        const words = text.split(/\s+/);
+                        words.forEach(word => {
+                            if (engKeywords.includes(word)) engCount++;
+                            if (indKeywords.includes(word)) indCount++;
+                        });
+                        if (engCount > indCount) isEnglish = true;
+                    }
                     
                     // Format whatsapp number: remove leading + or 0, ensure 62
                     let cleanWA = String(whatsapp).replace(/[^0-9]/g, '');
-                    if (cleanWA.startsWith('0')) cleanWA = '62' + cleanWA.substring(1);
+                    if (cleanWA.startsWith('0')) {
+                        cleanWA = '62' + cleanWA.substring(1);
+                    }
+                    
+                    // If country code is not Indonesia, assume English
+                    if (cleanWA && !cleanWA.startsWith('62')) {
+                        isEnglish = true;
+                    }
+
+                    const draftBodyID = `Halo ${clientName},\n\nTerima kasih telah menghubungi Sagara Technology. Kami telah menerima permintaan konsultasi Anda. Kapan Anda memiliki waktu luang untuk berdiskusi lebih lanjut via telepon atau meeting online?\n\nSalam,\nTim Sagara Technology`;
+                    const draftBodyEN = `Hello ${clientName},\n\nThank you for reaching out to Sagara Technology. We have received your consultation request. When would you be available for a further discussion via phone call or online meeting?\n\nBest regards,\nSagara Technology Team`;
+                    
+                    const draftBody = isEnglish ? draftBodyEN : draftBodyID;
                     
                     if (!cleanWA) {
                         showToast('Nomor WhatsApp tidak tersedia (data lama).', 'error');
