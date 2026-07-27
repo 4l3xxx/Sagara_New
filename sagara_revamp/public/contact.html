@@ -367,11 +367,23 @@
 <span data-lang="en">WhatsApp Number</span>
 <span class="hidden" data-lang="id">Nomor WhatsApp</span>
 </label>
-<div class="relative">
-<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<div class="relative flex">
+<select id="country_code" class="block w-[110px] pl-3 pr-8 py-3 border border-slate-200 dark:border-slate-600 rounded-l-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm border-r-0 focus:z-10" style="appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%239CA3AF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right .7rem top 50%; background-size: .65rem auto;">
+<option value="+62">🇮🇩 +62</option>
+<option value="+1">🇺🇸 +1</option>
+<option value="+44">🇬🇧 +44</option>
+<option value="+60">🇲🇾 +60</option>
+<option value="+65">🇸🇬 +65</option>
+<option value="+61">🇦🇺 +61</option>
+<option value="+81">🇯🇵 +81</option>
+<option value="+82">🇰🇷 +82</option>
+<option value="+86">🇨🇳 +86</option>
+<option value="+91">🇮🇳 +91</option>
+</select>
+<div class="absolute inset-y-0 left-[110px] pl-3 flex items-center pointer-events-none text-slate-400 z-20">
 <span class="material-symbols-outlined text-[20px]">call</span>
 </div>
-<input class="block w-full pl-10 pr-3 py-3 border-slate-200 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm" id="whatsapp_number" name="whatsapp_number" placeholder="+628..." required="" type="tel"/>
+<input class="block w-full pl-10 pr-3 py-3 border border-slate-200 dark:border-slate-600 rounded-r-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm border-l-0 focus:z-10" id="whatsapp_number" name="whatsapp_number" placeholder="8123456789" required="" type="tel"/>
 </div>
 <p class="text-xs text-slate-400 dark:text-slate-500">
 <span data-lang="en">Our consultant will chat with you via WhatsApp.</span>
@@ -552,7 +564,10 @@ Dikirim dari form konsultasi Sagara
             // Get form values
             const fullName = document.getElementById('fullname').value.trim();
             const email = document.getElementById('email').value.trim();
-            const whatsapp = document.getElementById('whatsapp_number').value.trim();
+            const countryCode = document.getElementById('country_code').value;
+            let whatsappRaw = document.getElementById('whatsapp_number').value.trim();
+            if(whatsappRaw.startsWith('0')) whatsappRaw = whatsappRaw.substring(1);
+            const whatsapp = countryCode + whatsappRaw;
             const service = document.getElementById('service').value;
             const message = document.getElementById('message').value.trim();
             
