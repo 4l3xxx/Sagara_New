@@ -36,6 +36,11 @@ services:
     environment:
       - PORT=3000
       - DATABASE_URL=postgres://postgres:password123@db:5432/sagara_revamp
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USER=consulsagara@gmail.com
+      - SMTP_PASS=ujiofkqodrhhhvzn
+      - SMTP_FROM=consulsagara@gmail.com
     env_file:
       - .env
     depends_on:
