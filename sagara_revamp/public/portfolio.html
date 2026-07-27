@@ -133,10 +133,67 @@
         let currentFilter = 'all';
         let portfolioItems = [];
         
+        const industryMeta = {
+            'Healthcare': { id: 'Kesehatan', icon: 'medical_services' },
+            'Government': { id: 'Pemerintah', icon: 'account_balance' },
+            'Smart City': { id: 'Kota Cerdas', icon: 'domain' },
+            'E-Commerce': { id: 'E-Commerce', icon: 'shopping_cart' },
+            'Education': { id: 'Edukasi', icon: 'school' },
+            'Finance': { id: 'Keuangan', icon: 'payments' },
+            'Retail': { id: 'Ritel', icon: 'store' },
+            'Logistics': { id: 'Logistik', icon: 'local_shipping' },
+            'Telecommunication': { id: 'Telekomunikasi', icon: 'cell_tower' },
+            'Manufacturing': { id: 'Manufaktur', icon: 'factory' },
+            'Media & Entertainment': { id: 'Media & Hiburan', icon: 'movie' },
+            'Real Estate': { id: 'Real Estat', icon: 'real_estate_agent' },
+            'Agriculture': { id: 'Agrikultur', icon: 'agriculture' },
+            'Energy': { id: 'Energi', icon: 'bolt' }
+        };
+
+        function renderFilters() {
+            const filterContainer = document.getElementById('filterContainer');
+            if (!filterContainer || portfolioItems.length === 0) return;
+            
+            const uniqueIndustries = [...new Set(portfolioItems.map(item => item.industry))];
+            
+            let filterHtml = `
+                <button class="filter-btn active flex h-9 items-center justify-center gap-x-2 rounded-full bg-[#111418] dark:bg-white text-white dark:text-[#111418] px-4 hover:opacity-90 transition-opacity whitespace-nowrap" data-filter="all" onclick="filterPortfolio('all')">
+                    <span class="material-symbols-outlined text-[18px]">check</span>
+                    <p class="text-sm font-medium">
+                        <span data-lang="en">All Industries</span>
+                        <span class="hidden" data-lang="id">Semua Industri</span>
+                    </p>
+                </button>
+            `;
+            
+            uniqueIndustries.forEach(industry => {
+                if (!industry) return;
+                const meta = industryMeta[industry] || { id: industry, icon: 'category' };
+                const sampleItem = portfolioItems.find(item => item.industry === industry);
+                const key = sampleItem ? sampleItem.industryKey : industry.toLowerCase().replace(/\s+/g, '-');
+                
+                filterHtml += `
+                <button class="filter-btn flex h-9 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-gray-800 border border-[#e5e7eb] dark:border-gray-700 text-[#111418] dark:text-gray-300 px-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors whitespace-nowrap" data-filter="${key}" onclick="filterPortfolio('${key}')">
+                    <span class="material-symbols-outlined text-[18px]">${meta.icon}</span>
+                    <p class="text-sm font-medium">
+                        <span data-lang="en">${industry}</span>
+                        <span class="hidden" data-lang="id">${meta.id}</span>
+                    </p>
+                </button>
+                `;
+            });
+            
+            filterContainer.innerHTML = filterHtml;
+            
+            const currentLang = localStorage.getItem('language') || 'id';
+            if (typeof switchLanguage === 'function') switchLanguage(currentLang);
+        }
+
         async function loadPortfolioData() {
             try {
                 const response = await fetch('/api/portfolio');
                 portfolioItems = await response.json();
+                renderFilters();
                 renderPortfolio();
                 filterPortfolio(currentFilter);
             } catch (err) {
@@ -239,9 +296,8 @@
             const description = lang === 'en' ? project.fullDescription : project.fullDescriptionId;
             const impact = lang === 'en' ? project.impact : project.impactId;
             const testimonial = lang === 'en' ? project.testimonial : project.testimonialId;
-            const industry = lang === 'en' ? project.industry : 
-                (project.industry === 'Healthcare' ? 'Kesehatan' : 
-                 project.industry === 'Government' ? 'Pemerintah' : 'Kota Cerdas');
+            const meta = industryMeta[project.industry] || { id: project.industry };
+            const industry = lang === 'en' ? project.industry : meta.id;
             
             const modalContent = `
                 <div class="modal-content">
@@ -298,9 +354,8 @@
                 const description = lang === 'en' ? item.description : item.descriptionId;
                 const impact = lang === 'en' ? item.impact : item.impactId;
                 const testimonial = lang === 'en' ? item.testimonial : item.testimonialId;
-                const industry = lang === 'en' ? item.industry : 
-                    (item.industry === 'Healthcare' ? 'Kesehatan' : 
-                     item.industry === 'Government' ? 'Pemerintah' : 'Kota Cerdas');
+                const meta = industryMeta[item.industry] || { id: item.industry };
+                const industry = lang === 'en' ? item.industry : meta.id;
                 
                 return `
                     <article class="project-card bg-white dark:bg-[#1a2632] rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800 group h-full" data-industry="${item.industryKey}" onclick="openModal(${item.id})">
@@ -472,35 +527,8 @@
 <span data-lang="en">Featured Projects</span>
 <span class="hidden" data-lang="id">Proyek Unggulan</span>
 </h2>
-<div class="flex gap-2 flex-wrap self-start md:self-center">
-<button class="filter-btn active flex h-9 items-center justify-center gap-x-2 rounded-full bg-[#111418] dark:bg-white text-white dark:text-[#111418] px-4 hover:opacity-90 transition-opacity" data-filter="all" onclick="filterPortfolio('all')">
-<span class="material-symbols-outlined text-[18px]">check</span>
-<p class="text-sm font-medium">
-<span data-lang="en">All Industries</span>
-<span class="hidden" data-lang="id">Semua Industri</span>
-</p>
-</button>
-<button class="filter-btn flex h-9 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-gray-800 border border-[#e5e7eb] dark:border-gray-700 text-[#111418] dark:text-gray-300 px-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" data-filter="healthcare" onclick="filterPortfolio('healthcare')">
-<span class="material-symbols-outlined text-[18px]">medical_services</span>
-<p class="text-sm font-medium">
-<span data-lang="en">Healthcare</span>
-<span class="hidden" data-lang="id">Kesehatan</span>
-</p>
-</button>
-<button class="filter-btn flex h-9 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-gray-800 border border-[#e5e7eb] dark:border-gray-700 text-[#111418] dark:text-gray-300 px-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" data-filter="government" onclick="filterPortfolio('government')">
-<span class="material-symbols-outlined text-[18px]">account_balance</span>
-<p class="text-sm font-medium">
-<span data-lang="en">Government</span>
-<span class="hidden" data-lang="id">Pemerintah</span>
-</p>
-</button>
-<button class="filter-btn flex h-9 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-gray-800 border border-[#e5e7eb] dark:border-gray-700 text-[#111418] dark:text-gray-300 px-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" data-filter="smartcity" onclick="filterPortfolio('smartcity')">
-<span class="material-symbols-outlined text-[18px]">domain</span>
-<p class="text-sm font-medium">
-<span data-lang="en">Smart City</span>
-<span class="hidden" data-lang="id">Kota Cerdas</span>
-</p>
-</button>
+<div id="filterContainer" class="flex gap-2 overflow-x-auto no-scrollbar w-full md:w-auto py-1 self-start md:self-center max-w-full">
+<!-- Dynamically populated by JS -->
 </div>
 </div>
 <!-- Project Grid -->
