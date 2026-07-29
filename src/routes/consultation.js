@@ -12,7 +12,7 @@ const emailService      = require('../services/emailService');
 const { CONSULTATIONS_FILE, SPAM_LOG_FILE } = require('../config/constants');
 const pool              = require('../config/database');
 
-const GMAIL_RE = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+const EMAIL_RE = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 // ─── Toxic content check (consultation fields) ───────────────────────────────
 /**
@@ -125,8 +125,8 @@ router.post('/api/consultation', async (req, res) => {
 
   if (!full_name || !business_email || !whatsapp_number || !service_type || !message)
     return res.status(400).json({ error: 'All fields required' });
-  if (!GMAIL_RE.test(business_email))
-    return res.status(400).json({ error: 'Email must be @gmail.com' });
+  if (!EMAIL_RE.test(business_email))
+    return res.status(400).json({ error: 'Email format is invalid' });
 
   // ── Toxic filter — blocks harmful language before any further processing ──
   const toxicResult = checkToxicConsultation({ message, full_name }, req);
@@ -203,8 +203,8 @@ router.post('/api/consultation/spam-protected', async (req, res) => {
 
   if (!full_name || !business_email || !service_type || !message)
     return res.status(400).json({ error: 'All fields required' });
-  if (!GMAIL_RE.test(business_email))
-    return res.status(400).json({ error: 'Email must be @gmail.com' });
+  if (!EMAIL_RE.test(business_email))
+    return res.status(400).json({ error: 'Email format is invalid' });
 
   // ── Toxic filter — blocks harmful language before any further processing ──
   const toxicResult = checkToxicConsultation({ message, full_name }, req);
