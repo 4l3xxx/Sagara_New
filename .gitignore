@@ -1,15 +1,31 @@
-# Root gitignore for Sagara project
-sagara_revamp/node_modules/
-sagara_revamp/.env
-sagara_revamp/.env.local
-sagara_revamp/.env.production
-sagara_revamp/*.log
-sagara_revamp/npm-debug.log*
-sagara_revamp/yarn-debug.log*
-sagara_revamp/yarn-error.log*
-sagara_revamp/.DS_Store
-sagara_revamp/data/
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+venv/
+.venv/
+env/
+.env/
+
+# OS
+.DS_Store
+Thumbs.db
 
 # TestSprite
-sagara_revamp/testsprite_tests/
-sagara_revamp/.testsprite/
+testsprite_tests/
+.testsprite/
