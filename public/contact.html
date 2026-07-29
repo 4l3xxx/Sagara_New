@@ -589,9 +589,32 @@ Dikirim dari form konsultasi Sagara
                 return;
             }
 
+            if (!/^[A-Za-z .\-]+$/.test(fullName)) {
+                SagaraToast.warning(lang === 'en' ? 'Name should only contain letters.' : 'Nama hanya boleh berisi huruf.');
+                return;
+            }
+
+            if (!/^[0-9\+\-\(\)\s]+$/.test(whatsappRaw)) {
+                SagaraToast.warning(lang === 'en' ? 'Phone should only contain numbers and symbols like + - ( ).' : 'Nomor HP hanya boleh berisi angka dan simbol + - ( ).');
+                return;
+            }
+            
+            const digitsOnly = whatsappRaw.replace(/[^0-9]/g, '');
+            if (digitsOnly.length < 9 || digitsOnly.length > 20) {
+                SagaraToast.warning(lang === 'en' ? 'Phone number must have 9 to 20 digits.' : 'Nomor HP harus memiliki 9 hingga 20 angka.');
+                return;
+            }
+
             // Email format validation
             if (!validateEmail(email)) {
                 SagaraToast.warning(lang === 'en' ? 'Please enter a valid email address.' : 'Mohon masukkan email yang valid.');
+                return;
+            }
+
+            const typoDomains = ['gmaial.com', 'gamil.com', 'gmai.com', 'gmail.co', 'gmail.con', 'yaho.com', 'yahoo.co', 'yaho.co.id'];
+            const emailDomain = email.split('@')[1];
+            if (emailDomain && typoDomains.includes(emailDomain.toLowerCase())) {
+                SagaraToast.warning(lang === 'en' ? 'Invalid email domain. Did you mean @gmail.com or @yahoo.com?' : 'Domain email salah ketik. Apakah maksud Anda @gmail.com atau @yahoo.com?');
                 return;
             }
 
