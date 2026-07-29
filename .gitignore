@@ -29,3 +29,6 @@ Thumbs.db
 # TestSprite
 testsprite_tests/
 .testsprite/
+
+# Old Leftover Data
+sagara_revamp/
