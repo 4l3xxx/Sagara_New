@@ -303,17 +303,17 @@
                             
                             <div>
                                 <label class="block text-sm font-semibold mb-1">${lang === 'en' ? 'Name' : 'Nama'}</label>
-                                <input type="text" id="applyName" required class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <input type="text" id="applyName" required pattern="^[A-Za-z .-]+$" title="${lang === 'en' ? 'Only letters, spaces, dots and hyphens are allowed' : 'Hanya huruf, spasi, titik, dan strip yang diperbolehkan'}" class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
                             </div>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-semibold mb-1">Email</label>
-                                    <input type="email" id="applyEmail" required class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <input type="email" id="applyEmail" required pattern="^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$" title="${lang === 'en' ? 'Please enter a valid email address (e.g. user@gmail.com, user@company.com)' : 'Masukkan alamat email yang valid (contoh: user@gmail.com, user@company.com)'}" class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold mb-1">${lang === 'en' ? 'Phone' : 'Nomor HP'}</label>
-                                    <input type="tel" id="applyPhone" required class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <input type="tel" id="applyPhone" required minlength="9" maxlength="20" pattern="^[0-9\\+\\-\\(\\)\\s]+$" title="${lang === 'en' ? 'Only numbers and phone symbols (+, -, ()) are allowed' : 'Hanya angka dan simbol telepon (+, -, ()) yang diperbolehkan'}" class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
                                 </div>
                             </div>
                             
@@ -326,7 +326,13 @@
 
                             <div>
                                 <label class="block text-sm font-semibold mb-1">${lang === 'en' ? 'Upload Portfolio / CV File (PDF, DOCX)' : 'Unggah File Portofolio / CV (PDF, DOCX)'}</label>
-                                <input type="file" id="applyPortfolioFile" accept=".pdf,.doc,.docx" class="w-full px-4 py-2 rounded-lg border dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <div class="flex items-center gap-3">
+                                    <input type="file" id="applyPortfolioFile" accept=".pdf,.doc,.docx" class="hidden">
+                                    <label for="applyPortfolioFile" class="cursor-pointer inline-block px-4 py-2 border rounded-lg bg-gray-100 dark:bg-slate-800 border-gray-300 dark:border-slate-700 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors text-sm font-semibold">
+                                        ${lang === 'en' ? 'Choose File' : 'Pilih File'}
+                                    </label>
+                                    <span id="fileNameDisplay" class="text-sm text-slate-500">${lang === 'en' ? 'No file chosen' : 'Tidak ada file dipilih'}</span>
+                                </div>
                             </div>
                             
                             
@@ -340,6 +346,14 @@
                 `;
 
                 setTimeout(() => {
+                    const fileInputEl = document.getElementById('applyPortfolioFile');
+                    if (fileInputEl) {
+                        fileInputEl.addEventListener('change', (e) => {
+                            const fileName = e.target.files[0] ? e.target.files[0].name : (lang === 'en' ? 'No file chosen' : 'Tidak ada file dipilih');
+                            document.getElementById('fileNameDisplay').textContent = fileName;
+                        });
+                    }
+
                     const form = document.getElementById('applyForm');
                     if (form) {
                         form.addEventListener('submit', async (e) => {
@@ -349,9 +363,40 @@
                             const linkInput = document.getElementById('applyPortfolio').value;
                             const fileInput = document.getElementById('applyPortfolioFile').files[0];
                             
+                            const nameVal = document.getElementById('applyName').value;
+                            const emailVal = document.getElementById('applyEmail').value;
+                            const phoneVal = document.getElementById('applyPhone').value;
+
+                            feedback.classList.remove('hidden');
+                            feedback.className = 'text-red-600 dark:text-red-400 font-semibold py-2';
+
+                            if (!/^[A-Za-z .\-]+$/.test(nameVal)) {
+                                feedback.textContent = lang === 'en' ? 'Name should only contain letters.' : 'Nama hanya boleh berisi huruf.';
+                                return;
+                            }
+                            if (!/^[0-9\+\-\(\)\s]+$/.test(phoneVal)) {
+                                feedback.textContent = lang === 'en' ? 'Phone should only contain numbers and symbols like + - ( ).' : 'Nomor HP hanya boleh berisi angka dan simbol + - ( ).';
+                                return;
+                            }
+                            
+                            const digitsOnly = phoneVal.replace(/[^0-9]/g, '');
+                            if (digitsOnly.length < 9 || digitsOnly.length > 20) {
+                                feedback.textContent = lang === 'en' ? 'Phone number must have 9 to 20 digits.' : 'Nomor HP harus memiliki 9 hingga 20 angka.';
+                                return;
+                            }
+                            if (!/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(emailVal)) {
+                                feedback.textContent = lang === 'en' ? 'Invalid email format.' : 'Format email tidak valid.';
+                                return;
+                            }
+                            
+                            const typoDomains = ['gmaial.com', 'gamil.com', 'gmai.com', 'gmail.co', 'gmail.con', 'yaho.com', 'yahoo.co', 'yaho.co.id'];
+                            const emailDomain = emailVal.split('@')[1];
+                            if (emailDomain && typoDomains.includes(emailDomain.toLowerCase())) {
+                                feedback.textContent = lang === 'en' ? 'Invalid email domain. Did you mean @gmail.com or @yahoo.com?' : 'Domain email salah ketik. Apakah maksud Anda @gmail.com atau @yahoo.com?';
+                                return;
+                            }
+
                             if (!linkInput && !fileInput) {
-                                feedback.classList.remove('hidden');
-                                feedback.className = 'text-red-600 dark:text-red-400 font-semibold py-2';
                                 feedback.textContent = lang === 'en' ? 'Please provide a link or upload a file.' : 'Harap berikan link portofolio atau unggah file CV.';
                                 return;
                             }

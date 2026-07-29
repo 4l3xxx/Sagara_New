@@ -1369,6 +1369,7 @@
                             <option value="Data Scientist">Data Scientist</option>
                             <option value="Other">Other (Custom)</option>
                         </select>
+                        <input type="text" id="job-title-custom" placeholder="Enter custom job title" class="hidden mt-2 w-full border border-slate-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-primary focus:border-primary">
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Location</label>
@@ -3388,6 +3389,8 @@
             document.getElementById('jobModalTitle').textContent = 'Add New Position';
             document.getElementById('job-id').value = '';
             document.getElementById('job-title').value = '';
+            document.getElementById('job-title-custom').value = '';
+            document.getElementById('job-title-custom').classList.add('hidden');
             document.getElementById('job-location').value = '';
             document.getElementById('job-type').value = 'Full-time';
             document.getElementById('job-salary').value = '';
@@ -3404,7 +3407,27 @@
         function openEditJobModal(job) {
             document.getElementById('jobModalTitle').textContent = 'Edit Position';
             document.getElementById('job-id').value = job.id;
-            document.getElementById('job-title').value = job.title;
+            
+            const titleSelect = document.getElementById('job-title');
+            const customInput = document.getElementById('job-title-custom');
+            let titleExists = false;
+            for (let i = 0; i < titleSelect.options.length; i++) {
+                if (titleSelect.options[i].value === job.title) {
+                    titleExists = true;
+                    break;
+                }
+            }
+
+            if (titleExists) {
+                titleSelect.value = job.title;
+                customInput.classList.add('hidden');
+                customInput.value = '';
+            } else {
+                titleSelect.value = 'Other';
+                customInput.classList.remove('hidden');
+                customInput.value = job.title;
+            }
+
             document.getElementById('job-location').value = job.location;
             document.getElementById('job-type').value = job.type;
             document.getElementById('job-salary').value = job.salary;
@@ -3427,8 +3450,18 @@
         async function saveJob(e) {
             e.preventDefault();
             const jobId = document.getElementById('job-id').value;
+            
+            let finalTitle = document.getElementById('job-title').value;
+            if (finalTitle === 'Other') {
+                finalTitle = document.getElementById('job-title-custom').value;
+                if (!finalTitle) {
+                    showToast('Harap isi judul pekerjaan custom', 'error');
+                    return;
+                }
+            }
+
             const payload = {
-                title: document.getElementById('job-title').value,
+                title: finalTitle,
                 location: document.getElementById('job-location').value,
                 type: document.getElementById('job-type').value,
                 salary: document.getElementById('job-salary').value,
@@ -4604,6 +4637,16 @@
 
         function handleJobTitleChange() {
             const title = document.getElementById('job-title').value;
+            const customInput = document.getElementById('job-title-custom');
+            
+            if (title === 'Other') {
+                customInput.classList.remove('hidden');
+                customInput.required = true;
+            } else {
+                customInput.classList.add('hidden');
+                customInput.required = false;
+            }
+
             if (jobTemplates[title]) {
                 document.getElementById('job-description').value = jobTemplates[title].desc;
                 document.getElementById('job-requirements').value = jobTemplates[title].reqs;
