@@ -39,7 +39,7 @@ services:
       - SMTP_HOST=smtp.gmail.com
       - SMTP_PORT=587
       - SMTP_USER=consulsagara@gmail.com
-      - SMTP_PASS=ujiofkqodrhhhvzn
+      - SMTP_PASS=lhzvytchszufhzqi
       - SMTP_FROM=consulsagara@gmail.com
     env_file:
       - .env
