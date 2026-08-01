@@ -17,11 +17,35 @@ const { PORT }          = require('./config/constants');
 const app = express();
 
 // ── Global middleware ─────────────────────────────────────────────────────────
-app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
-app.use(cors());
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false
+}));
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://sagararevamp.biz.id',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || origin === 'null' || allowedOrigins.includes(origin) || (origin && (origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')))) {
+      callback(null, true);
+    } else {
+      console.error('CORS Error for origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../public')));
+
+app.use(express.static(path.join(__dirname, '../public'), {
+  maxAge: '1d' // Adds Cache-Control header (e.g. public, max-age=86400)
+}));
 
 // ── Route modules ─────────────────────────────────────────────────────────────
 app.use(require('./routes/health'));

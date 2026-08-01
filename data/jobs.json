@@ -216,5 +216,22 @@
     ],
     "created_at": "2026-07-29T02:16:25.768Z",
     "is_active": true
+  },
+  {
+    "id": 1785563458219,
+    "title": "Project Manager",
+    "location": "Jakarta, Indonesia (Hybrid)",
+    "type": "Full-time",
+    "salary": "IDR 20-25 Million",
+    "experience": "Min. 3 years",
+    "description": "We need an organized Project Manager to oversee the software development lifecycle, coordinate team members, and ensure timely delivery of high-quality software projects.",
+    "requirements": [
+      "- Experience in Agile/Scrum methodologies",
+      "- Excellent leadership and team coordination skills",
+      "- Familiarity with Jira or Trello",
+      "- Strong analytical and problem-solving skills"
+    ],
+    "created_at": "2026-08-01T05:50:58.220Z",
+    "is_active": true
   }
 ]

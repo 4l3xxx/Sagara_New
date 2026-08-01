@@ -818,20 +818,6 @@
                         </div>
                     </div>
 
-                    <!-- Secondary Charts (Row 2) -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                        <!-- User Sentiment Analysis (Hidden) removed -->
-                        <div class="bg-white rounded-2xl p-8 shadow-sm border hover:shadow-md transition-shadow lg:col-span-2">
-                            <h3 class="font-bold text-slate-800 mb-6 flex items-center gap-2 text-lg">
-                                <div
-                                    class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-[20px]">query_stats</span>
-                                </div>
-                                <span id="analLblAvgScore">Avg. Lead Score Trend</span>
-                            </h3>
-                            <div id="leadscore-chart" class="h-64"></div>
-                        </div>
-                    </div>
 
                     <!-- Premium Row 3: Funnel & Services (New) -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
@@ -1294,6 +1280,14 @@
                     <p id="emailConfirmTarget"
                         class="text-green-600 font-mono text-sm mt-2 bg-green-50 py-1 px-3 rounded-lg inline-block"></p>
                 </div>
+                
+                <div class="mb-4">
+                    <p class="text-xs text-slate-500 italic flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+                        Bahasa balasan otomatis disesuaikan dengan bahasa klien.
+                    </p>
+                </div>
+
                 <div class="flex flex-col gap-3">
                     <div class="flex gap-2">
                         <a id="emailOpenLinkWeb" href="#" target="_blank"
@@ -1760,7 +1754,7 @@
                 </div>
 
                 <!-- Metadata Grid -->
-                <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="hidden grid-cols-2 gap-4 mb-8">
                     <div class="bg-white border border-slate-200 rounded-xl p-4">
                         <span class="material-symbols-outlined text-blue-500 text-xl mb-1">business</span>
                         <p class="text-xs font-bold text-slate-400 uppercase">Industry</p>
@@ -2567,8 +2561,18 @@
                     
                     if (lead && lead.message) {
                         const text = lead.message.toLowerCase();
-                        const engKeywords = ['i', 'my', 'want', 'need', 'looking for', 'project', 'development', 'app', 'website'];
-                        const indKeywords = ['saya', 'aku', 'mau', 'butuh', 'mencari', 'proyek', 'buat', 'bikin', 'ingin', 'kami', 'kita'];
+                        const engKeywords = [
+                            'i', 'my', 'want', 'need', 'looking', 'project', 'development', 'app', 'website', 
+                            'we', 'our', 'us', 'help', 'build', 'create', 'make', 'company', 'business', 
+                            'software', 'system', 'interested', 'price', 'cost', 'quote', 'hello', 'hi', 
+                            'dear', 'thanks', 'please', 'regarding', 'inquiry', 'team', 'service'
+                        ];
+                        const indKeywords = [
+                            'saya', 'aku', 'mau', 'butuh', 'mencari', 'proyek', 'buat', 'bikin', 'ingin', 
+                            'kami', 'kita', 'bantu', 'aplikasi', 'sistem', 'perusahaan', 'bisnis', 'harga', 
+                            'biaya', 'tolong', 'halo', 'hai', 'terima', 'kasih', 'pengembangan', 'pembuatan', 
+                            'mengenai', 'pertanyaan', 'bisa', 'tim', 'layanan', 'kerjasama'
+                        ];
                         
                         let engCount = 0;
                         let indCount = 0;
@@ -2595,14 +2599,13 @@
                     const draftBodyEN = `Hello ${clientName},\n\nThank you for reaching out to Sagara Technology. We have received your consultation request. When would you be available for a further discussion via phone call or online meeting?\n\nBest regards,\nSagara Technology Team`;
                     
                     const draftBody = isEnglish ? draftBodyEN : draftBodyID;
+                    openLinkWeb.href = `https://web.whatsapp.com/send?phone=${cleanWA}&text=${encodeURIComponent(draftBody)}`;
+                    openLinkApp.href = `whatsapp://send?phone=${cleanWA}&text=${encodeURIComponent(draftBody)}`;
                     
                     if (!cleanWA) {
                         showToast('Nomor WhatsApp tidak tersedia (data lama).', 'error');
                         return;
                     }
-                    
-                    openLinkWeb.href = `https://web.whatsapp.com/send?phone=${cleanWA}&text=${encodeURIComponent(draftBody)}`;
-                    openLinkApp.href = `whatsapp://send?phone=${cleanWA}&text=${encodeURIComponent(draftBody)}`;
                     
                     modal.style.display = 'flex';
 
@@ -2885,7 +2888,38 @@
         }
 
         function exportToCSV() {
-            showToast("Export CSV - feature coming soon", "success");
+            if (!window.allConsultations || window.allConsultations.length === 0) {
+                showToast("Tidak ada data untuk diexport", "error");
+                return;
+            }
+            const headers = ['ID', 'Date', 'Prospect Name', 'Email', 'WhatsApp', 'Service', 'Company', 'Intent Category', 'Score', 'Message', 'Status'];
+            const csvRows = [];
+            csvRows.push(headers.join(','));
+            window.allConsultations.forEach(lead => {
+                const row = [
+                    lead.id,
+                    new Date(lead.created_at).toLocaleString(),
+                    `"${(lead.full_name || '').replace(/"/g, '""')}"`,
+                    `"${(lead.email || '').replace(/"/g, '""')}"`,
+                    `"${(lead.whatsapp_number || '').replace(/"/g, '""')}"`,
+                    `"${(lead.service_interest || '').replace(/"/g, '""')}"`,
+                    `"${(lead.company_name || '').replace(/"/g, '""')}"`,
+                    `"${(lead.ai_intent_category || '').replace(/"/g, '""')}"`,
+                    lead.ai_lead_score || 0,
+                    `"${(lead.message || '').replace(/"/g, '""')}"`,
+                    `"${(lead.status || '').replace(/"/g, '""')}"`
+                ];
+                csvRows.push(row.join(','));
+            });
+            const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `sagara_consultations_${new Date().toISOString().split('T')[0]}.csv`;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         // ============================================
@@ -4302,8 +4336,26 @@
                 }
             });
 
-            loadSettings();
-            loadDashboard();
+            // Fetch admin role early to avoid UI state bugs
+            fetch('/api/admin/me')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.username) {
+                        window._currentAdminUser = data.username;
+                        window._currentAdminRole = data.role;
+                        const profileNameEl = document.getElementById('setProfileName');
+                        if (profileNameEl) profileNameEl.textContent = data.username;
+                    }
+                })
+                .catch(err => console.error('Error fetching admin data on load', err))
+                .finally(() => {
+                    loadSettings();
+                    loadDashboard();
+                    // If current section is consultations, reload to apply role
+                    if (document.querySelector('.sidebar-item[data-section="consultations"]')?.classList.contains('active') || window.location.hash === '#consultations') {
+                         loadConsultations();
+                    }
+                });
         });
 
         // ============================================
