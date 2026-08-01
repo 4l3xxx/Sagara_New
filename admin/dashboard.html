@@ -1948,7 +1948,6 @@
                 analLblFromNewLead: "From New Lead to Contacted",
                 analLblGrowth: "Consultation Trends",
                 analLblSegmentation: "Client Segmentation",
-                analLblAvgScore: "Avg. Lead Score Trend",
                 analLblFunnel: "Sales Progress",
                 analLblServiceDemand: "Popular Services",
                 analLblSpamTrend: "Spam Attack Trend",
@@ -2041,7 +2040,6 @@
                 analLblFromNewLead: "Dari Prospek Baru ke Dihubungi",
                 analLblGrowth: "Klien Baru Masuk",
                 analLblSegmentation: "Segmentasi Klien",
-                analLblAvgScore: "Tren Rata-rata Skor Prospek",
                 analLblFunnel: "Progres Penjualan",
                 analLblServiceDemand: "Layanan Terpopuler",
                 analLblSpamTrend: "Tren Serangan Spam",
@@ -3145,22 +3143,6 @@
             }
 
             // 3. Pie: Sentiment removed
-
-            // 4. Bar: Lead Trend
-            const lDiv = document.querySelector("#leadscore-chart");
-            if (lDiv) {
-                lDiv.innerHTML = '';
-                new ApexCharts(lDiv, {
-                    ...baseConfig,
-                    series: [{ name: 'Avg Score %', data: metrics.trend.data }],
-                    chart: { ...baseConfig.chart, type: 'bar', height: 250 },
-                    colors: ['#6366f1'],
-                    plotOptions: { bar: { borderRadius: 8, columnWidth: '45%' } },
-                    xaxis: { categories: metrics.trend.labels, labels: { style: { colors: '#94a3b8', fontWeight: 500 } } },
-                    yaxis: { max: 100, labels: { formatter: val => Math.round(val) + '%' } }
-                }).render();
-            }
-
             // 5. Funnel Chart (Using Bar with horizontal styling)
             const fDiv = document.querySelector("#funnel-chart");
             if (fDiv) {
