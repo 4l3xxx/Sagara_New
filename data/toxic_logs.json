@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1785575996285,
+    "timestamp": "2026-08-01T09:19:56.285Z",
+    "source": "consultation",
+    "field": "pesan",
+    "text_preview": "ayo pake akun game ini dijamin menang terus",
+    "category": "spam",
+    "label": "Spam / Iklan",
+    "score": 75,
+    "ip_address": "::ffff:172.19.0.1"
+  },
+  {
+    "id": 1785575969213,
+    "timestamp": "2026-08-01T09:19:29.213Z",
+    "source": "consultation",
+    "field": "pesan",
+    "text_preview": "kontol",
+    "category": "sexualContent",
+    "label": "Konten Seksual",
+    "score": 85,
+    "ip_address": "::ffff:172.19.0.1"
+  },
+  {
+    "id": 1785575963687,
+    "timestamp": "2026-08-01T09:19:23.687Z",
+    "source": "consultation",
+    "field": "pesan",
+    "text_preview": "fuck you bitch",
+    "category": "profanity",
+    "label": "Kata Kasar",
+    "score": 70,
+    "ip_address": "::ffff:172.19.0.1"
+  }
+]

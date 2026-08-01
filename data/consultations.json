@@ -1265,5 +1265,24 @@
     "created_at": "2026-07-31T13:23:58.487Z",
     "notes": "Client unresponsive",
     "updated_at": "2026-08-01T05:50:34.786Z"
+  },
+  {
+    "id": 1785575536582,
+    "full_name": "kooc",
+    "business_email": "kocc@gmail.com",
+    "whatsapp_number": "+62956595479545",
+    "service_type": "IT outsourcing",
+    "message": "babi lu",
+    "company_size": null,
+    "budget": null,
+    "industry": null,
+    "sentiment": "neutral",
+    "sentiment_score": 0,
+    "nlp_category": "CORPORATE",
+    "lead_score": 0.6,
+    "is_suspicious": false,
+    "spam_score": 45,
+    "status": "New",
+    "created_at": "2026-08-01T09:12:16.582Z"
   }
 ]

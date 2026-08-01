@@ -12,6 +12,7 @@
  *   sexualContent — konten seksual / pornografi
  *   profanity     — kata kasar / swear words
  *   harassment    — pelecehan / personal attacks
+ *   spam          — iklan / promosi tidak sah
  *
  * Each category carries a weight (0–100). Any message whose
  * highest matched weight meets or exceeds `this.threshold`
@@ -34,7 +35,8 @@ class ToxicContentFilter {
         patterns: [
           /\b(bunuh|hajar|habisi|hancurkan|musnahkan|bakar|tikam|serang)\b.{0,30}\b(kamu|anda|lu|lo|kalian|mereka|sagara|admin)\b/i,
           /\b(aku|saya|gue|gw|kita)\b.{0,15}\b(akan|mau|bakal|siap)\b.{0,15}\b(bunuh|hajar|laporkan|hancurkan|ancam|serang)\b/i,
-          /\bi.{0,5}(will|gonna|going to|plan to).{0,20}(kill|hurt|harm|destroy|attack|bomb|shoot|stab|murder)\b/i,
+          /\bi.{0,5}(will|gonna|going to|plan to).{0,20}(kill|hurt|harm|destroy|attack|bomb|shoot|stab|murder|hit|beat)\b/i,
+          /\b(let's|let us|come on).{0,20}(hit|beat|kill|hurt|harm|destroy|attack).{0,20}\b(him|her|them|you|this)\b/i,
           /\b(death|murder|bomb|shoot|stab|execute).{0,30}\b(you|your|this|sagara|admin|company)\b/i,
           /\b(ancam|mengancam|diancam)\b/i,
           /\b(mati aja|mati lo|mati kamu)\b/i,
@@ -102,7 +104,7 @@ class ToxicContentFilter {
         label:  'Kata Kasar',
         words: {
           id: [
-            'anjing','bangsat','brengsek','goblok','tolol','bego',
+            'anjing','babi','bangsat','brengsek','goblok','tolol','bego',
             'idiot','kampret','keparat','tai','tahi','sialan',
             'bedebah','asu','jancok','jancuk','cok','cuk',
             'bajingan','celeng','setan','iblis','lonte','sundal',
@@ -143,6 +145,23 @@ class ToxicContentFilter {
         patterns: [
           /\b(kamu|lo|lu|you)\b.{0,15}\b(tidak|ga|gak|nggak|bukan).{0,10}\b(berguna|pantas|dibutuhkan|diperlukan|penting)\b/i,
           /\b(kamu|lo|lu|you).{0,10}\b(bodoh|idiot|goblok|tolol|worthless|useless|stupid|dumb)\b/i,
+        ],
+      },
+
+      // ── 6. Spam / Iklan ──────────────────────────────────────────── weight 75
+      spam: {
+        weight: 75,
+        label:  'Spam / Iklan',
+        words: {
+          id: ['cuan', 'gacor', 'judi', 'judol', 'slot'],
+          en: ['casino', 'jackpot']
+        },
+        phrases: [
+          'mainkan game ini', 'dijamin cuan', 'klik link', 'daftar sekarang'
+        ],
+        patterns: [
+          /\b(mainkan|daftar|join|ayo).{0,20}(game ini|situs ini|link ini)\b/i,
+          /\b(dijamin).{0,15}(cuan|untung|menang|kaya)\b/i
         ],
       },
     };
