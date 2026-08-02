@@ -92,3 +92,4 @@ if __name__ == "__main__":
     test_msg = "Kami butuh ERP system segera untuk perusahaan cabang kami."
     test_svc = "Enterprise Resource Planning"
     print(predictor.predict(test_msg, test_svc))
+

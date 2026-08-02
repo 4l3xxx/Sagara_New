@@ -2150,6 +2150,16 @@
             }
         }
 
+        function calculatePriorityScore(item) {
+            let p = (item.lead_score || 0.5) * 40;
+            if (item.status === 'New') p += 20;
+            const days = (Date.now() - new Date(item.created_at).getTime()) / 86400000;
+            if (days > 3) p += 20; else if (days > 1) p += 10;
+            if (['CORPORATE', 'GOVERNMENT', 'Corporate', 'Government'].includes(item.nlp_category)) p += 20;
+            else if (['UMKM', 'SME'].includes(item.nlp_category)) p += 10;
+            return Math.min(Math.round(p), 100);
+        }
+
         function handleAvatarUpload(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -2496,7 +2506,7 @@
                             <span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${item.nlp_category === 'Corporate' ? 'bg-slate-800 text-white' : 'bg-emerald-100 text-emerald-800'}">${item.nlp_category || 'General'}</span>
                         </td>
                         <td class="py-4 px-4 font-bold text-slate-900 text-sm">
-                            ${Math.round((item.lead_score || 0.5) * 100)}%
+                            ${calculatePriorityScore(item)}%
                         </td>
                         <td class="py-4 px-4">
                             ${getAIRecommendation(item.lead_score || 0.5, item.nlp_category)}

@@ -1284,5 +1284,43 @@
     "spam_score": 45,
     "status": "New",
     "created_at": "2026-08-01T09:12:16.582Z"
+  },
+  {
+    "id": 1785658569110,
+    "full_name": "Alexander Marisi Sinurat",
+    "business_email": "alexanderboymarisi@gmail.com",
+    "whatsapp_number": "+629987654321",
+    "service_type": "IT outsourcing",
+    "message": "We urgently need an ERP system for our 200-branch manufacturing company. This is critical ASAP, our current system is causing major operational downtime.",
+    "company_size": null,
+    "budget": null,
+    "industry": null,
+    "sentiment": "neutral",
+    "sentiment_score": 0,
+    "nlp_category": "CORPORATE",
+    "lead_score": 0.6,
+    "is_suspicious": false,
+    "spam_score": 6,
+    "status": "New",
+    "created_at": "2026-08-02T08:16:09.110Z"
+  },
+  {
+    "id": 1785658862102,
+    "full_name": "Alexander Boy",
+    "business_email": "alexanderboymarisi@gmail.com",
+    "whatsapp_number": "+62456478564",
+    "service_type": "Digital transformation / custom software",
+    "message": "Ingin scan dan indeks 10.000 dokumen lama. Butuh sistem pencarian cepat dan penyimpanan cloud. Prioritas keamanan data.",
+    "company_size": null,
+    "budget": null,
+    "industry": null,
+    "sentiment": "neutral",
+    "sentiment_score": 0,
+    "nlp_category": "CORPORATE",
+    "lead_score": 0.6,
+    "is_suspicious": false,
+    "spam_score": 0,
+    "status": "New",
+    "created_at": "2026-08-02T08:21:02.102Z"
   }
 ]
