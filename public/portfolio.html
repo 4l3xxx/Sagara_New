@@ -5,9 +5,9 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Sagara Impactful Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="/assets/css/fonts.css" rel="stylesheet">
+<link href="/assets/css/icons.css" rel="stylesheet">
+<script src="/js/tailwindcss-plugins.js"></script>
 <script>
         tailwind.config = {
             darkMode: "class",
@@ -92,7 +92,7 @@
             }
         }
     </style>
-<!-- Theme Script -->
+
 <script>
         function initTheme() {
             const storedTheme = localStorage.getItem('theme');
@@ -415,11 +415,11 @@
             }
         });
     </script>
-<!-- Navigation -->
+
 <nav class="fixed top-0 left-0 right-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex justify-between items-center h-20">
-<!-- LOGO (UPDATED - tanpa SVG kerucut biru) -->
+
 <a class="flex items-center gap-3" href="index.html">
 <img alt="Sagara Logo" class="h-10 w-auto rounded-lg" onerror="this.style.display='none'" src="/assets/images/sagara_tech_logo.jpg"/>
 <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara</h2>
@@ -441,7 +441,7 @@
 <a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="contact.html">Contact</a>
 <a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="contact.html">Kontak</a>
 </div>
-<!-- Theme Toggle Button -->
+
 <button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
 <span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
 </button>
@@ -454,7 +454,7 @@
 <a class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" data-lang="id" href="contact.html">Konsultasi</a>
 </div>
 <div class="md:hidden flex items-center gap-4">
-<!-- Theme Toggle Button (Mobile) -->
+
 <button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
 <span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
 </button>
@@ -470,7 +470,7 @@
 </div>
 </div>
 
-<!-- Mobile Menu Dropdown -->
+
 <div id="mobileNavMenu" class="hidden md:hidden absolute top-full left-0 w-full bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 shadow-lg py-4 px-6 flex flex-col gap-4">
     <a class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="en" href="index.html">Home</a>
     <a class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="id" href="index.html">Beranda</a>
@@ -493,12 +493,12 @@
 </div>
 
 </nav>
-<!-- Hero Section -->
+
 <main class="flex-grow">
 <div class="relative bg-white dark:bg-[#111418]">
 <div class="@container">
 <div class="px-4 py-8 md:px-10 md:py-12">
-<div class="flex min-h-[360px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-xl items-center justify-center p-8 text-center relative overflow-hidden group" style='background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url("https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&amp;w=2426&amp;auto=format")'>
+<div class="flex min-h-[360px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-xl items-center justify-center p-8 text-center relative overflow-hidden group" style='background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url("/assets/images/consulting.png")'>
 <div class="flex flex-col gap-4 max-w-3xl z-10">
 <h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl lg:text-6xl">
 <span data-lang="en">Transforming Industries through Technology</span>
@@ -520,7 +520,7 @@
 </div>
 </div>
 </div>
-<!-- Filter & Grid Section -->
+
 <div class="layout-container flex flex-col px-4 md:px-10 pb-16 max-w-[1440px] mx-auto" id="projects-section">
 <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
 <h2 class="text-[#111418] dark:text-white text-2xl font-bold leading-tight tracking-[-0.015em] self-start md:self-center">
@@ -528,15 +528,15 @@
 <span class="hidden" data-lang="id">Proyek Unggulan</span>
 </h2>
 <div id="filterContainer" class="flex gap-2 overflow-x-auto no-scrollbar w-full md:w-auto py-1 self-start md:self-center max-w-full">
-<!-- Dynamically populated by JS -->
+
 </div>
 </div>
-<!-- Project Grid -->
+
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolioGrid">
-<!-- Projects will be rendered here -->
+
 </div>
 </div>
-<!-- CTA Section -->
+
 <div class="bg-white dark:bg-[#111418] py-16 border-t border-[#f0f2f4] dark:border-gray-800">
 <div class="layout-container px-4 md:px-10 max-w-[960px] mx-auto text-center">
 <div class="bg-gradient-to-br from-[#137fec]/10 to-[#137fec]/5 dark:from-[#137fec]/20 dark:to-[#137fec]/5 rounded-2xl p-10 md:p-14 border border-primary/10">
@@ -557,16 +557,16 @@
 </div>
 </div>
 </main>
-<!-- Modal Popup -->
+
 <div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[1000] hidden items-center justify-center p-4" id="projectModal" onclick="if(event.target===this) closeModal()">
 <div class="bg-white dark:bg-[#1a2632] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl">
 <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white text-3xl z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="closeModal()">×</button>
 <div class="p-6" id="modalContent">
-<!-- Content will be injected here -->
+
 </div>
 </div>
 </div>
-<!-- Footer -->
+
 <footer class="bg-white dark:bg-[#111418] border-t border-[#f0f2f4] dark:border-gray-800 py-10 px-10">
 <div class="layout-container flex flex-col md:flex-row justify-between items-center gap-6 max-w-[1440px] mx-auto">
 <div class="flex items-center gap-2 text-[#111418] dark:text-white">
@@ -589,3 +589,11 @@
 </footer>
 </body>
 </html>
+
+
+
+
+
+
+
+

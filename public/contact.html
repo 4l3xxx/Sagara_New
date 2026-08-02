@@ -7,9 +7,9 @@
 <title>Sagara - Quick Consultation</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="/assets/css/fonts.css" rel="stylesheet">
+<link href="/assets/css/icons.css" rel="stylesheet">
+<script src="/js/tailwindcss-plugins.js"></script>
 <script>
         tailwind.config = {
             darkMode: "class",
@@ -57,7 +57,7 @@
             animation: spin 0.8s linear infinite;
         }
     </style>
-<!-- Theme Script -->
+
 <script>
         function initTheme() {
             const storedTheme = localStorage.getItem('theme');
@@ -181,11 +181,11 @@
             switchLanguage(lang);
         });
     </script>
-<!-- Navbar -->
+
 <nav class="fixed top-0 left-0 right-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex justify-between items-center h-20">
-<!-- LOGO (UPDATED - tanpa SVG kerucut biru) -->
+
 <a class="flex items-center gap-3" href="index.html">
 <img alt="Sagara Logo" class="h-10 w-auto rounded-lg" onerror="this.style.display='none'" src="/assets/images/sagara_tech_logo.jpg"/>
 <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">Sagara
@@ -208,7 +208,7 @@
 <a class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="contact.html">Contact</a>
 <a class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="contact.html">Kontak</a>
 </div>
-<!-- Theme Toggle Button -->
+
 <button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
 <span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
 </button>
@@ -221,7 +221,7 @@
 <a class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" data-lang="id" href="contact.html">Konsultasi</a>
 </div>
 <div class="md:hidden flex items-center gap-4">
-<!-- Theme Toggle Button (Mobile) -->
+
 <button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
 <span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
 </button>
@@ -237,7 +237,7 @@
 </div>
 </div>
 
-<!-- Mobile Menu Dropdown -->
+
 <div id="mobileNavMenu" class="hidden md:hidden absolute top-full left-0 w-full bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 shadow-lg py-4 px-6 flex flex-col gap-4">
     <a class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="en" href="index.html">Home</a>
     <a class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="id" href="index.html">Beranda</a>
@@ -260,9 +260,9 @@
 </div>
 
 </nav>
-<!-- Main Content -->
+
 <main class="flex-grow flex items-center justify-center relative overflow-hidden">
-<!-- Background Decoration -->
+
 <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
 <div class="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] rounded-full bg-primary/10 blur-3xl dark:bg-primary/5">
 </div>
@@ -271,7 +271,7 @@
 </div>
 <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 relative z-10">
 <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-<!-- Left Column -->
+
 <div class="flex flex-col gap-8 text-center lg:text-left">
 <div class="space-y-4">
 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-primary text-xs font-bold uppercase tracking-wider w-fit mx-auto lg:mx-0 border border-blue-100 dark:border-blue-800">
@@ -315,7 +315,7 @@
 </div>
 </div>
 </div>
-<!-- Right Column: Consultation Form -->
+
 <div class="w-full max-w-md mx-auto">
 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 p-8 relative overflow-hidden">
 <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary to-blue-400"></div>
@@ -330,7 +330,7 @@
 </p>
 </div>
 <form class="space-y-5" id="consultationForm" onsubmit="return false;">
-<!-- Full Name -->
+
 <div class="space-y-1.5">
 <label class="block text-sm font-medium text-slate-700 dark:text-slate-200" for="fullname">
 <span data-lang="en">Full Name</span>
@@ -340,10 +340,10 @@
 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
 <span class="material-symbols-outlined text-[20px]">person</span>
 </div>
-<input class="block w-full pl-10 pr-3 py-3 border-slate-200 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm" id="fullname" name="fullname" placeholder="Enter your full name" required="" type="text"/>
+<input class="block w-full pl-10 pr-3 py-3 border-slate-200 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm" id="fullname" name="f_n_m" placeholder="Enter your full name" required="" type="text"/>
 </div>
 </div>
-<!-- Email -->
+
 <div class="space-y-1.5">
 <label class="block text-sm font-medium text-slate-700 dark:text-slate-200" for="email">
 <span data-lang="en">Email Address</span>
@@ -353,7 +353,7 @@
 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
 <span class="material-symbols-outlined text-[20px]">mail</span>
 </div>
-<input class="block w-full pl-10 pr-3 py-3 border-slate-200 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm" id="email" name="email" placeholder="yourname@domain.com" required="" type="email"/>
+<input class="block w-full pl-10 pr-3 py-3 border-slate-200 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm" id="email" name="e_m_l" placeholder="yourname@domain.com" required="" type="email"/>
 </div>
 <div class="text-xs mt-1 hidden text-red-500" id="email-error"></div>
 <p class="text-xs text-slate-400 dark:text-slate-500">
@@ -361,7 +361,7 @@
 <span class="hidden" data-lang="id">Kami akan mengirim pesan formal via email ini.</span>
 </p>
 </div>
-<!-- WhatsApp -->
+
 <div class="space-y-1.5">
 <label class="block text-sm font-medium text-slate-700 dark:text-slate-200" for="whatsapp_number">
 <span data-lang="en">WhatsApp Number</span>
@@ -400,7 +400,7 @@
 <span class="hidden" data-lang="id">Konsultan kami akan menghubungi Anda melalui WhatsApp.</span>
 </p>
 </div>
-<!-- Service Type -->
+
 <div class="space-y-1.5">
 <label class="block text-sm font-medium text-slate-700 dark:text-slate-200" for="service">
 <span data-lang="en">Service Type</span>
@@ -423,7 +423,7 @@
 </div>
 </div>
 </div>
-<!-- Message -->
+
 <div class="space-y-1.5">
 <label class="block text-sm font-medium text-slate-700 dark:text-slate-200" for="message">
 <span data-lang="en">Message / Project Details</span>
@@ -433,7 +433,7 @@
 <div class="absolute top-3 left-3 flex items-start pointer-events-none text-slate-400">
 <span class="material-symbols-outlined text-[20px]">chat</span>
 </div>
-<textarea class="block w-full pl-10 pr-3 py-3 border-slate-200 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm min-h-[120px]" id="message" name="message" placeholder="Hi Sagara, I would like to discuss a potential project regarding... (Please describe your needs, goals, and rough timeline)" required=""></textarea>
+<textarea class="block w-full pl-10 pr-3 py-3 border-slate-200 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-slate-50 dark:bg-slate-900/50 transition-shadow sm:text-sm min-h-[120px]" id="message" name="m_s_g" placeholder="Hi Sagara, I would like to discuss a potential project regarding... (Please describe your needs, goals, and rough timeline)" required=""></textarea>
 </div>
 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
 <span data-lang="en">Please provide a brief overview of your needs so we can prepare
@@ -442,7 +442,7 @@
                                         agar kami dapat bersiap.</span>
 </p>
 </div>
-<!-- Submit Button -->
+
 <button class="w-full flex items-center justify-center gap-2 py-4 px-6 border border-transparent rounded-lg shadow-sm text-base font-bold text-white bg-cta-orange hover:bg-cta-orange-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cta-orange transition-all transform hover:-translate-y-0.5 shadow-lg shadow-orange-500/30 disabled:opacity-70 disabled:cursor-not-allowed" id="submitBtn" type="button">
 <span class="btn-text">
 <span data-lang="en">Send Consultation →</span>
@@ -494,7 +494,7 @@
 </div>
 </div>
 </footer>
-<!-- Form Handler Script with redirectToGmail -->
+
 <script src="/js/toast.js"></script>
 <script>
         // Function to validate email (RFC 5322 standard regex)
@@ -682,7 +682,7 @@ Dikirim dari form konsultasi Sagara
             }, 1000);
         });
     </script>
-<!-- Global Fullscreen Loading Overlay -->
+
 <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] flex flex-col items-center justify-center hidden" id="globalLoadingOverlay">
 <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-2xl flex flex-col items-center gap-4 border border-slate-100 dark:border-slate-700 max-w-sm w-full mx-4">
 <div class="w-12 h-12 rounded-full border-4 border-slate-200 dark:border-slate-700 border-t-primary animate-spin"></div>
@@ -747,3 +747,11 @@ Dikirim dari form konsultasi Sagara
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+

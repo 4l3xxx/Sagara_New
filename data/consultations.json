@@ -1360,5 +1360,26 @@
     "spam_score": 3,
     "status": "New",
     "created_at": "2026-08-02T08:35:31.765Z"
+  },
+  {
+    "id": 1785666699842,
+    "full_name": "saddds",
+    "business_email": "qaasdads@gmail.com",
+    "whatsapp_number": "+62473834274",
+    "service_type": "Digital transformation / custom software",
+    "message": "testing doang anjg",
+    "company_size": null,
+    "budget": null,
+    "industry": null,
+    "sentiment": "neutral",
+    "sentiment_score": 0,
+    "nlp_category": "CORPORATE",
+    "lead_score": 0.6,
+    "is_suspicious": false,
+    "spam_score": 45,
+    "status": "Closed",
+    "created_at": "2026-08-02T10:31:39.842Z",
+    "notes": "Client agreed to terms & pricing",
+    "updated_at": "2026-08-02T10:32:30.144Z"
   }
 ]

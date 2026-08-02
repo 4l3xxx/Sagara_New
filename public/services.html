@@ -5,9 +5,9 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Sagara - IT Services &amp; Solutions</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
+<link href="/assets/css/fonts.css" rel="stylesheet">
+<link href="/assets/css/icons.css" rel="stylesheet">
+<script src="/js/tailwindcss.js"></script>
 <script>
         tailwind.config = {
             darkMode: "class",
@@ -55,7 +55,7 @@
             transform: translateY(-2px);
         }
     </style>
-<!-- Theme Script -->
+
 <script>
         function initTheme() {
             const storedTheme = localStorage.getItem('theme');
@@ -149,7 +149,7 @@
             switchLanguage(lang);
         });
     </script>
-<!-- Navigation -->
+
 <nav class="fixed top-0 left-0 right-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex justify-between items-center h-20">
@@ -174,7 +174,7 @@
 <a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="contact.html">Contact</a>
 <a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="contact.html">Kontak</a>
 </div>
-<!-- Theme Toggle Button -->
+
 <button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
 <span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
 </button>
@@ -187,7 +187,7 @@
 <a class="hidden bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105" data-lang="id" href="contact.html">Konsultasi</a>
 </div>
 <div class="md:hidden flex items-center gap-4">
-<!-- Theme Toggle Button (Mobile) -->
+
 <button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
 <span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
 </button>
@@ -203,7 +203,7 @@
 </div>
 </div>
 
-<!-- Mobile Menu Dropdown -->
+
 <div id="mobileNavMenu" class="hidden md:hidden absolute top-full left-0 w-full bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 shadow-lg py-4 px-6 flex flex-col gap-4">
     <a class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="en" href="index.html">Home</a>
     <a class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="id" href="index.html">Beranda</a>
@@ -226,10 +226,10 @@
 </div>
 
 </nav>
-<!-- Hero Section with Image -->
+
 <section class="relative overflow-hidden py-20 lg:py-28">
 <div class="absolute inset-0 z-0">
-<img alt="IT Consulting" class="w-full h-full object-cover opacity-10 dark:opacity-20" src="https://images.unsplash.com/photo-1551434678-e076c2235a1f?q=80&amp;w=2070&amp;auto=format"/>
+<img alt="IT Consulting" class="w-full h-full object-cover opacity-10 dark:opacity-20" src="/assets/images/consulting.png"/>
 </div>
 <div class="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
 <div class="absolute bottom-20 left-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
@@ -248,7 +248,7 @@
 </p>
 </div>
 </section>
-<!-- Services Grid - TANPA JUDUL SERVICE (cuma icon + deskripsi) -->
+
 <section class="py-20">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="text-center mb-12">
@@ -262,7 +262,7 @@
 </p>
 </div>
 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-<!-- Service 1 - No Title -->
+
 <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
 <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
 <span class="material-symbols-outlined text-primary text-3xl">consultation</span>
@@ -289,7 +289,7 @@
 </li>
 </ul>
 </div>
-<!-- Service 2 - No Title -->
+
 <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
 <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
 <span class="material-symbols-outlined text-primary text-3xl">code_blocks</span>
@@ -316,7 +316,7 @@
 </li>
 </ul>
 </div>
-<!-- Service 3 - No Title -->
+
 <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
 <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
 <span class="material-symbols-outlined text-primary text-3xl">cloud</span>
@@ -343,7 +343,7 @@
 </li>
 </ul>
 </div>
-<!-- Service 4 - No Title -->
+
 <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
 <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
 <span class="material-symbols-outlined text-primary text-3xl">security</span>
@@ -370,7 +370,7 @@
 </li>
 </ul>
 </div>
-<!-- Service 5 - No Title -->
+
 <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
 <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
 <span class="material-symbols-outlined text-primary text-3xl">analytics</span>
@@ -397,7 +397,7 @@
 </li>
 </ul>
 </div>
-<!-- Service 6 - No Title -->
+
 <div class="service-card bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 text-center">
 <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-5 mx-auto">
 <span class="material-symbols-outlined text-primary text-3xl">account_balance</span>
@@ -427,7 +427,7 @@
 </div>
 </div>
 </section>
-<!-- Industries We Serve with Image -->
+
 <section class="py-16 bg-slate-50 dark:bg-slate-900/30">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -474,20 +474,20 @@
 </div>
 </div>
 <div class="rounded-2xl overflow-hidden shadow-lg">
-<img alt="Industries" class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&amp;w=2070&amp;auto=format"/>
+<img alt="Industries" class="w-full h-64 object-cover" src="/assets/images/consulting.png"/>
 </div>
 </div>
 </div>
 </section>
-<!-- Why Choose Us with Image -->
+
 <section class="py-20">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="grid lg:grid-cols-2 gap-12 items-center">
 <div class="order-2 lg:order-1">
 <div class="grid grid-cols-2 gap-4">
-<img alt="Team" class="rounded-2xl h-48 w-full object-cover shadow-md" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&amp;w=2070&amp;auto=format"/>
-<img alt="Office" class="rounded-2xl h-48 w-full object-cover shadow-md mt-8" src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&amp;w=2069&amp;auto=format"/>
-<img alt="Meeting" class="rounded-2xl h-48 w-full object-cover shadow-md col-span-2" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&amp;w=2070&amp;auto=format"/>
+<img alt="Team" class="rounded-2xl h-48 w-full object-cover shadow-md" src="/assets/images/consulting.png"/>
+<img alt="Office" class="rounded-2xl h-48 w-full object-cover shadow-md mt-8" src="/assets/images/consulting.png"/>
+<img alt="Meeting" class="rounded-2xl h-48 w-full object-cover shadow-md col-span-2" src="/assets/images/consulting.png"/>
 </div>
 </div>
 <div class="order-1 lg:order-2">
@@ -550,7 +550,7 @@
 </div>
 </div>
 </section>
-<!-- Stats Section -->
+
 <section class="py-16 bg-primary/5">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -585,7 +585,7 @@
 </div>
 </div>
 </section>
-<!-- CTA Section -->
+
 <section class="py-20 bg-primary">
 <div class="max-w-4xl mx-auto px-4 text-center">
 <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">
@@ -608,7 +608,7 @@
 </div>
 </div>
 </section>
-<!-- Footer -->
+
 <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-10">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -632,3 +632,11 @@
 </footer>
 </body>
 </html>ml&gt;
+
+
+
+
+
+
+
+

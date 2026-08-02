@@ -5,10 +5,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Sagara Services Overview</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="/js/tailwindcss-plugins.js"></script>
+<link href="/assets/css/fonts.css" rel="stylesheet">
+<link href="/assets/css/icons.css" rel="stylesheet">
+<link href="/assets/css/icons.css" rel="stylesheet">
 <script>
         tailwind.config = {
             darkMode: 'class',
@@ -77,7 +77,7 @@
             transform-origin: center;
         }
     </style>
-<!-- Theme Script -->
+
 <script>
         function initTheme() {
             const storedTheme = localStorage.getItem('theme');
@@ -178,11 +178,11 @@
     </script>
 <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root">
 <div class="layout-container flex h-full grow flex-col">
-<!-- Header -->
+
 <nav class="fixed top-0 left-0 right-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-background-dark/90 dark:border-slate-800">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex justify-between items-center h-20">
-<!-- Logo -->
+
 <a class="flex items-center gap-3" href="index.html">
 <div class="size-8 text-primary">
 <svg class="h-full w-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -193,7 +193,7 @@
 <h2 class="text-slate-900 dark:text-white text-xl font-display font-black tracking-tight">
                                 Sagara</h2>
 </a>
-<!-- Desktop Menu -->
+
 <div class="hidden md:flex flex-1 justify-end items-center gap-8">
 <div class="flex items-center gap-8">
 <a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="index.html">Home</a>
@@ -211,8 +211,8 @@
 <a class="text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="en" href="contact.html">Contact</a>
 <a class="hidden text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-sm font-semibold" data-lang="id" href="contact.html">Kontak</a>
 </div>
-<!-- Language Toggle -->
-<!-- Theme Toggle Button -->
+
+
 <button class="theme-toggle-btn flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors mr-2" onclick="toggleTheme()">
 <span class="material-symbols-outlined text-[18px] theme-icon-display">dark_mode</span>
 </button>
@@ -228,9 +228,9 @@
                                 Konsultasi
                             </a>
 </div>
-<!-- Mobile Menu Button -->
+
 <div class="md:hidden flex items-center gap-4">
-<!-- Mobile Lang Toggle -->
+
 <div class="flex items-center gap-2">
 <button class="font-bold text-xs text-slate-500 hover:text-primary" id="btn-id-mobile" onclick="switchLanguage('id')">ID</button>
 <span class="text-slate-300 text-xs">|</span>
@@ -243,7 +243,7 @@
 </div>
 </div>
 
-<!-- Mobile Menu Dropdown -->
+
 <div id="mobileNavMenu" class="hidden md:hidden absolute top-full left-0 w-full bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 shadow-lg py-4 px-6 flex flex-col gap-4">
     <a class="nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="en" href="index.html">Home</a>
     <a class="hidden nav-link-active text-slate-700 dark:text-slate-300 hover:text-primary transition-colors text-base font-semibold" data-lang="id" href="index.html">Beranda</a>
@@ -268,7 +268,7 @@
 </nav>
 <main class="flex flex-col flex-1 px-4 py-5 md:px-10 lg:px-40">
 <div class="layout-content-container flex flex-col max-w-[1200px] w-full mx-auto flex-1">
-<!-- Hero Section -->
+
 <div class="@container mb-10">
 <div class="flex flex-col gap-6 py-10 @[480px]:gap-8 @[864px]:flex-row items-center">
 <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl shadow-lg @[480px]:h-auto @[480px]:min-w-[400px] @[864px]:w-1/2 overflow-hidden relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCww935MlU8CeHZFEcRAe3EGHvNcTn5-TyIxPJHs2WEXFEHRhSu5nXE5sARiSAfTM6ibY11UXRMWxnCJ3wunYSlwNoBZlnm4ebrBD7V0s25qpX_7GgwARZXrZAwsXhdvBlBO26rVuR2uFsS4Fwd1q0ekSVrWoHVji5IItU6ZUZE8c4n5SsXuZEEWA_xv5u5FvQoNmfUb_e1-MdLRNzr4Xa5I6VWdA9I9bpdJezAjxgLbHH2kPvPMY-21srIGmuCwAnNCCyTsBcMoWM");'>
@@ -307,7 +307,7 @@
 </div>
 </div>
 </div>
-<!-- Persona Selector (Visual Only) -->
+
 <div class="flex justify-center mb-12">
 <div class="inline-flex h-12 items-center justify-center rounded-xl bg-[#f0f2f4] dark:bg-gray-800 p-1 border border-[#e5e7eb] dark:border-gray-700">
 <label class="flex cursor-pointer h-full items-center justify-center overflow-hidden rounded-lg px-6 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:shadow-sm has-[:checked]:text-primary text-[#617589] dark:text-gray-400 text-sm font-bold leading-normal transition-all duration-200">
@@ -327,9 +327,9 @@
 </label>
 </div>
 </div>
-<!-- Services Grid -->
+
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-<!-- Corporate Card -->
+
 <div class="group flex flex-col gap-6 rounded-xl border border-solid border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-gray-800 p-8 shadow-sm hover:shadow-xl hover:border-primary dark:hover:border-primary hover:-translate-y-1 transition-all duration-300">
 <div class="flex flex-col gap-4">
 <div class="flex items-center justify-between">
@@ -392,7 +392,7 @@
 <span class="hidden truncate" data-lang="id">Konsultasi Sekarang</span>
 </button>
 </div>
-<!-- SME Card -->
+
 <div class="group flex flex-col gap-6 rounded-xl border border-solid border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-gray-800 p-8 shadow-sm hover:shadow-xl hover:border-primary dark:hover:border-primary hover:-translate-y-1 transition-all duration-300">
 <div class="flex flex-col gap-4">
 <div class="flex items-center justify-between">
@@ -453,7 +453,7 @@
 <span class="hidden truncate" data-lang="id">Konsultasi Sekarang</span>
 </button>
 </div>
-<!-- Government Card -->
+
 <div class="group flex flex-col gap-6 rounded-xl border border-solid border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-gray-800 p-8 shadow-sm hover:shadow-xl hover:border-primary dark:hover:border-primary hover:-translate-y-1 transition-all duration-300">
 <div class="flex flex-col gap-4">
 <div class="flex items-center justify-between">
@@ -515,7 +515,7 @@
 </button>
 </div>
 </div>
-<!-- Trust Section -->
+
 <div class="flex flex-col items-center justify-center pt-8 pb-16 border-t border-dashed border-gray-200 dark:border-gray-800">
 <p class="text-[#617589] dark:text-gray-400 text-sm font-bold uppercase tracking-wider mb-8">
 <span data-lang="en">Trusted by Industry Leaders</span>
@@ -523,7 +523,7 @@
 </p>
 <div class="marquee-container">
 <div class="marquee-content opacity-70 grayscale hover:grayscale-0 transition-opacity duration-500">
-<!-- First set -->
+
 <div class="flex items-center gap-12">
 <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
 <span class="material-symbols-outlined text-4xl">verified_user</span> ISO 27001
@@ -541,7 +541,7 @@
 <span class="material-symbols-outlined text-4xl">security</span> SecureNet
                                     </div>
 </div>
-<!-- Second set -->
+
 <div class="flex items-center gap-12">
 <div class="flex items-center gap-2 text-xl font-bold font-display text-slate-800 dark:text-slate-200">
 <span class="material-symbols-outlined text-4xl">verified_user</span> ISO 27001
@@ -564,7 +564,7 @@
 </div>
 </div>
 </main>
-<!-- Footer -->
+
 <footer class="bg-white dark:bg-background-dark border-t border-[#f0f2f4] dark:border-gray-800">
 <div class="max-w-[1200px] mx-auto px-10 py-12">
 <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -660,7 +660,7 @@
                                 undang-undang.</span>
 </p>
 <div class="flex gap-4">
-<a class="text-[#617589] dark:text-gray-500 hover:text-primary" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-[#617589] dark:text-gray-500 hover:text-primary" href="javascript:void(0)"><span class="material-symbols-outlined">public</span></a>
 </div>
 </div>
 </div>
@@ -669,3 +669,11 @@
 </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
