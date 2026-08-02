@@ -1,5 +1,16 @@
 [
   {
+    "id": 1785659731746,
+    "timestamp": "2026-08-02T08:35:31.746Z",
+    "name": "Alexander Marisi Sinurat",
+    "email": "alexanderboymarisi@gmail.com",
+    "message_preview": "We are looking for an excellent IT partner to build a great enterprise-level ERP system for our company. We have 200 employees and a large budget. This project is very important and we are excited to ",
+    "spam_score": 3,
+    "reasons": [],
+    "confidence": "low",
+    "ip_address": "::ffff:172.19.0.1"
+  },
+  {
     "id": 1785658568982,
     "timestamp": "2026-08-02T08:16:08.983Z",
     "name": "Alexander Marisi Sinurat",
