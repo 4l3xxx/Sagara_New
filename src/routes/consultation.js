@@ -139,8 +139,6 @@ router.post('/api/consultation', async (req, res) => {
     });
 
   const { finalScore, reasons } = runSpamChecks({ full_name, business_email, service_type, message, req });
-  if (finalScore >= 80)
-    return res.status(400).json({ error: 'Your message has been flagged as potential spam. Please revise your message and try again.', spam_score: finalScore, reasons });
 
   const isSuspicious = finalScore >= 50;
 
@@ -217,8 +215,6 @@ router.post('/api/consultation/spam-protected', async (req, res) => {
     });
 
   const { finalScore } = runSpamChecks({ full_name, business_email, service_type, message, req });
-  if (finalScore >= 80)
-    return res.status(400).json({ error: 'Your message has been flagged as potential spam. Please revise your message and try again.', spam_score: finalScore });
 
   const isSuspicious = finalScore >= 50;
 

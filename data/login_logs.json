@@ -1,5 +1,12 @@
 [
   {
+    "id": 1785657480493,
+    "timestamp": "2026-08-02T07:58:00.493Z",
+    "username": "samuel",
+    "success": true,
+    "ip_address": "::ffff:172.19.0.1"
+  },
+  {
     "id": 1785650647436,
     "timestamp": "2026-08-02T06:04:07.436Z",
     "username": "samuel",
