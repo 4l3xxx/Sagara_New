@@ -26,9 +26,9 @@ app.use(helmet({
     useDefaults: false,
     directives: {
       defaultSrc:     ["'self'"],
-      scriptSrc:      ["'self'"],
-      styleSrc:       ["'self'"],
-      fontSrc:        ["'self'"],
+      scriptSrc:      ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      styleSrc:       ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc:        ["'self'", "https://fonts.gstatic.com"],
       imgSrc:         ["'self'", "data:", "blob:", "https://randomuser.me", "https://images.unsplash.com", "https://lh3.googleusercontent.com", "https://ui-avatars.com", "https://placehold.co"],
       connectSrc:     ["'self'"],
       workerSrc:      ["'self'", "blob:"],
