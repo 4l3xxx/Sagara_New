@@ -8,9 +8,7 @@ const adminAuth            = require('../middleware/adminAuth');
 const { FACES_FILE, DATA_DIR } = require('../config/constants');
 const { ADMINS, sessions } = require('../state');
 
-const GO_URL = process.env.GO_BACKEND_URL || 'http://localhost:8080';
 const FACE_MATCH_THRESHOLD = 0.4;
-let goBackendOfflineLogged = false;
 
 function readLocalFaces() {
   try {
@@ -41,21 +39,7 @@ function matchFaceLocally(descriptor) {
   return null;
 }
 
-async function tryGoFetch(pathname, options = {}) {
-  try {
-    const goRes = await fetch(`${GO_URL}${pathname}`, {
-      ...options,
-      signal: AbortSignal.timeout(3000),
-    });
-    if (goRes.ok) return goRes;
-  } catch (err) {
-    if (!goBackendOfflineLogged) {
-      console.warn(`[Face] Go backend unavailable at ${GO_URL}, using local JSON fallback`);
-      goBackendOfflineLogged = true;
-    }
-  }
-  return null;
-}
+
 
 function createAdminSession(req, res, username) {
   const sessionId = crypto.randomBytes(32).toString('hex');
@@ -71,12 +55,7 @@ router.post('/api/face/register', async (req, res) => {
   if (!name || !descriptor || !Array.isArray(descriptor))
     return res.status(400).json({ error: 'Name and descriptor array required' });
 
-  const goRes = await tryGoFetch('/api/admin/register-face', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, descriptor }),
-  });
-  if (goRes) console.log(`[Face] Synced ${name} to Postgres via Go backend`);
+
 
   try {
     const data      = JSON.parse(fs.readFileSync(FACES_FILE, 'utf8'));
@@ -93,11 +72,7 @@ router.post('/api/face/register', async (req, res) => {
 
 // ─── GET /api/face/descriptors ────────────────────────────────────────────────
 router.get('/api/face/descriptors', async (req, res) => {
-  const goRes = await tryGoFetch('/api/admin/face-descriptors');
-  if (goRes) {
-    const goData = await goRes.json();
-    return res.json(goData.map(u => ({ name: u.Name || u.name, descriptor: u.Descriptor || u.descriptor })));
-  }
+
 
   res.json(readLocalFaces());
 });
@@ -120,7 +95,7 @@ router.post('/api/face/attendance', (req, res) => {
 router.delete('/api/face/user/:name', adminAuth, async (req, res) => {
   const { name } = req.params;
   try {
-    await tryGoFetch(`/api/admin/delete-face?name=${encodeURIComponent(name)}`, { method: 'DELETE' });
+
 
     const data = JSON.parse(fs.readFileSync(FACES_FILE, 'utf8'));
     data.users = data.users.filter(u => u.name !== name);
@@ -137,24 +112,9 @@ router.post('/api/face/admin-login', async (req, res) => {
   let verifiedUsername = null;
 
   if (descriptor && Array.isArray(descriptor)) {
-    const goRes = await tryGoFetch('/api/admin/login-face', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ descriptor }),
-    });
-
-    if (goRes) {
-      const goData = await goRes.json();
-      if (goData.success && goData.name) {
-        verifiedUsername = goData.name;
-      } else {
-        return res.status(401).json({ error: goData.message || 'Identity verification failed' });
-      }
-    } else {
-      verifiedUsername = matchFaceLocally(descriptor);
-      if (!verifiedUsername) {
-        return res.status(401).json({ error: 'Face not recognized. Register your face first or use password login.' });
-      }
+    verifiedUsername = matchFaceLocally(descriptor);
+    if (!verifiedUsername) {
+      return res.status(401).json({ error: 'Face not recognized. Register your face first or use password login.' });
     }
   } else if (username) {
     verifiedUsername = username;

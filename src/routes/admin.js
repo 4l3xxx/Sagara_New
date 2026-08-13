@@ -14,7 +14,7 @@ const twoFaLimiter       = require('../middleware/twoFaLimiter');
 const { createAuditLog, getUserRole } = require('../helpers/audit');
 const { logLoginAttempt } = require('../helpers/loginLog');
 const { sessions, twoFASecrets, ADMINS } = require('../state');
-const { CHATS_FILE, CONTENT_FILE } = require('../config/constants');
+const { CHATS_FILE, CONTENT_FILE, CONSULTATIONS_FILE } = require('../config/constants');
 
 // ─── Multer (image upload) ────────────────────────────────────────────────────
 const storage = multer.diskStorage({
@@ -103,11 +103,16 @@ router.get('/api/admin/stats', adminAuth, (req, res) => {
   try {
     const chats = JSON.parse(fs.readFileSync(CHATS_FILE, 'utf8'));
     const today = new Date().toISOString().split('T')[0];
+    const consultations = JSON.parse(fs.readFileSync(CONSULTATIONS_FILE, 'utf8'));
+    const dealsWon = consultations.filter(c => c.status === 'Closed').length;
+    const dealsLost = consultations.filter(c => c.status === 'Failed').length;
+
     res.json({
       totalChats:     chats.length,
       todayChats:     chats.filter(c => c.timestamp.startsWith(today)).length,
       lastChat:       chats[chats.length - 1] || null,
-      systemUptime:   process.uptime(),
+      dealsWon,
+      dealsLost,
       hasApiKey:      !!process.env.GROQ_API_KEY,
     });
   } catch (err) { res.status(500).json({ error: 'Failed to load stats' }); }

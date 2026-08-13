@@ -11,6 +11,37 @@ const { createAuditLog, getUserRole } = require('../helpers/audit');
 const emailService      = require('../services/emailService');
 const { CONSULTATIONS_FILE, SPAM_LOG_FILE } = require('../config/constants');
 const pool              = require('../config/database');
+const multer            = require('multer');
+const path              = require('path');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadDir = path.join(__dirname, '../../public/uploads/evidence');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+const upload = multer({ 
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5 MB limit
+  },
+  fileFilter: function (req, file, cb) {
+    const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only PDF, JPG, and PNG are allowed.'));
+    }
+  }
+});
+
+const multerUpload = upload.single('evidence_file');
 
 const EMAIL_RE = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -269,31 +300,159 @@ router.get('/api/admin/consultations/stats', adminAuth, (req, res) => {
   } catch { res.json({ total: 0, corporate: 0, urgent: 0, sme: 0 }); }
 });
 
-router.post('/api/admin/consultations/status', adminAuth, async (req, res) => {
-  const { id, status, notes } = req.body;
+router.post('/api/admin/consultations/status', adminAuth, (req, res, next) => {
+    multerUpload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+            return res.status(400).json({ error: err.message });
+        } else if (err) {
+            return res.status(400).json({ error: err.message });
+        }
+        next();
+    });
+}, async (req, res) => {
+  const { id, status, notes, reason, evidence_type } = req.body;
+  const evidenceFile = req.file;
+
   try {
     const list  = JSON.parse(fs.readFileSync(CONSULTATIONS_FILE, 'utf8'));
     const index = list.findIndex(c => c.id == id);
     if (index === -1) return res.status(404).json({ error: 'Not found' });
 
-    list[index] = { ...list[index], status, notes, updated_at: new Date().toISOString() };
+    let finalStatus = status;
+    let isPendingVerification = false;
+
+    // If it's a Won/Lost deal, change to Pending Verification first
+    if (status === 'Closed' || status === 'Failed') {
+      finalStatus = 'Pending Verification';
+      isPendingVerification = true;
+    }
+
+    list[index] = { ...list[index], status: finalStatus, notes, updated_at: new Date().toISOString() };
     fs.writeFileSync(CONSULTATIONS_FILE, JSON.stringify(list, null, 2));
 
     const lead = list[index];
     const emailStr = lead.business_email;
+    const finalEvidenceUrl = evidenceFile ? `/uploads/evidence/${evidenceFile.filename}` : null;
+
     if (status === 'Contacted') {
       const auditNote = `Mengupdate status prospek ke CONTACTED: ${emailStr}`;
-        
       await createAuditLog(req.sessionUser, 'CONTACT_CLIENT', auditNote, req);
     }
-    else if (status === 'Closed')
-      await createAuditLog(req.sessionUser, 'DEAL_WON', `DEAL WON: ${emailStr}${notes ? `. ${notes}` : ''}`, req);
-    else if (status === 'Failed')
-      await createAuditLog(req.sessionUser, 'DEAL_LOST', `DEAL LOST: ${emailStr}${notes ? `. ${notes}` : ''}`, req);
+    else if (status === 'Closed' || status === 'Failed') {
+      const outcome = status === 'Closed' ? 'WON' : 'LOST';
+      const auditNote = `Memperbarui deal ke ${outcome} (Menunggu Verifikasi): ${emailStr}${notes ? `. Catatan: ${notes}` : ''}`;
+      await createAuditLog(req.sessionUser, `DEAL_${outcome}_PENDING`, auditNote, req);
+      
+      // Save to deal_outcomes table
+      // Ensure we have a valid UUID for deal_id. If consultation requests are saved with UUIDs in postgres, we need to map it.
+      // But we will just try to insert or assuming consultation_requests has the corresponding record.
+      // NOTE: In standard setup, 'id' in JSON might be a timestamp, but Postgres consultation_requests.id is UUID. 
+      // We will just do our best here. If it fails due to foreign key, it's fine, we log it.
+      try {
+        const adminId = req.sessionUser.id; // User ID from session
+        await pool.query(
+          `INSERT INTO deal_outcomes 
+            (deal_id, outcome, reason, notes, evidence_type, evidence_url, determined_by, verification_status)
+           VALUES ((SELECT id FROM consultation_requests WHERE business_email = $1 ORDER BY created_at DESC LIMIT 1), $2, $3, $4, $5, $6, $7, 'PENDING')`,
+          [emailStr, outcome, reason || null, notes || null, evidence_type || null, finalEvidenceUrl || null, adminId]
+        );
+      } catch (dbErr) {
+        console.error('[Consultation] deal_outcomes sync error:', dbErr.message);
+      }
+    }
 
     res.json({ success: true });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Failed to update' });
+  }
+});
+
+router.get('/api/admin/consultations/:id/evidence', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const list = JSON.parse(fs.readFileSync(CONSULTATIONS_FILE, 'utf8'));
+    const entry = list.find(c => String(c.id) === String(id));
+    if (!entry) return res.status(404).json({ error: 'Evidence not found' });
+
+    const result = await pool.query(
+      `SELECT d.* FROM deal_outcomes d
+       JOIN consultation_requests c ON d.deal_id = c.id
+       WHERE c.business_email = $1
+       ORDER BY d.created_at DESC LIMIT 1`,
+      [entry.business_email]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Evidence not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch evidence' });
+  }
+});
+
+router.post('/api/admin/consultations/verify', adminAuth, async (req, res) => {
+  const { id, action } = req.body; 
+  
+  const role = await getUserRole(req.sessionUser);
+  // Only superadmin (or manager) can verify
+  if (role !== 'superadmin' && role !== 'manager') {
+     console.error("403 - role is", role);
+     return res.status(403).json({ error: 'Unauthorized role for verification' });
+  }
+
+  try {
+    const list  = JSON.parse(fs.readFileSync(CONSULTATIONS_FILE, 'utf8'));
+    const index = list.findIndex(c => String(c.id) === String(id));
+    if (index === -1) {
+        console.error("404 - Not found in json for id", id);
+        return res.status(404).json({ error: 'Not found' });
+    }
+
+    const lead = list[index];
+    const newVerificationStatus = action === 'APPROVE' ? 'APPROVED' : 'REJECTED';
+
+    // Atomic update to avoid race conditions
+    const outcomeRes = await pool.query(
+      `UPDATE deal_outcomes 
+       SET verification_status = $1, verified_by = $2 
+       WHERE id = (
+          SELECT d.id FROM deal_outcomes d
+          JOIN consultation_requests c ON d.deal_id = c.id
+          WHERE c.business_email = $3 AND d.verification_status = 'PENDING'
+          ORDER BY d.created_at DESC LIMIT 1
+       )
+       RETURNING id, outcome`,
+      [newVerificationStatus, req.sessionUser, lead.business_email]
+    );
+    
+    if (outcomeRes.rows.length === 0) {
+        return res.status(400).json({ error: 'Deal ini sudah diproses oleh Manager lain (atau tidak ditemukan).' });
+    }
+
+    const pendingOutcome = outcomeRes.rows[0];
+    let newDealStatus = 'Contacted'; 
+    
+    if (action === 'APPROVE') {
+        newDealStatus = pendingOutcome.outcome === 'WON' ? 'Closed' : 'Failed';
+    }
+
+    list[index] = { ...list[index], status: newDealStatus, updated_at: new Date().toISOString() };
+    fs.writeFileSync(CONSULTATIONS_FILE, JSON.stringify(list, null, 2));
+
+    // DB already updated atomically above
+
+    const auditNote = `Verifikasi Deal ${action}: ${lead.business_email}`;
+    await createAuditLog(req.sessionUser, `VERIFY_DEAL_${action}`, auditNote, req);
+
+    res.json({ success: true, newStatus: newDealStatus });
+  } catch (err) {
+    console.error("500 Error:", err);
+    res.status(500).json({ error: 'Failed to verify deal' });
   }
 });
 

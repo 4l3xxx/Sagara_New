@@ -46,6 +46,7 @@ services:
       - nlp-service
     volumes:
       - ./data:/usr/src/app/data
+      - ./public/uploads:/usr/src/app/public/uploads
     restart: unless-stopped
 
 volumes:

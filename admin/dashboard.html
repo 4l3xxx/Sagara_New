@@ -200,7 +200,7 @@
             border-left: 4px solid #137fec;
         }
 
-        .ai-keyword {
+        .highlight-term {
             background: #fef08a;
             color: #854d0e;
             font-weight: 600;
@@ -409,44 +409,43 @@
                         <div class="bg-white rounded-2xl p-6 card-hover relative overflow-hidden group">
                             <div
                                 class="absolute top-0 right-0 p-4 opacity-10 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500">
-                                <span class="material-symbols-outlined text-[80px] text-purple-500">timer</span>
+                                <span class="material-symbols-outlined text-[80px] text-emerald-500">check_circle</span>
                             </div>
                             <div class="flex items-center gap-4 mb-4">
                                 <div
-                                    class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 border border-purple-100">
-                                    <span class="material-symbols-outlined text-[24px]">schedule</span>
+                                    class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 border border-emerald-100">
+                                    <span class="material-symbols-outlined text-[24px]">verified</span>
                                 </div>
                                 <div>
-                                    <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Uptime
+                                    <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Deals Won
                                     </h3>
                                 </div>
                             </div>
                             <div class="flex items-baseline gap-2">
-                                <div class="text-4xl font-black text-slate-800" id="uptime">-</div>
+                                <div class="text-4xl font-black text-slate-800" id="dealsWon">-</div>
                                 <div class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">
-                                    Active</div>
+                                    Closed</div>
                             </div>
                         </div>
 
                         <div class="bg-white rounded-2xl p-6 card-hover relative overflow-hidden group">
                             <div
                                 class="absolute top-0 right-0 p-4 opacity-10 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500">
-                                <span class="material-symbols-outlined text-[80px] text-amber-500">memory</span>
+                                <span class="material-symbols-outlined text-[80px] text-rose-500">cancel</span>
                             </div>
                             <div class="flex items-center gap-4 mb-4">
                                 <div
-                                    class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 border border-amber-100">
-                                    <span class="material-symbols-outlined text-[24px]">api</span>
+                                    class="w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center text-rose-600 border border-rose-100">
+                                    <span class="material-symbols-outlined text-[24px]">error</span>
                                 </div>
                                 <div>
-                                    <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">API Status
+                                    <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Deals Lost
                                     </h3>
                                 </div>
                             </div>
                             <div class="flex items-baseline gap-2">
-                                <div class="text-2xl font-black text-slate-800" id="apiStatus">-</div>
-                                <div class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">Groq
-                                    API</div>
+                                <div class="text-4xl font-black text-slate-800" id="dealsLost">-</div>
+                                <div class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">Failed</div>
                             </div>
                         </div>
                     </div>
@@ -1792,6 +1791,30 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Objective Verification Evidence -->
+                <div id="det-evidence-section" class="hidden mt-8 bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                    <h4 class="text-sm font-extrabold text-slate-800 uppercase tracking-widest flex items-center gap-2 mb-4">
+                        <span class="material-symbols-outlined text-[20px]">verified</span> Deal Evidence
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Evidence Type</span>
+                            <span class="font-semibold text-slate-800" id="det-evidence-type">-</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Subjective Notes</span>
+                            <span class="font-semibold text-slate-800" id="det-evidence-notes">-</span>
+                        </div>
+                        <div class="md:col-span-2 mt-2 pt-4 border-t border-slate-200">
+                            <span class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">Evidence Document</span>
+                            <a href="#" id="det-evidence-link" target="_blank" class="hidden text-blue-600 hover:underline font-bold items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">open_in_new</span> View Attached Evidence
+                            </a>
+                            <span id="det-evidence-none" class="text-slate-500 italic">No document attached.</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             
@@ -2122,7 +2145,7 @@
             let highlighted = escapeHtml(text);
             importantKeywords.forEach(word => {
                 const regex = new RegExp(`\\b(${word})\\b`, 'gi');
-                highlighted = highlighted.replace(regex, '<mark class="ai-keyword">$1</mark>');
+                highlighted = highlighted.replace(regex, '<mark class="highlight-term">$1</mark>');
             });
             return highlighted;
         }
@@ -2254,8 +2277,8 @@
 
                 document.getElementById('totalChats').textContent = data.totalChats || 0;
                 document.getElementById('todayChats').textContent = data.todayChats || 0;
-                document.getElementById('uptime').textContent = Math.floor(data.systemUptime / 60) + ' mins';
-                document.getElementById('apiStatus').textContent = data.hasApiKey ? 'Active' : 'Inactive';
+                document.getElementById('dealsWon').textContent = data.dealsWon || 0;
+                document.getElementById('dealsLost').textContent = data.dealsLost || 0;
 
                 if (data.lastChat) {
                     document.getElementById('recentActivity').innerHTML = `
@@ -2438,6 +2461,36 @@
             summaryEl.textContent = `AI categorizes this message as ${item.nlp_category || 'General'} intent. Subjectivity score ranks consistent with genuine query. ${isHighlyUrgent}`;
 
             const replyBtn = document.getElementById('det-reply-btn');
+            const evidenceSection = document.getElementById('det-evidence-section');
+            const evidenceType = document.getElementById('det-evidence-type');
+            const evidenceNotes = document.getElementById('det-evidence-notes');
+            const evidenceLink = document.getElementById('det-evidence-link');
+            const evidenceNone = document.getElementById('det-evidence-none');
+
+            if (item.status === 'WON' || item.status === 'LOST') {
+                replyBtn.classList.add('hidden');
+                replyBtn.classList.remove('flex');
+                evidenceSection.classList.remove('hidden');
+
+                evidenceType.textContent = item.won_reason || item.lost_reason || '-';
+                evidenceNotes.textContent = item.subjective_notes || '-';
+                
+                if (item.evidence_file_url || item.evidence_url) {
+                    evidenceLink.href = item.evidence_file_url || item.evidence_url;
+                    evidenceLink.classList.remove('hidden');
+                    evidenceLink.classList.add('flex');
+                    evidenceNone.classList.add('hidden');
+                } else {
+                    evidenceLink.classList.add('hidden');
+                    evidenceLink.classList.remove('flex');
+                    evidenceNone.classList.remove('hidden');
+                }
+            } else {
+                replyBtn.classList.remove('hidden');
+                replyBtn.classList.add('flex');
+                evidenceSection.classList.add('hidden');
+            }
+
             replyBtn.onclick = () => {
                 closeDetailModal();
                 handleLeadAction(item.id, item.business_email, 'New');
@@ -2517,9 +2570,11 @@
                                 ${item.status === 'Contacted' ? `<span class="whitespace-nowrap px-2 py-1 rounded text-[9px] font-bold bg-amber-50 text-amber-600 border border-amber-200">${currentLang === 'id' ? 'DIHUBUNGI' : 'CONTACTED'}</span>` : ''}
                                 ${item.status === 'Closed' ? `<span class="whitespace-nowrap px-2 py-1 rounded text-[9px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">DEAL WON</span>` : ''}
                                 ${item.status === 'Failed' ? `<span class="whitespace-nowrap px-2 py-1 rounded text-[9px] font-bold bg-slate-100 text-slate-500 border border-slate-200">DEAL LOST</span>` : ''}
-                                
+                                ${item.status === 'Pending Verification' ? `<span class="whitespace-nowrap px-2 py-1 rounded text-[9px] font-bold bg-yellow-50 text-yellow-600 border border-yellow-200">PENDING VERIFICATION</span>` : ''}
                                 ${item.status === 'New' ? `<button onclick="handleLeadAction('${item.id}', '${item.business_email}', 'New')" class="whitespace-nowrap text-xs font-bold text-white bg-primary hover:bg-blue-600 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">mail</span> Reply</button>` : ''}
                                 ${item.status === 'Contacted' ? `<button onclick="handleLeadAction('${item.id}', '${item.business_email}', 'Contacted')" class="whitespace-nowrap text-xs font-bold text-white bg-slate-800 hover:bg-slate-900 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check_circle</span> Update</button>` : ''}
+                                ${item.status === 'Pending Verification' && isSuper ? `<button onclick="openVerifyModal('${item.id}')" class="whitespace-nowrap text-xs font-bold text-slate-800 bg-yellow-300 hover:bg-yellow-400 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">verified</span> Verify</button>` : ''}
+                                ${(item.status === 'Closed' || item.status === 'Failed') ? `<button onclick="openOutcomeModal('${item.id}')" class="whitespace-nowrap text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">info</span> Outcome</button>` : ''}
                                 
                                 <button onclick="openDetailModal('${item.id}')" class="p-1.5 text-slate-400 hover:text-blue-600 transition-colors" title="Read Message">
                                     <span class="material-symbols-outlined text-[20px]">visibility</span>
@@ -2742,6 +2797,9 @@
                 b.classList.add('bg-slate-50', 'border-slate-200');
             });
             
+            const evidenceTypeSelect = document.getElementById('evidenceType');
+            evidenceTypeSelect.innerHTML = '';
+            
             if (type === 'WON') {
                 btnWon.classList.add('ring-2', 'ring-emerald-500');
                 btnLost.classList.remove('ring-2', 'ring-slate-500');
@@ -2749,6 +2807,12 @@
                 wonReasons.classList.add('flex');
                 lostReasons.classList.add('hidden');
                 lostReasons.classList.remove('flex');
+                
+                evidenceTypeSelect.innerHTML = `
+                    <option value="contract">Contract / PO / Invoice</option>
+                    <option value="payment_proof">Payment Proof</option>
+                    <option value="other">Other Evidence</option>
+                `;
             } else {
                 btnLost.classList.add('ring-2', 'ring-slate-500');
                 btnWon.classList.remove('ring-2', 'ring-emerald-500');
@@ -2756,6 +2820,11 @@
                 lostReasons.classList.add('flex');
                 wonReasons.classList.add('hidden');
                 wonReasons.classList.remove('flex');
+                
+                evidenceTypeSelect.innerHTML = `
+                    <option value="comm_log">Communication Log (Emails/Calls)</option>
+                    <option value="other">Other Evidence</option>
+                `;
             }
         }
         
@@ -2769,7 +2838,10 @@
             
             const customContainer = document.getElementById('customReasonContainer');
             const btnSubmit = document.getElementById('btnConfirmStatusUpdate');
+            const evidenceContainer = document.getElementById('evidenceContainer');
             
+            evidenceContainer.classList.remove('hidden');
+
             if (reason === 'custom') {
                 customContainer.classList.remove('hidden');
                 selectedReasonText = document.getElementById('customReasonInput').value;
@@ -2797,9 +2869,193 @@
             if (!selectedStatusId || !selectedStatusType || !selectedReasonText) return;
             if (selectedReasonText.trim() === '') return;
             
+            const evidenceType = document.getElementById('evidenceType').value;
+            const evidenceNotes = document.getElementById('evidenceNotes').value;
+            const evidenceFile = document.getElementById('evidenceFile').files[0];
+            
+            if (!evidenceFile) {
+                showToast(currentLang === 'en' ? "Evidence document is strictly required" : "Dokumen bukti wajib diisi sebagai validasi objektif!", "error");
+                return;
+            }
+            
+            if (evidenceNotes.trim() === '') {
+                showToast(currentLang === 'en' ? "Subjective Notes is required" : "Catatan (Subjective Notes) wajib diisi!", "error");
+                return;
+            }
+            
             closeUpdateStatusModal();
             const newStatus = selectedStatusType === 'WON' ? 'Closed' : 'Failed';
-            updateLeadStatus(selectedStatusId, newStatus, true, selectedReasonText);
+            
+            const formData = new FormData();
+            formData.append('id', selectedStatusId);
+            formData.append('status', newStatus);
+            formData.append('reason', selectedReasonText);
+            formData.append('notes', evidenceNotes); // Send subjective notes
+            formData.append('evidence_type', evidenceType);
+            if (evidenceFile) {
+                formData.append('evidence_file', evidenceFile);
+            }
+
+            submitUpdateStatusFormData(formData);
+        }
+
+        async function submitUpdateStatusFormData(formData) {
+            showLoading(currentLang === 'en' ? 'Submitting for verification...' : 'Mengirim untuk verifikasi...');
+            try {
+                const token = localStorage.getItem('sagara_admin_token');
+                const res = await fetch('/api/admin/consultations/status', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+                if (res.ok) {
+                    showToast(currentLang === 'en' ? 'Status updated (Pending Verification)' : 'Status diperbarui (Menunggu Verifikasi)');
+                    loadConsultations();
+                    loadAnalytics();
+                } else {
+                    let errMessage = "Gagal update status";
+                    try {
+                        const errData = await res.json();
+                        if (errData.error) errMessage = errData.error;
+                    } catch (e) {
+                        errMessage += " - " + res.status;
+                    }
+                    showToast(errMessage, "error");
+                }
+            } catch (err) {
+                showToast("Gagal update status", "error");
+            } finally {
+                hideLoading();
+            }
+        }
+
+        let verifyDealId = null;
+
+        async function openOutcomeModal(id) {
+            showLoading(currentLang === 'en' ? 'Loading details...' : 'Memuat detail...');
+            try {
+                const token = localStorage.getItem('sagara_admin_token');
+                const res = await fetch(`/api/admin/consultations/${id}/evidence`, {
+                    credentials: 'same-origin',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                hideLoading();
+                if (res.ok) {
+                    const data = await res.json();
+                    
+                    const badge = document.getElementById('outcomeBadge');
+                    if (data.outcome === 'WON') {
+                        badge.className = 'px-2 py-1 rounded text-xs font-bold bg-emerald-100 text-emerald-800';
+                        badge.textContent = 'WON (Closed)';
+                    } else {
+                        badge.className = 'px-2 py-1 rounded text-xs font-bold bg-rose-100 text-rose-800';
+                        badge.textContent = 'LOST (Failed)';
+                    }
+                    
+                    document.getElementById('outcomeEvidenceType').textContent = data.evidence_type || '-';
+                    document.getElementById('outcomeNotes').textContent = data.notes || (data.reason || '-');
+                    
+                    const link = document.getElementById('outcomeEvidenceLink');
+                    if (data.evidence_url) {
+                        link.href = data.evidence_url.startsWith('http') ? data.evidence_url : (window.location.origin + data.evidence_url);
+                        link.style.display = 'flex';
+                    } else {
+                        link.style.display = 'none';
+                    }
+                    
+                    const modal = document.getElementById('outcomeDetailModal');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                } else {
+                    const text = await res.text();
+                    showToast(currentLang === 'en' ? 'Failed to fetch details: ' + text : 'Gagal memuat detail: ' + text, "error");
+                }
+            } catch (err) {
+                hideLoading();
+                showToast("Network error", "error");
+            }
+        }
+
+        function closeOutcomeModal() {
+            const modal = document.getElementById('outcomeDetailModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        async function openVerifyModal(id) {
+            verifyDealId = id;
+            showLoading('Fetching evidence...');
+            try {
+                const token = localStorage.getItem('sagara_admin_token');
+                const res = await fetch(`/api/admin/consultations/${id}/evidence`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!res.ok) throw new Error('Evidence not found');
+                const evidence = await res.json();
+                
+                document.getElementById('verifyOutcomeBadge').textContent = evidence.outcome;
+                document.getElementById('verifyOutcomeBadge').className = evidence.outcome === 'WON' 
+                    ? 'px-2 py-1 rounded text-xs font-bold bg-emerald-100 text-emerald-800' 
+                    : 'px-2 py-1 rounded text-xs font-bold bg-slate-200 text-slate-800';
+                
+                document.getElementById('verifyEvidenceType').textContent = evidence.evidence_type || 'N/A';
+                document.getElementById('verifyNotes').textContent = evidence.notes || 'No notes provided.';
+                
+                const linkEl = document.getElementById('verifyEvidenceLink');
+                if (evidence.evidence_url) {
+                    linkEl.href = evidence.evidence_url;
+                    linkEl.style.display = 'flex';
+                } else {
+                    linkEl.style.display = 'none';
+                }
+
+                const modal = document.getElementById('verifyDealModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } catch (err) {
+                showToast("Failed to fetch evidence details", "error");
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function closeVerifyModal() {
+            const modal = document.getElementById('verifyDealModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            verifyDealId = null;
+        }
+
+        async function submitVerify(action) {
+            if (!verifyDealId) return;
+            
+            showLoading(currentLang === 'en' ? 'Verifying...' : 'Memverifikasi...');
+            try {
+                const token = localStorage.getItem('sagara_admin_token');
+                const res = await fetch('/api/admin/consultations/verify', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: verifyDealId, action })
+                });
+                if (res.ok) {
+                    showToast(currentLang === 'en' ? 'Deal verified successfully!' : 'Deal berhasil diverifikasi!');
+                    closeVerifyModal();
+                    loadConsultations();
+                    loadAnalytics();
+                } else {
+                    showToast("Gagal memverifikasi", "error");
+                }
+            } catch (err) {
+                showToast("Gagal memverifikasi", "error");
+            } finally {
+                hideLoading();
+            }
         }
 
         async function updateLeadStatus(id, newStatus, skipPrompt = false, explicitReason = null) {
@@ -3016,13 +3272,40 @@
                 // --- NEW ANALYTICS LOGIC START ---
 
                 // 3.1 Service Popularity
-                const serviceDist = {};
+                const normalizeService = (raw) => {
+                    if (!raw) return 'Other';
+                    const lower = raw.toLowerCase();
+                    if (lower.includes('web')) return 'Web development';
+                    if (lower.includes('mobile') || lower.includes('app')) return 'Mobile app development';
+                    if (lower.includes('outsourcing') || lower.includes('outsourching')) return 'IT outsourcing';
+                    if (lower.includes('ui') || lower.includes('ux')) return 'UI/UX design';
+                    if (lower.includes('digital') || lower.includes('custom') || lower.includes('transform')) return 'Digital transformation / custom software';
+                    return 'Other';
+                };
+
+                const serviceCounts = {
+                    'Web development': 0,
+                    'Mobile app development': 0,
+                    'IT outsourcing': 0,
+                    'UI/UX design': 0,
+                    'Digital transformation / custom software': 0,
+                    'Other': 0
+                };
+
                 consultations.forEach(c => {
-                    const s = c.service_type || 'Other';
-                    serviceDist[s] = (serviceDist[s] || 0) + 1;
+                    const norm = normalizeService(c.service_type);
+                    serviceCounts[norm]++;
                 });
-                const serviceLabels = Object.keys(serviceDist);
-                const serviceSeries = Object.values(serviceDist);
+
+                const finalServiceDist = {};
+                for (const key in serviceCounts) {
+                    if (serviceCounts[key] > 0) {
+                        finalServiceDist[key] = serviceCounts[key];
+                    }
+                }
+
+                const serviceLabels = Object.keys(finalServiceDist);
+                const serviceSeries = Object.values(finalServiceDist);
 
                 // 3.2 Sales Funnel
                 const funnelStages = {
@@ -4635,15 +4918,76 @@
                     <input type="text" id="customReasonInput" oninput="handleCustomReasonInput(event)" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="Type your custom reason here...">
                 </div>
 
+                <div id="evidenceContainer" class="hidden mt-4 p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                    <p class="text-slate-700 text-sm font-semibold mb-2" id="evidenceLabel">Objective Verification (Evidence)</p>
+                    
+                    <label class="block text-xs font-medium text-slate-700 mb-1">Evidence Type</label>
+                    <select id="evidenceType" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary outline-none mb-3">
+                        <!-- Populated dynamically via JS -->
+                    </select>
+
+                    <label class="block text-xs font-medium text-slate-700 mb-1">Upload File</label>
+                    <input type="file" id="evidenceFile" class="w-full border border-slate-300 text-slate-600 bg-white rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary outline-none mb-4">
+
+                    <label class="block text-xs font-medium text-slate-700 mb-1">Subjective Notes</label>
+                    <textarea id="evidenceNotes" rows="2" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="Provide context (e.g. Budget too low, detail why)..."></textarea>
+                </div>
+
                 <div class="mt-6 flex justify-end gap-2">
-                    <button id="btnCancelStatusUpdate" onclick="closeUpdateStatusModal()" class="px-4 py-2 text-slate-500 hover:text-slate-800 text-sm font-semibold transition-colors">Cancel</button>
-                    <button id="btnConfirmStatusUpdate" onclick="submitUpdateStatus()" class="px-4 py-2 bg-primary text-white hover:bg-blue-600 rounded-lg text-sm font-bold shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all">Submit</button>
+                    <button id="btnCancelStatusUpdate" onclick="closeUpdateStatusModal()" class="px-4 py-2 text-slate-500 hover:bg-slate-100 rounded-lg text-sm font-semibold transition-colors">Cancel</button>
+                    <button id="btnConfirmStatusUpdate" onclick="submitUpdateStatus()" class="px-4 py-2 bg-primary text-white hover:bg-blue-600 rounded-lg text-sm font-bold shadow-sm transition-all">Submit</button>
                 </div>
             </div>
         </div>
     </div>
 
     
+    <div id="verifyDealModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] hidden flex-col items-center justify-center">
+        <div class="bg-white p-6 rounded-2xl max-w-md w-full shadow-2xl relative mx-4">
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Verify Deal Outcome</h3>
+            <p class="text-slate-600 text-sm mb-4">Please review the evidence before approving or rejecting.</p>
+            
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-4 text-sm">
+                <div class="mb-2"><strong>Requested Outcome:</strong> <span id="verifyOutcomeBadge" class="px-2 py-1 rounded text-xs font-bold"></span></div>
+                <div class="mb-2"><strong>Evidence Type:</strong> <span id="verifyEvidenceType" class="text-slate-700"></span></div>
+                <div class="mb-2"><strong>Notes:</strong> <span id="verifyNotes" class="text-slate-700 italic"></span></div>
+                <div class="mt-4 pt-3 border-t border-slate-200">
+                    <a id="verifyEvidenceLink" href="#" target="_blank" class="text-blue-600 hover:underline font-bold flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">open_in_new</span> View Evidence Document
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex gap-3 mt-6">
+                <button onclick="closeVerifyModal()" class="flex-1 py-2 text-slate-500 hover:bg-slate-100 rounded-lg text-sm font-semibold transition-colors">Cancel</button>
+                <button onclick="submitVerify('REJECT')" class="flex-1 bg-rose-50 hover:bg-rose-500 text-rose-600 hover:text-white border border-rose-200 py-2 rounded-lg text-sm font-bold shadow-sm transition-all">Reject</button>
+                <button onclick="submitVerify('APPROVE')" class="flex-1 bg-emerald-50 hover:bg-emerald-500 text-emerald-600 hover:text-white border border-emerald-200 py-2 rounded-lg text-sm font-bold shadow-sm transition-all">Approve</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="outcomeDetailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] hidden flex-col items-center justify-center">
+        <div class="bg-white p-6 rounded-2xl max-w-md w-full shadow-2xl relative mx-4">
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Deal Outcome Details</h3>
+            <p class="text-slate-600 text-sm mb-4">Review the recorded evidence for this outcome.</p>
+            
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-4 text-sm">
+                <div class="mb-2"><strong>Outcome:</strong> <span id="outcomeBadge" class="px-2 py-1 rounded text-xs font-bold"></span></div>
+                <div class="mb-2"><strong>Evidence Type:</strong> <span id="outcomeEvidenceType" class="text-slate-700"></span></div>
+                <div class="mb-2"><strong>Notes:</strong> <span id="outcomeNotes" class="text-slate-700 italic"></span></div>
+                <div class="mt-4 pt-3 border-t border-slate-200">
+                    <a id="outcomeEvidenceLink" href="#" target="_blank" class="text-blue-600 hover:underline font-bold flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">open_in_new</span> View Evidence Document
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex gap-3 mt-6">
+                <button onclick="closeOutcomeModal()" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-lg transition-colors">Close</button>
+            </div>
+        </div>
+    </div>
+
     <div id="globalLoadingOverlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] flex flex-col items-center justify-center hidden">
         <div class="bg-white p-8 rounded-2xl shadow-2xl flex flex-col items-center gap-4 border border-slate-100 max-w-sm w-full mx-4">
             <div class="w-12 h-12 rounded-full border-4 border-slate-200 border-t-primary animate-spin"></div>
@@ -4697,6 +5041,53 @@
                 document.getElementById('job-description').value = '';
                 document.getElementById('job-requirements').value = '';
             }
+        }
+
+        function exportToCSV() {
+            if (!window.allConsultations || window.allConsultations.length === 0) {
+                if (typeof showToast === 'function') showToast("Tidak ada data untuk diekspor", "error");
+                else alert("Tidak ada data untuk diekspor");
+                return;
+            }
+
+            const headers = ['ID', 'Nama Klien', 'Email Bisnis', 'WhatsApp', 'Jenis Layanan', 'Kategori AI', 'Skor Prioritas', 'Status', 'Tanggal', 'Pesan (Raw Text)'];
+            
+            const escapeCSV = (str) => {
+                if (str === null || str === undefined) return '""';
+                const s = String(str).replace(/"/g, '""').replace(/\n/g, ' ');
+                return `"${s}"`;
+            };
+
+            const csvRows = [headers.join(',')];
+
+            for (const row of window.allConsultations) {
+                const values = [
+                    row.id,
+                    row.full_name,
+                    row.business_email,
+                    row.whatsapp_number,
+                    row.service_type,
+                    row.nlp_category || 'General',
+                    Math.round((row.lead_score || 0) * 100) + '%',
+                    row.status,
+                    new Date(row.created_at).toLocaleString('id-ID'),
+                    row.message
+                ];
+                csvRows.push(values.map(escapeCSV).join(','));
+            }
+
+            const csvString = csvRows.join('\n');
+            const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvString], { type: 'text/csv;charset=utf-8;' }); // BOM for Excel UTF-8
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `Sagara_Client_Data_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            if (typeof showToast === 'function') showToast("Data klien berhasil diekspor ke CSV!", "success");
         }
     </script>
 </body>

@@ -117,3 +117,19 @@ CREATE TABLE IF NOT EXISTS categories (
     name TEXT NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Create deal_outcomes table for objective verification
+CREATE TABLE IF NOT EXISTS deal_outcomes (
+    id SERIAL PRIMARY KEY,
+    deal_id VARCHAR(50) REFERENCES consultation_requests(id) ON DELETE CASCADE,
+    outcome VARCHAR(20) NOT NULL,
+    reason VARCHAR(255),
+    notes TEXT,
+    evidence_type VARCHAR(50),
+    evidence_url VARCHAR(255),
+    determined_by VARCHAR(50),
+    verified_by VARCHAR(50),
+    verification_status VARCHAR(20) DEFAULT 'PENDING',
+    activity_snapshot JSONB,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
