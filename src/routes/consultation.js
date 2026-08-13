@@ -354,7 +354,7 @@ router.post('/api/admin/consultations/status', adminAuth, (req, res, next) => {
           `INSERT INTO deal_outcomes 
             (deal_id, outcome, reason, notes, evidence_type, evidence_url, determined_by, verification_status)
            VALUES ((SELECT id FROM consultation_requests WHERE business_email = $1 ORDER BY created_at DESC LIMIT 1), $2, $3, $4, $5, $6, $7, 'PENDING')`,
-          [emailStr, outcome, reason || null, notes || null, evidence_type || null, finalEvidenceUrl || null, adminId]
+           [emailStr, outcome, reason || null, notes || null, evidence_type || null, finalEvidenceUrl, adminId]
         );
       } catch (dbErr) {
         console.error('[Consultation] deal_outcomes sync error:', dbErr.message);

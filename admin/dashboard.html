@@ -2467,7 +2467,7 @@
             const evidenceLink = document.getElementById('det-evidence-link');
             const evidenceNone = document.getElementById('det-evidence-none');
 
-            if (item.status === 'WON' || item.status === 'LOST') {
+            if (item.status === 'Closed' || item.status === 'Failed' || item.status === 'Pending Verification') {
                 replyBtn.classList.add('hidden');
                 replyBtn.classList.remove('flex');
                 evidenceSection.classList.remove('hidden');
@@ -2475,8 +2475,8 @@
                 evidenceType.textContent = item.won_reason || item.lost_reason || '-';
                 evidenceNotes.textContent = item.subjective_notes || '-';
                 
-                if (item.evidence_file_url || item.evidence_url) {
-                    evidenceLink.href = item.evidence_file_url || item.evidence_url;
+                if (item.evidence_url) {
+                    evidenceLink.href = item.evidence_url;
                     evidenceLink.classList.remove('hidden');
                     evidenceLink.classList.add('flex');
                     evidenceNone.classList.add('hidden');
@@ -2572,7 +2572,7 @@
                                 ${item.status === 'Failed' ? `<span class="whitespace-nowrap px-2 py-1 rounded text-[9px] font-bold bg-slate-100 text-slate-500 border border-slate-200">DEAL LOST</span>` : ''}
                                 ${item.status === 'Pending Verification' ? `<span class="whitespace-nowrap px-2 py-1 rounded text-[9px] font-bold bg-yellow-50 text-yellow-600 border border-yellow-200">PENDING VERIFICATION</span>` : ''}
                                 ${item.status === 'New' ? `<button onclick="handleLeadAction('${item.id}', '${item.business_email}', 'New')" class="whitespace-nowrap text-xs font-bold text-white bg-primary hover:bg-blue-600 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">mail</span> Reply</button>` : ''}
-                                ${item.status === 'Contacted' ? `<button onclick="handleLeadAction('${item.id}', '${item.business_email}', 'Contacted')" class="whitespace-nowrap text-xs font-bold text-white bg-slate-800 hover:bg-slate-900 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check_circle</span> Update</button>` : ''}
+                                ${item.status === 'Contacted' ? `<button onclick="handleLeadAction('${item.id}', '${item.business_email}', 'Contacted')" class="whitespace-nowrap text-xs font-bold text-slate-800 hover:bg-slate-900 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check_circle</span> Update</button>` : ''}
                                 ${item.status === 'Pending Verification' && isSuper ? `<button onclick="openVerifyModal('${item.id}')" class="whitespace-nowrap text-xs font-bold text-slate-800 bg-yellow-300 hover:bg-yellow-400 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">verified</span> Verify</button>` : ''}
                                 ${(item.status === 'Closed' || item.status === 'Failed') ? `<button onclick="openOutcomeModal('${item.id}')" class="whitespace-nowrap text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">info</span> Outcome</button>` : ''}
                                 
@@ -2959,11 +2959,31 @@
                     document.getElementById('outcomeNotes').textContent = data.notes || (data.reason || '-');
                     
                     const link = document.getElementById('outcomeEvidenceLink');
+                    const linkContainer = document.getElementById('outcomeEvidenceLinkContainer');
+                    const imgContainer = document.getElementById('outcomeEvidenceImageContainer');
+                    const imgEl = document.getElementById('outcomeEvidenceImage');
+                    const notesContainer = document.getElementById('outcomeNotesContainer');
+                    
                     if (data.evidence_url) {
-                        link.href = data.evidence_url.startsWith('http') ? data.evidence_url : (window.location.origin + data.evidence_url);
+                        const fullUrl = data.evidence_url.startsWith('http') ? data.evidence_url : (window.location.origin + data.evidence_url);
+                        link.href = fullUrl;
                         link.style.display = 'flex';
+                        if (linkContainer) linkContainer.style.display = 'block';
+                        
+                        const isImage = fullUrl.match(/\.(jpeg|jpg|gif|png|webp)$/i) || data.evidence_type === 'Screenshot/Photo';
+                        if (isImage) {
+                            imgEl.src = fullUrl;
+                            imgContainer.classList.remove('hidden');
+                            notesContainer.classList.add('hidden');
+                        } else {
+                            imgContainer.classList.add('hidden');
+                            notesContainer.classList.remove('hidden');
+                        }
                     } else {
                         link.style.display = 'none';
+                        if (linkContainer) linkContainer.style.display = 'none';
+                        imgContainer.classList.add('hidden');
+                        notesContainer.classList.remove('hidden');
                     }
                     
                     const modal = document.getElementById('outcomeDetailModal');
@@ -3005,11 +3025,31 @@
                 document.getElementById('verifyNotes').textContent = evidence.notes || 'No notes provided.';
                 
                 const linkEl = document.getElementById('verifyEvidenceLink');
+                const linkContainer = document.getElementById('verifyEvidenceLinkContainer');
+                const imgContainer = document.getElementById('verifyEvidenceImageContainer');
+                const imgEl = document.getElementById('verifyEvidenceImage');
+                const notesContainer = document.getElementById('verifyNotesContainer');
+                
                 if (evidence.evidence_url) {
-                    linkEl.href = evidence.evidence_url;
+                    const fullUrl = evidence.evidence_url.startsWith('http') ? evidence.evidence_url : (window.location.origin + evidence.evidence_url);
+                    linkEl.href = fullUrl;
                     linkEl.style.display = 'flex';
+                    if (linkContainer) linkContainer.style.display = 'block';
+                    
+                    const isImage = fullUrl.match(/\.(jpeg|jpg|gif|png|webp)$/i) || evidence.evidence_type === 'Screenshot/Photo';
+                    if (isImage) {
+                        imgEl.src = fullUrl;
+                        imgContainer.classList.remove('hidden');
+                        notesContainer.classList.add('hidden');
+                    } else {
+                        imgContainer.classList.add('hidden');
+                        notesContainer.classList.remove('hidden');
+                    }
                 } else {
                     linkEl.style.display = 'none';
+                    if (linkContainer) linkContainer.style.display = 'none';
+                    imgContainer.classList.add('hidden');
+                    notesContainer.classList.remove('hidden');
                 }
 
                 const modal = document.getElementById('verifyDealModal');
@@ -4950,8 +4990,11 @@
             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-4 text-sm">
                 <div class="mb-2"><strong>Requested Outcome:</strong> <span id="verifyOutcomeBadge" class="px-2 py-1 rounded text-xs font-bold"></span></div>
                 <div class="mb-2"><strong>Evidence Type:</strong> <span id="verifyEvidenceType" class="text-slate-700"></span></div>
-                <div class="mb-2"><strong>Notes:</strong> <span id="verifyNotes" class="text-slate-700 italic"></span></div>
-                <div class="mt-4 pt-3 border-t border-slate-200">
+                <div id="verifyEvidenceImageContainer" class="mt-4 mb-4 hidden">
+                    <img id="verifyEvidenceImage" src="" alt="Evidence Photo" class="w-full rounded-lg shadow-sm border border-slate-200" style="max-height: 250px; object-fit: contain;">
+                </div>
+                <div id="verifyNotesContainer" class="mb-2"><strong>Notes:</strong> <span id="verifyNotes" class="text-slate-700 italic"></span></div>
+                <div id="verifyEvidenceLinkContainer" class="mt-4 pt-3 border-t border-slate-200" style="display: none;">
                     <a id="verifyEvidenceLink" href="#" target="_blank" class="text-blue-600 hover:underline font-bold flex items-center gap-1">
                         <span class="material-symbols-outlined text-sm">open_in_new</span> View Evidence Document
                     </a>
@@ -4974,8 +5017,11 @@
             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-4 text-sm">
                 <div class="mb-2"><strong>Outcome:</strong> <span id="outcomeBadge" class="px-2 py-1 rounded text-xs font-bold"></span></div>
                 <div class="mb-2"><strong>Evidence Type:</strong> <span id="outcomeEvidenceType" class="text-slate-700"></span></div>
-                <div class="mb-2"><strong>Notes:</strong> <span id="outcomeNotes" class="text-slate-700 italic"></span></div>
-                <div class="mt-4 pt-3 border-t border-slate-200">
+                <div id="outcomeEvidenceImageContainer" class="mt-4 mb-4 hidden">
+                    <img id="outcomeEvidenceImage" src="" alt="Evidence Photo" class="w-full rounded-lg shadow-sm border border-slate-200" style="max-height: 250px; object-fit: contain;">
+                </div>
+                <div id="outcomeNotesContainer" class="mb-2"><strong>Notes:</strong> <span id="outcomeNotes" class="text-slate-700 italic"></span></div>
+                <div id="outcomeEvidenceLinkContainer" class="mt-4 pt-3 border-t border-slate-200" style="display: none;">
                     <a id="outcomeEvidenceLink" href="#" target="_blank" class="text-blue-600 hover:underline font-bold flex items-center gap-1">
                         <span class="material-symbols-outlined text-sm">open_in_new</span> View Evidence Document
                     </a>

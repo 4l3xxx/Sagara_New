@@ -1467,9 +1467,9 @@
     "lead_score": 0.6,
     "is_suspicious": false,
     "spam_score": 45,
-    "status": "Contacted",
+    "status": "Closed",
     "created_at": "2026-08-13T02:29:00.256Z",
-    "notes": "Automated: Admin sent an email response.",
-    "updated_at": "2026-08-13T02:29:31.258Z"
+    "notes": "yesss",
+    "updated_at": "2026-08-13T04:07:27.678Z"
   }
 ]
